@@ -1,0 +1,3 @@
+Turn this into a morning brief for the Test Manager (max {{max_bullets}} bullets + one "Suggested focus today" sentence).
+
+{{summary}}

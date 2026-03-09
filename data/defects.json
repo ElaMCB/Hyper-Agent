@@ -1,0 +1,20 @@
+[
+  {
+    "id": "DEF-001",
+    "title": "Login fails when SSO token expires",
+    "severity": "Critical",
+    "status": "Open"
+  },
+  {
+    "id": "DEF-002",
+    "title": "Report export truncates after 10k rows",
+    "severity": "High",
+    "status": "Open"
+  },
+  {
+    "id": "DEF-003",
+    "title": "Tooltip misaligned on small screens",
+    "severity": "Low",
+    "status": "Done"
+  }
+]

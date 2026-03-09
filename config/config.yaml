@@ -1,0 +1,17 @@
+# Hyper-Agent config
+# Paths are relative to repo root unless absolute.
+
+data:
+  dir: data
+  # Files to use for brief (names or paths under data.dir)
+  defects_file: defects.json
+  test_runs_file: test_runs.json
+
+llm:
+  enabled: false
+  provider: openai
+  model: gpt-4o-mini
+
+brief:
+  # Number of bullets before "Suggested focus"
+  max_bullets: 5
