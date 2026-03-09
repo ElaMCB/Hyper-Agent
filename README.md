@@ -18,60 +18,33 @@ Covers: daily brief & meeting prep, vendor (TCS) oversight, delivery collaborati
 
 ### Capability diagram
 
+*Context keeper · Evidence gatherer · Draft producer*
+
 ```mermaid
 flowchart TB
-    subgraph agent["Hyper-Agent: AI Test Architect / Shadow"]
-        CORE["Context keeper · Evidence gatherer · Draft producer"]
-    end
-
-    subgraph daily["1. Daily orchestration & focus"]
-        direction TB
-        D1["Morning brief"]
-        D2["Priority stack"]
-        D3["Meeting prep"]
-    end
-
-    subgraph vendor["2. Vendor (TCS) oversight"]
-        direction TB
-        V1["Commitment vs actuals"]
-        V2["Single view"]
-        V3["Escalation support"]
-        V4["Consistency"]
-    end
-
-    subgraph delivery["3. Delivery collaboration"]
-        direction TB
-        L1["Scope ↔ test alignment"]
-        L2["Release readiness"]
-        L3["Communication"]
-    end
-
-    subgraph decision["4. Decision support"]
-        direction TB
-        S1["Go/no-go evidence"]
-        S2["Prioritization"]
-        S3["Impact of changes"]
-    end
-
-    subgraph gov["5. Governance & consistency"]
-        direction TB
-        G1["Standards"]
-        G2["Patterns"]
-    end
-
-    subgraph brain["6. Second brain"]
-        direction TB
-        B1["Status on demand"]
-        B2["Your preferences"]
-    end
-
-    CORE --- daily
-    CORE --- vendor
-    CORE --- delivery
-    CORE --- decision
-    CORE --- gov
-    CORE --- brain
+    CORE["Hyper-Agent<br/>AI Test Architect / Shadow"]
+    CORE --- A1
+    CORE --- A2
+    CORE --- A3
+    CORE --- A4
+    CORE --- A5
+    CORE --- A6
+    A1["1. Daily orchestration & focus"]
+    A2["2. Vendor (TCS) oversight"]
+    A3["3. Delivery collaboration"]
+    A4["4. Decision support"]
+    A5["5. Governance & consistency"]
+    A6["6. Second brain"]
 ```
+
+| Area | Sub-capabilities |
+|------|------------------|
+| **1. Daily orchestration** | Morning brief · Priority stack · Meeting prep |
+| **2. Vendor (TCS) oversight** | Commitment vs actuals · Single view · Escalation support · Consistency |
+| **3. Delivery collaboration** | Scope ↔ test alignment · Release readiness · Communication |
+| **4. Decision support** | Go/no-go evidence · Prioritization · Impact of changes |
+| **5. Governance** | Standards · Patterns |
+| **6. Second brain** | Status on demand · Your preferences |
 
 *Full diagram set:* [docs/DIAGRAM-capabilities.md](docs/DIAGRAM-capabilities.md)
 
