@@ -1,6 +1,6 @@
 <div align="center">
 
-# Shadow
+# [Shadow](https://ElaMCB.github.io/Hyper-Agent/)
 
 *Your AI test architect*
 
@@ -13,18 +13,6 @@
 > **Shadow** is the AI that runs in this repo. It shadows the Test Manager: QA team oversight, delivery collaboration, daily orchestration. You focus on directing and deciding; Shadow keeps the picture clear and the drafts ready.
 
 **Hyper-Agent** is the project and repo that builds Shadow.
-
-## Website (GitHub Pages)
-
-Shadow has a **landing page** in `docs/index.html`. It is **not** live until you turn Pages on:
-
-1. Repo **Settings** → **Pages**
-2. **Build and deployment** → Source: **Deploy from a branch**
-3. Branch: **main** → Folder: **`/docs`** → **Save**
-
-After a minute, open: **https://ElaMCB.github.io/Hyper-Agent/**
-
-That page is separate from the README: branding, capability list, and links into the repo and docs.
 
 ## Vision
 
