@@ -141,13 +141,3 @@ Headquarters is the **HTML dashboard** (not deployed to Pages by default):
 | **Stretch** | Risk/readiness packs · steering narratives · authenticated endpoints · deeper “ask Shadow” over your data |
 
 This repo is the living implementation of that roadmap—fork, extend, and tune it to how *you* run quality.
-
----
-
-<div align="center">
-
-[![Visits](https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=https%3A%2F%2Fgithub.com%2FElaMCB%2FHyper-Agent&title=Visits&count_bg=0c0e11&title_bg=d4af37&icon=github&icon_color=e8eaed&edge_flat=false)](https://github.com/ElaMCB/Hyper-Agent/graphs/traffic)
-
-*Approximate **Visits** to this README (bots, previews, caches). The [GitHub Pages](https://ElaMCB.github.io/Hyper-Agent/) footer has a separate **Site views** counter. Repo owners: [Insights → Traffic](https://github.com/ElaMCB/Hyper-Agent/graphs/traffic).*
-
-</div>
