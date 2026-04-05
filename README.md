@@ -10,7 +10,7 @@
 
 [![README views](https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=https%3A%2F%2Fgithub.com%2FElaMCB%2FHyper-Agent&title=README+views&count_bg=0c0e11&title_bg=d4af37&icon=github&icon_color=e8eaed&edge_flat=false)](https://github.com/ElaMCB/Hyper-Agent/graphs/traffic)
 
-*Badge counts approximate loads of this README (including bots and previews). As the repo owner, use **GitHub → Insights → Traffic** for [clones and visitors](https://github.com/ElaMCB/Hyper-Agent/graphs/traffic) to the repository; the [GitHub Pages](https://ElaMCB.github.io/Hyper-Agent/) site is tracked separately unless you add analytics there.*
+* **README** (above): approximate loads of this README on GitHub. **Site:** a **Site views** badge lives in the [GitHub Pages](https://ElaMCB.github.io/Hyper-Agent/) footer (separate counter). Both are rough (bots, previews, caches). Repo owners: richer data in **GitHub → Insights → Traffic** → [clones & visitors](https://github.com/ElaMCB/Hyper-Agent/graphs/traffic).*
 
 </div>
 
@@ -123,6 +123,16 @@ Then open **http://localhost:8000/brief.md** for the brief, **http://localhost:8
 **Data:** `defects.json` and `test_runs.json` in `data/` (samples included). Optional: `llm.enabled` + `OPENAI_API_KEY` in `.env` for LLM-polished briefs.
 
 **Azure DevOps & Outlook:** [docs/INTEGRATION-ADO-OUTLOOK.md](docs/INTEGRATION-ADO-OUTLOOK.md) — live Bugs in the brief; Outlook via Graph or Power Automate.
+
+### Where is Headquarters?
+
+Headquarters is the **HTML dashboard** (not deployed to Pages by default):
+
+| Where | What to do |
+|--------|------------|
+| **This machine** | Run `python src/main.py headquarters`, then open **`output/headquarters/latest.html`** in a browser (the CLI prints the path). |
+| **API** | With the API running, open **`/headquarters.html`** (e.g. `http://localhost:8000/headquarters.html`). |
+| **GitHub Actions** | **Actions** → workflow **Nightly Headquarters** → latest run → **Artifacts** → download **`headquarters-…`** → open **`latest.html`** inside the zip. |
 
 ---
 

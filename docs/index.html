@@ -563,6 +563,25 @@
     }
     .site-footer__bottom a { color: var(--accent); }
     .site-footer__bottom a:hover { text-decoration: underline; }
+    .site-footer__stats {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: center;
+      gap: 0.65rem 1rem;
+      margin-bottom: 0.75rem;
+    }
+    .site-footer__stats a { line-height: 0; }
+    .site-footer__stats img { height: 22px; width: auto; vertical-align: middle; }
+    .site-footer__stats-note {
+      width: 100%;
+      max-width: 36rem;
+      margin: 0 auto;
+      font-size: 0.72rem;
+      color: var(--muted);
+      line-height: 1.45;
+    }
+    .site-footer__stats-note a { color: var(--accent); }
     .badge {
       display: inline-block;
       margin-top: 0.35rem;
@@ -801,7 +820,20 @@ python src/main.py brief</code></pre>
         </div>
       </div>
       <div class="site-footer__bottom">
-        <a href="https://github.com/ElaMCB/Hyper-Agent">Hyper-Agent</a> · Shadow — built for Test Managers
+        <div class="site-footer__stats">
+          <a href="https://github.com/ElaMCB/Hyper-Agent/graphs/traffic" target="_blank" rel="noopener noreferrer" title="GitHub Traffic (repo owners)">
+            <img src="https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=https%3A%2F%2Felamcb.github.io%2FHyper-Agent%2F&amp;title=Site+views&amp;count_bg=0c0e11&amp;title_bg=d4af37&amp;icon=&amp;icon_color=e8eaed&amp;edge_flat=false" width="120" height="22" alt="Approximate Site views (this page)" decoding="async" />
+          </a>
+        </div>
+        <p class="site-footer__stats-note">
+          <strong style="color:var(--text);">Tracking:</strong> this badge counts loads of <strong style="color:var(--text);">this site</strong> (approximate; includes bots). The <a href="https://github.com/ElaMCB/Hyper-Agent?tab=readme-ov-file#readme" target="_blank" rel="noopener noreferrer">GitHub README</a> has a separate counter for README views. For clone and visitor graphs (repo owners), use <a href="https://github.com/ElaMCB/Hyper-Agent/graphs/traffic" target="_blank" rel="noopener noreferrer">Insights → Traffic</a>.
+        </p>
+        <p style="margin:1rem 0 0;font-size:0.78rem;color:var(--muted);">
+          <strong style="color:var(--text);">Headquarters</strong> (daily dashboard) is not hosted here — run <code style="color:#c5cad3;">python src/main.py headquarters</code> locally and open <code style="color:#c5cad3;">output/headquarters/latest.html</code>, use <code style="color:#c5cad3;">/headquarters.html</code> on your API, or download the artifact from <a href="https://github.com/ElaMCB/Hyper-Agent/actions/workflows/nightly-headquarters.yml" target="_blank" rel="noopener noreferrer">Actions → Nightly Headquarters</a>.
+        </p>
+        <p style="margin:0.85rem 0 0;">
+          <a href="https://github.com/ElaMCB/Hyper-Agent">Hyper-Agent</a> · Shadow — built for Test Managers
+        </p>
       </div>
     </footer>
   </main>
