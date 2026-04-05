@@ -13,7 +13,12 @@ import yaml
 from src.shadow.capabilities.brief import render_brief
 from src.shadow.capabilities.headquarters import render_headquarters_html
 from src.shadow.capabilities.prep import run_prep
-from src.shadow.output.writer import write_brief_artifact, write_headquarters_artifacts
+from src.shadow.output.writer import (
+    prune_headquarters_archives,
+    write_brief_artifact,
+    write_headquarters_artifacts,
+    write_headquarters_latest_md,
+)
 from src.shadow.snapshot import build_snapshot
 
 
@@ -56,9 +61,19 @@ def cmd_headquarters(config: dict) -> None:
     stamped, latest = write_headquarters_artifacts(
         _ROOT, page, snap.as_of, hq_dir, write_latest=write_latest
     )
+    md_path = write_headquarters_latest_md(_ROOT, md, hq_dir)
     print(f"Headquarters: {stamped}", file=sys.stderr, flush=True)
+    print(f"Brief mirror: {md_path}", file=sys.stderr, flush=True)
     if latest:
         print(f"Open: {latest}", file=sys.stderr, flush=True)
+
+    ret_cfg = hq_cfg.get("retention") or {}
+    if not isinstance(ret_cfg, dict):
+        ret_cfg = {}
+    max_arch = int(ret_cfg.get("max_archived_html", 0))
+    removed = prune_headquarters_archives(_ROOT, hq_dir, max_arch)
+    if removed:
+        print(f"Pruned {removed} old headquarters-*.html (keeping {max_arch} newest)", file=sys.stderr, flush=True)
 
 
 def main() -> None:
@@ -66,7 +81,7 @@ def main() -> None:
     if len(sys.argv) < 2:
         print("Usage: python src/main.py <command>")
         print("  brief        Morning brief (snapshot → markdown; saves under output/briefs by default)")
-        print("  headquarters Same snapshot + HTML dashboard (brief + tables; saves latest.html)")
+        print("  headquarters Same snapshot + HQ HTML + latest.md; prunes old HQ archives if configured")
         print("  prep         Meeting prep (stub)")
         sys.exit(0)
 

@@ -98,7 +98,7 @@ Builds a **Snapshot** (UTC time + sources + defects + test runs), renders the br
 ```bash
 python src/main.py headquarters
 ```
-Same snapshot and brief as above, plus a **single HTML dashboard** at `output/headquarters/latest.html` (and a timestamped copy beside it): at-a-glance bullets, defect and test-run tables, sources, optional **quick links** in `config/config.yaml` under `headquarters.links`, and the full brief in a collapsible section. Schedule it nightly (Windows Task Scheduler, `cron`, or the repo workflow **Nightly Headquarters** under `.github/workflows/`) so the file is waiting when you start work. CI uploads `output/headquarters/` as a workflow artifact (add repository secret `AZDO_PAT` if you use Azure DevOps).
+Same snapshot and brief as above, plus a **single HTML dashboard** at `output/headquarters/latest.html` (overwritten each run) and the **same brief text** at `output/headquarters/latest.md`. Each run also adds a timestamped `headquarters-…Z.html` archive; **`headquarters.retention.max_archived_html`** (default 30 in sample config) drops older archives so the folder stays bounded—set to **0** to keep everything. Timestamped markdown briefs still land under `output/briefs/`. At-a-glance bullets, tables, sources, optional **quick links** in `headquarters.links`, collapsible full brief. Schedule nightly (Task Scheduler, `cron`, or **Nightly Headquarters** in `.github/workflows/`). CI uploads `output/headquarters/` as an artifact (secret **`AZDO_PAT`** if you use ADO).
 
 **API (deploy or run locally):**
 ```bash
@@ -111,7 +111,7 @@ Then open **http://localhost:8000/brief.md** for the brief, **http://localhost:8
 | `GET /` | Service info |
 | `GET /brief` | Brief as JSON |
 | `GET /brief.md` | Brief as markdown |
-| `GET /headquarters.html` | Headquarters dashboard (HTML); `?persist=1` writes `output/headquarters/` if the server can write the repo |
+| `GET /headquarters.html` | Headquarters dashboard (HTML); `?persist=1` writes `output/headquarters/` (`latest.html`, `latest.md`, archives, prune) if the server can write the repo |
 | `GET /health` | Health check |
 
 **Deploy:** [docs/DEPLOY.md](docs/DEPLOY.md) — Railway, Render, Azure, or Docker.

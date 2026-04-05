@@ -15,7 +15,12 @@ from fastapi.responses import HTMLResponse, PlainTextResponse
 
 from src.shadow.capabilities.brief import render_brief
 from src.shadow.capabilities.headquarters import render_headquarters_html
-from src.shadow.output.writer import write_brief_artifact, write_headquarters_artifacts
+from src.shadow.output.writer import (
+    prune_headquarters_archives,
+    write_brief_artifact,
+    write_headquarters_artifacts,
+    write_headquarters_latest_md,
+)
 from src.shadow.snapshot import build_snapshot
 
 app = FastAPI(
@@ -86,6 +91,12 @@ def _headquarters_html(config: dict, *, persist: bool = False) -> str:
         hq_dir = hq_cfg.get("dir", "output/headquarters")
         write_latest = bool(hq_cfg.get("write_latest", True))
         write_headquarters_artifacts(_ROOT, html_page, snap.as_of, hq_dir, write_latest=write_latest)
+        write_headquarters_latest_md(_ROOT, md, hq_dir)
+        ret_cfg = hq_cfg.get("retention") or {}
+        if not isinstance(ret_cfg, dict):
+            ret_cfg = {}
+        max_arch = int(ret_cfg.get("max_archived_html", 0))
+        prune_headquarters_archives(_ROOT, hq_dir, max_arch)
     return html_page
 
 

@@ -36,6 +36,10 @@ headquarters:
   dir: output/headquarters
   write_latest: true
   title: "Shadow — Headquarters"
+  # Same run also writes latest.md (brief text next to latest.html). Timestamped briefs still go to output.briefs_dir.
+  retention:
+    # Keep the N newest headquarters-*.html archives; 0 = never delete old archives
+    max_archived_html: 30
   # Optional shortcuts (ADO, dashboards, wiki) — same snapshot, fewer tabs to open
   links: []
   # links:

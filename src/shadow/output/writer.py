@@ -4,6 +4,34 @@ from datetime import datetime
 from pathlib import Path
 
 
+def write_headquarters_latest_md(root: Path, markdown: str, hq_dir: str) -> Path:
+    """
+    Mirror the run's morning brief next to HQ HTML: `output/headquarters/latest.md` (overwritten each run).
+    """
+    out_dir = root / hq_dir
+    out_dir.mkdir(parents=True, exist_ok=True)
+    path = out_dir / "latest.md"
+    path.write_text(markdown, encoding="utf-8")
+    return path
+
+
+def prune_headquarters_archives(root: Path, hq_dir: str, max_keep: int) -> int:
+    """
+    Delete oldest `headquarters-*.html` files in hq_dir, keeping the `max_keep` newest by filename.
+    Does not touch `latest.html` or `latest.md`. Returns number of files removed.
+    """
+    if max_keep <= 0:
+        return 0
+    d = root / hq_dir
+    if not d.is_dir():
+        return 0
+    archived = sorted(d.glob("headquarters-*.html"), key=lambda p: p.name, reverse=True)
+    to_remove = archived[max_keep:]
+    for p in to_remove:
+        p.unlink(missing_ok=True)
+    return len(to_remove)
+
+
 def write_headquarters_artifacts(
     root: Path,
     html: str,
