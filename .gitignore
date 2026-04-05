@@ -8,3 +8,4 @@ __pycache__/
 
 # Generated brief snapshots (optional: remove this line to track in git)
 output/briefs/
+output/headquarters/

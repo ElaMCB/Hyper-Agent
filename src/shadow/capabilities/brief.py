@@ -26,6 +26,17 @@ def _provenance_footer(snapshot: Snapshot) -> str:
     return f"\n\n*As of {as_of} (UTC) · Sources: {src}*"
 
 
+def get_brief_bullets_and_focus(
+    snapshot: Snapshot,
+    config: dict,
+    *,
+    max_bullets: int | None = None,
+) -> tuple[list[str], str]:
+    """Public summary used by brief and headquarters (same numbers, same focus line)."""
+    mb = max_bullets if max_bullets is not None else int(config.get("brief", {}).get("max_bullets", 5))
+    return _build_summary(snapshot, mb)
+
+
 def _build_summary(snapshot: Snapshot, max_bullets: int) -> tuple[list[str], str]:
     defects = snapshot.defects
     test_runs = snapshot.test_runs
@@ -71,7 +82,7 @@ def render_brief(
     """
     mb = max_bullets if max_bullets is not None else int(config.get("brief", {}).get("max_bullets", 5))
 
-    bullets, suggested = _build_summary(snapshot, mb)
+    bullets, suggested = get_brief_bullets_and_focus(snapshot, config, max_bullets=mb)
     md = format_brief_md(bullets, suggested)
 
     if use_llm and bullets:

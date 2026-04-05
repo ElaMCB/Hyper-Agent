@@ -1,0 +1,33 @@
+# Nightly Shadow "Headquarters" — download the artifact or open latest.html from a synced clone.
+name: Nightly Headquarters
+
+on:
+  schedule:
+    # 05:15 UTC daily (~ evening US / morning APAC); change to suit your timezone
+    - cron: "15 5 * * *"
+  workflow_dispatch:
+
+jobs:
+  headquarters:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Build snapshot + HTML
+        env:
+          AZDO_PAT: ${{ secrets.AZDO_PAT }}
+        run: python src/main.py headquarters
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: headquarters-${{ github.run_id }}
+          path: output/headquarters/
+          if-no-files-found: warn

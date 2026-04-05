@@ -94,17 +94,24 @@ python src/main.py brief
 ```
 Builds a **Snapshot** (UTC time + sources + defects + test runs), renders the brief, and by default **saves** `output/briefs/brief-YYYY-MM-DDTHHMMSSZ.md` for an audit trail. Toggle in `config/config.yaml` under `output`.
 
+**CLI (daily Headquarters page):**
+```bash
+python src/main.py headquarters
+```
+Same snapshot and brief as above, plus a **single HTML dashboard** at `output/headquarters/latest.html` (and a timestamped copy beside it): at-a-glance bullets, defect and test-run tables, sources, optional **quick links** in `config/config.yaml` under `headquarters.links`, and the full brief in a collapsible section. Schedule it nightly (Windows Task Scheduler, `cron`, or the repo workflow **Nightly Headquarters** under `.github/workflows/`) so the file is waiting when you start work. CI uploads `output/headquarters/` as a workflow artifact (add repository secret `AZDO_PAT` if you use Azure DevOps).
+
 **API (deploy or run locally):**
 ```bash
 uvicorn src.api:app --reload --host 0.0.0.0 --port 8000
 ```
-Then open **http://localhost:8000/brief.md** for the brief, **http://localhost:8000/docs** for the API docs.
+Then open **http://localhost:8000/brief.md** for the brief, **http://localhost:8000/headquarters.html** for the dashboard, **http://localhost:8000/docs** for the API docs.
 
 | Endpoint | Description |
 |----------|-------------|
 | `GET /` | Service info |
 | `GET /brief` | Brief as JSON |
 | `GET /brief.md` | Brief as markdown |
+| `GET /headquarters.html` | Headquarters dashboard (HTML); `?persist=1` writes `output/headquarters/` if the server can write the repo |
 | `GET /health` | Health check |
 
 **Deploy:** [docs/DEPLOY.md](docs/DEPLOY.md) — Railway, Render, Azure, or Docker.

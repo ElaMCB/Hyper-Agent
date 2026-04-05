@@ -11,10 +11,11 @@ if str(_ROOT) not in sys.path:
 
 import yaml
 from fastapi import FastAPI
-from fastapi.responses import PlainTextResponse
+from fastapi.responses import HTMLResponse, PlainTextResponse
 
 from src.shadow.capabilities.brief import render_brief
-from src.shadow.output.writer import write_brief_artifact
+from src.shadow.capabilities.headquarters import render_headquarters_html
+from src.shadow.output.writer import write_brief_artifact, write_headquarters_artifacts
 from src.shadow.snapshot import build_snapshot
 
 app = FastAPI(
@@ -39,6 +40,7 @@ def root():
         "endpoints": {
             "brief": "/brief",
             "brief_md": "/brief.md",
+            "headquarters": "/headquarters.html",
             "health": "/health",
         },
     }
@@ -72,3 +74,23 @@ def get_brief(persist: bool = False):
 def get_brief_raw(persist: bool = False):
     config = _load_config()
     return _brief_markdown(config, persist=persist)
+
+
+def _headquarters_html(config: dict, *, persist: bool = False) -> str:
+    snap = build_snapshot(_ROOT, config)
+    llm_on = bool(config.get("llm", {}).get("enabled"))
+    md = render_brief(snap, _ROOT, config, use_llm=llm_on)
+    html_page = render_headquarters_html(snap, config, full_brief_markdown=md)
+    if persist:
+        hq_cfg = config.get("headquarters", {}) or {}
+        hq_dir = hq_cfg.get("dir", "output/headquarters")
+        write_latest = bool(hq_cfg.get("write_latest", True))
+        write_headquarters_artifacts(_ROOT, html_page, snap.as_of, hq_dir, write_latest=write_latest)
+    return html_page
+
+
+@app.get("/headquarters.html", response_class=HTMLResponse)
+def get_headquarters(persist: bool = False):
+    """Single-page dashboard (same data as brief). ?persist=1 writes output/headquarters/ on the server."""
+    config = _load_config()
+    return _headquarters_html(config, persist=persist)

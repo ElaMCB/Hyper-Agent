@@ -30,3 +30,16 @@ output:
   briefs_dir: output/briefs
   save_on_cli: true
   save_on_api: false
+
+# Daily "Headquarters" HTML: open output/headquarters/latest.html each morning
+headquarters:
+  dir: output/headquarters
+  write_latest: true
+  title: "Shadow — Headquarters"
+  # Optional shortcuts (ADO, dashboards, wiki) — same snapshot, fewer tabs to open
+  links: []
+  # links:
+  #   - label: "Azure DevOps"
+  #     url: "https://dev.azure.com/your-org/your-project"
+  #   - label: "Test results dashboard"
+  #     url: "https://..."
