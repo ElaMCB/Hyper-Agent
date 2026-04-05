@@ -4,7 +4,7 @@
 
 *Your AI test architect*
 
-**Context keeper · Evidence gatherer · Draft producer**
+**Context keeper · Evidence gatherer · Clarity layer**
 
 </div>
 
@@ -17,7 +17,7 @@ Test leadership is **decision-making under load**: Azure DevOps, Outlook, chat, 
 **Shadow** is an **intelligence layer** on top of that stack—not a replacement for ADO or your rituals, but a system that:
 
 1. **Ingests** what already exists (work items, runs, exports; calendar and mail when you wire them).
-2. **Compresses** it into **briefs, prep, and drafts** with clear provenance—so you know what it saw and when.
+2. **Compresses** it into **briefs, prep, and stakeholder-ready framing** with clear provenance—so you know what it saw and when.
 3. **Returns time** for what only you can do: coaching QA, aligning with delivery, owning risk, and signing your name to outcomes.
 
 **Hyper-Agent** is the project that builds **Shadow**. Shadow is the name of the agent you run, deploy, and eventually talk to every day.
@@ -29,7 +29,7 @@ Test leadership is **decision-making under load**: Azure DevOps, Outlook, chat, 
 | **Rhythm** | A repeatable morning brief (and later, pre-meeting prep) builds *situational awareness* without relying on willpower. |
 | **Evidence** | Escalations, steering bullets, and readiness views start from **structured facts**, not what you remembered in the car. |
 | **Composable** | Same codebase: files today, **live ADO bugs** now, Outlook/Graph and test runs next—each integration makes the next cheaper. |
-| **Human-in-the-loop** | Shadow **proposes** and **drafts**; you **decide**. No black-box “the AI said ship it.” |
+| **Human-in-the-loop** | Shadow **frames** and **suggests**; you **edit and decide**. No black-box “the AI said ship it.” |
 
 > Shadow shadows *you*: QA team oversight, delivery collaboration, daily orchestration. It keeps the picture sharp and the paperwork light so your judgment lands with weight.
 
