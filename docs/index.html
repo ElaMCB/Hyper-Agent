@@ -446,6 +446,47 @@
     }
     @media (min-width: 520px) { .cap-grid { grid-template-columns: repeat(2, 1fr); } }
     @media (min-width: 900px) { .cap-grid { grid-template-columns: repeat(3, 1fr); } }
+
+    .hq-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 1.1rem;
+    }
+    @media (min-width: 720px) {
+      .hq-grid { grid-template-columns: repeat(3, 1fr); gap: 1.15rem; align-items: stretch; }
+    }
+    .hq-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 1.2rem 1.25rem;
+      display: flex;
+      flex-direction: column;
+      min-height: 100%;
+    }
+    .hq-card h3 {
+      font-family: "Fraunces", Georgia, serif;
+      font-size: 1.05rem;
+      font-weight: 600;
+      margin: 0 0 0.5rem;
+      letter-spacing: -0.02em;
+    }
+    .hq-card p {
+      margin: 0;
+      font-size: 0.88rem;
+      color: var(--muted);
+      line-height: 1.55;
+      flex: 1;
+    }
+    .hq-card code {
+      font-size: 0.8em;
+      color: #c5cad3;
+    }
+    .hq-card .hq-actions {
+      margin-top: 1rem;
+      padding-top: 0.85rem;
+      border-top: 1px solid var(--border);
+    }
     .cap-tile {
       background: var(--surface);
       border: 1px solid var(--border);
@@ -588,6 +629,7 @@
         <a href="#product">Product</a>
         <a href="#capabilities">Capabilities</a>
         <a href="#docs">Docs</a>
+        <a href="#headquarters">Headquarters</a>
         <a class="nav-gh" href="https://github.com/ElaMCB/Hyper-Agent">GitHub</a>
       </nav>
     </div>
@@ -610,6 +652,7 @@
         <a class="btn btn-primary" href="https://github.com/ElaMCB/Hyper-Agent">Repository</a>
         <a class="btn btn-ghost" href="https://github.com/ElaMCB/Hyper-Agent/blob/main/README.md">Full README</a>
         <a class="btn btn-muted" href="#sample-brief">Sample brief</a>
+        <a class="btn btn-muted" href="#headquarters">Nightly Headquarters</a>
       </div>
     </div>
   </header>
@@ -761,6 +804,46 @@
       </div>
     </section>
 
+    <section class="page-section page-section--band" id="headquarters" aria-labelledby="hq-heading">
+      <div class="shell">
+        <header class="page-section__intro">
+          <p class="kicker">Nightly run · Morning-ready</p>
+          <h2 id="hq-heading">Nightly Headquarters</h2>
+          <p class="lede">
+            Your <strong style="color:var(--text);">daily command center</strong>: one HTML page with the same snapshot as the morning brief—defects, test runs, sources, suggested focus, and optional quick links to ADO or dashboards. Run it on your machine before standup, hit the API from a deployed service, or let <strong style="color:var(--text);">GitHub Actions</strong> build it every night so you open a fresh artifact in the morning.
+          </p>
+        </header>
+        <div class="hq-grid" aria-label="Ways to run Headquarters">
+          <div class="hq-card">
+            <h3>This machine</h3>
+            <p>From the repo root, generate <code>output/headquarters/latest.html</code> plus a timestamped copy and the markdown brief under <code>output/briefs/</code>.</p>
+            <div class="hq-actions">
+              <pre style="margin:0;font-size:0.78rem;line-height:1.45;color:#c5cad3;white-space:pre-wrap;word-break:break-word;"><code>pip install -r requirements.txt
+python src/main.py headquarters</code></pre>
+            </div>
+          </div>
+          <div class="hq-card">
+            <h3>REST API</h3>
+            <p>Same dashboard over HTTP—useful when Shadow runs on a small host or your network. Optional <code>?persist=1</code> writes files if the process can reach the repo path.</p>
+            <div class="hq-actions">
+              <pre style="margin:0;font-size:0.78rem;line-height:1.45;color:#c5cad3;white-space:pre-wrap;"><code>uvicorn src.api:app --reload
+→ GET /headquarters.html</code></pre>
+            </div>
+          </div>
+          <div class="hq-card">
+            <h3>GitHub Actions</h3>
+            <p>Workflow <strong style="color:var(--text);">Nightly Headquarters</strong> runs on a schedule (and manually). Download the latest artifact and open <code>latest.html</code> inside—no local Python required.</p>
+            <div class="hq-actions">
+              <a class="btn btn-primary" style="width:100%;" href="https://github.com/ElaMCB/Hyper-Agent/actions/workflows/nightly-headquarters.yml" target="_blank" rel="noopener noreferrer">Open workflow runs</a>
+            </div>
+          </div>
+        </div>
+        <p style="margin:1.5rem 0 0;font-size:0.88rem;color:var(--muted);max-width:38rem;">
+          Configure quick links and title under <code style="color:#c5cad3;">headquarters</code> in <code style="color:#c5cad3;">config/config.yaml</code>. Add repository secret <code style="color:#c5cad3;">AZDO_PAT</code> for live Azure DevOps bugs in the snapshot.
+        </p>
+      </div>
+    </section>
+
     <section class="cta-strip" id="get-started" aria-labelledby="cta-heading">
       <div class="cta-strip__inner">
         <h2 id="cta-heading">Run your first brief</h2>
@@ -781,6 +864,7 @@ python src/main.py brief</code></pre>
             <li><a href="#product">Product</a></li>
             <li><a href="#capabilities">Capabilities</a></li>
             <li><a href="#docs">Documentation</a></li>
+            <li><a href="#headquarters">Nightly Headquarters</a></li>
             <li><a href="#get-started">Get started</a></li>
           </ul>
         </div>
@@ -801,10 +885,10 @@ python src/main.py brief</code></pre>
         </div>
       </div>
       <div class="site-footer__bottom">
-        <p style="margin:0 0 1rem;font-size:0.78rem;color:var(--muted);">
-          <strong style="color:var(--text);">Headquarters</strong> (daily dashboard) is not hosted here — run <code style="color:#c5cad3;">python src/main.py headquarters</code> locally and open <code style="color:#c5cad3;">output/headquarters/latest.html</code>, use <code style="color:#c5cad3;">/headquarters.html</code> on your API, or download the artifact from <a href="https://github.com/ElaMCB/Hyper-Agent/actions/workflows/nightly-headquarters.yml" target="_blank" rel="noopener noreferrer">Actions → Nightly Headquarters</a>.
+        <p style="margin:0 0 0.65rem;">
+          <a href="https://github.com/ElaMCB/Hyper-Agent/graphs/traffic" target="_blank" rel="noopener noreferrer">Traffic</a>
         </p>
-        <p style="margin:0.85rem 0 0;">
+        <p style="margin:0;">
           <a href="https://github.com/ElaMCB/Hyper-Agent">Hyper-Agent</a> · Shadow — built for Test Managers
         </p>
       </div>
