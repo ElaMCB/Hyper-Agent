@@ -7,14 +7,21 @@
   <title>Shadow — Headquarters (sample)</title>
   <style>
     :root {
-      --bg: #0c0e11;
-      --panel: #12151c;
+      --bg: #0a0c0f;
+      --panel: #11141a;
+      --panel2: #0e1117;
       --border: #2a313c;
       --text: #e8eaed;
       --muted: #8b929b;
       --accent: #d4af37;
-      --warn-bg: rgba(180, 83, 9, 0.12);
-      --warn-border: rgba(212, 175, 55, 0.35);
+      --ok: #4ade80;
+      --ok-dim: rgba(34, 197, 94, 0.14);
+      --watch: #fbbf24;
+      --watch-dim: rgba(234, 179, 8, 0.12);
+      --risk: #f87171;
+      --risk-dim: rgba(239, 68, 68, 0.12);
+      --prog: #93c5fd;
+      --prog-dim: rgba(59, 130, 246, 0.12);
     }
     * { box-sizing: border-box; }
     body {
@@ -22,14 +29,14 @@
       font-family: "Segoe UI", system-ui, sans-serif;
       background: var(--bg);
       color: var(--text);
-      line-height: 1.5;
-      padding: 0 0 3rem;
+      line-height: 1.45;
+      padding: 0 0 2.5rem;
     }
     .sample-banner {
-      background: linear-gradient(90deg, rgba(212, 175, 55, 0.15), rgba(212, 175, 55, 0.06));
-      border-bottom: 1px solid var(--warn-border);
-      padding: 0.65rem clamp(1rem, 4vw, 2.5rem);
-      font-size: 0.82rem;
+      background: linear-gradient(90deg, rgba(212, 175, 55, 0.14), rgba(212, 175, 55, 0.05));
+      border-bottom: 1px solid rgba(212, 175, 55, 0.28);
+      padding: 0.55rem clamp(1rem, 4vw, 2.5rem);
+      font-size: 0.8rem;
       color: var(--muted);
       text-align: center;
     }
@@ -37,149 +44,422 @@
     .sample-banner a { color: var(--accent); font-weight: 600; text-decoration: none; }
     .sample-banner a:hover { text-decoration: underline; }
     .wrap {
-      padding: 1.5rem clamp(1rem, 4vw, 2.5rem) 0;
+      padding: 1.25rem clamp(1rem, 3vw, 2rem) 0;
+      max-width: 82rem;
+      margin: 0 auto;
     }
-    header {
-      max-width: 56rem;
-      margin: 0 auto 1.5rem;
+    .masthead {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: flex-end;
+      justify-content: space-between;
+      gap: 1rem;
+      margin-bottom: 1.35rem;
+      padding-bottom: 1.1rem;
       border-bottom: 1px solid var(--border);
-      padding-bottom: 1rem;
     }
-    h1 {
-      font-size: clamp(1.35rem, 3vw, 1.75rem);
+    .masthead h1 {
+      font-size: clamp(1.5rem, 2.8vw, 2rem);
       font-weight: 700;
-      margin: 0 0 0.35rem;
-      letter-spacing: -0.02em;
+      margin: 0;
+      letter-spacing: -0.03em;
+      line-height: 1.15;
     }
-    .stamp { color: var(--muted); font-size: 0.9rem; }
-    main { max-width: 56rem; margin: 0 auto; display: flex; flex-direction: column; gap: 1.25rem; }
+    .masthead .sub {
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin: 0 0 0.35rem;
+    }
+    .masthead-meta {
+      text-align: right;
+      font-size: 0.82rem;
+      color: var(--muted);
+    }
+    .masthead-meta strong { color: var(--text); }
+    .kpi-row {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(11rem, 1fr));
+      gap: 0.75rem;
+      margin-bottom: 1.35rem;
+    }
+    .kpi {
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 0.85rem 1rem;
+      position: relative;
+      overflow: hidden;
+    }
+    .kpi::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: 0;
+      bottom: 0;
+      width: 3px;
+      background: var(--accent);
+      opacity: 0.7;
+    }
+    .kpi.kpi--risk::before { background: var(--risk); }
+    .kpi.kpi--ok::before { background: var(--ok); }
+    .kpi-label {
+      font-size: 0.68rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 0.35rem;
+    }
+    .kpi-value { font-size: 1.45rem; font-weight: 700; letter-spacing: -0.02em; }
+    .kpi-hint { font-size: 0.75rem; color: var(--muted); margin-top: 0.25rem; }
+    section.block {
+      margin-bottom: 1.35rem;
+    }
+    .block-head {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 0.5rem;
+      margin-bottom: 0.65rem;
+    }
+    .block-head h2 {
+      margin: 0;
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--accent);
+    }
+    .block-head span { font-size: 0.78rem; color: var(--muted); }
     .panel {
       background: var(--panel);
       border: 1px solid var(--border);
       border-radius: 10px;
-      padding: 1rem 1.15rem;
+      overflow: hidden;
     }
-    .panel h2 {
-      margin: 0 0 0.65rem;
-      font-size: 0.78rem;
-      font-weight: 600;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      color: var(--accent);
-    }
-    .warn-panel { border-color: var(--warn-border); background: var(--warn-bg); }
-    ul { margin: 0; padding-left: 1.2rem; }
-    li { margin: 0.35rem 0; }
-    li.warn { color: #fbbf24; }
-    .focus {
-      font-size: 1.05rem;
-      border-left: 3px solid var(--accent);
-      padding-left: 0.85rem;
-      margin: 0;
-    }
-    table {
+    .scroll { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+    table.data {
       width: 100%;
       border-collapse: collapse;
+      font-size: 0.8rem;
+    }
+    .data th {
+      text-align: left;
+      padding: 0.55rem 0.75rem;
+      background: var(--panel2);
+      color: var(--muted);
+      font-weight: 600;
+      font-size: 0.68rem;
+      text-transform: uppercase;
+      letter-spacing: 0.07em;
+      border-bottom: 1px solid var(--border);
+      white-space: nowrap;
+    }
+    .data td {
+      padding: 0.65rem 0.75rem;
+      border-bottom: 1px solid var(--border);
+      vertical-align: top;
+    }
+    .data tr:last-child td { border-bottom: none; }
+    .data .mono { font-family: ui-monospace, monospace; font-size: 0.78em; color: #c5cad3; }
+    .st {
+      display: inline-flex;
+      align-items: center;
+      padding: 0.2rem 0.5rem;
+      border-radius: 4px;
+      font-size: 0.65rem;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      white-space: nowrap;
+    }
+    .st-ok { background: var(--ok-dim); color: var(--ok); border: 1px solid rgba(34, 197, 94, 0.35); }
+    .st-watch { background: var(--watch-dim); color: var(--watch); border: 1px solid rgba(234, 179, 8, 0.35); }
+    .st-risk { background: var(--risk-dim); color: var(--risk); border: 1px solid rgba(239, 68, 68, 0.35); }
+    .st-prog { background: var(--prog-dim); color: var(--prog); border: 1px solid rgba(59, 130, 246, 0.35); }
+    .st-done { background: rgba(148, 163, 184, 0.1); color: #94a3b8; border: 1px solid var(--border); }
+    .trend { font-size: 0.72rem; font-weight: 600; }
+    .trend-up { color: var(--ok); }
+    .trend-down { color: var(--risk); }
+    .trend-flat { color: var(--muted); }
+    .grid-2 {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 1rem;
+    }
+    @media (min-width: 960px) {
+      .grid-2 { grid-template-columns: 1fr 1fr; }
+    }
+    .mini-list { margin: 0; padding: 0; list-style: none; }
+    .mini-list li {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.5rem;
+      padding: 0.5rem 0.75rem;
+      border-bottom: 1px solid var(--border);
       font-size: 0.82rem;
     }
-    th, td { text-align: left; padding: 0.45rem 0.5rem; border-bottom: 1px solid var(--border); vertical-align: top; }
-    th { color: var(--muted); font-weight: 600; font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.06em; }
-    code { font-size: 0.85em; color: #c5cad3; }
-    .muted { color: var(--muted); }
-    .small { font-size: 0.8rem; margin: 0.5rem 0 0; }
-    .links { list-style: none; padding-left: 0; display: flex; flex-wrap: wrap; gap: 0.5rem 1.25rem; }
-    .links a { color: var(--accent); text-decoration: none; font-weight: 600; }
-    .links a:hover { text-decoration: underline; }
-    details {
+    .mini-list li:last-child { border-bottom: none; }
+    .bar {
+      height: 6px;
+      border-radius: 3px;
+      background: var(--border);
+      margin-top: 0.35rem;
+      overflow: hidden;
+    }
+    .bar > i { display: block; height: 100%; border-radius: 3px; background: var(--accent); }
+    .bar > i.low { background: var(--risk); }
+    .bar > i.mid { background: var(--watch); }
+    details.raw {
       background: var(--panel);
       border: 1px solid var(--border);
       border-radius: 10px;
-      padding: 0.75rem 1rem;
+      padding: 0.65rem 1rem;
+      margin-top: 1rem;
     }
-    summary { cursor: pointer; font-weight: 600; color: var(--muted); }
-    pre {
+    details.raw summary { cursor: pointer; font-weight: 600; color: var(--muted); font-size: 0.85rem; }
+    details.raw pre {
       margin: 0.75rem 0 0;
-      overflow: auto;
-      font-size: 0.78rem;
+      font-size: 0.74rem;
       color: var(--muted);
       white-space: pre-wrap;
       word-break: break-word;
     }
+    code { font-size: 0.9em; color: #c5cad3; }
   </style>
 </head>
 <body>
   <div class="sample-banner">
-    <strong>Illustrative sample</strong> — not live data. This mimics <code style="color:#c5cad3;">output/headquarters/latest.html</code> from <code style="color:#c5cad3;">python src/main.py headquarters</code>.
-    · <a href="index.html">Back to Shadow site</a>
+    <strong>Illustrative HQ layout</strong> — mock programs, statuses, and automation health (not live data).
+    · <a href="index.html">Back to site</a>
     · <a href="https://github.com/ElaMCB/Hyper-Agent">Repository</a>
   </div>
   <div class="wrap">
-  <header>
-    <h1>Shadow — Headquarters</h1>
-    <p class="stamp">Snapshot: 2026-04-05 07:30:15 UTC <span class="muted">(mock)</span></p>
-  </header>
-  <main>
-    <section class="panel">
-      <h2>Quick links</h2>
-      <ul class="links">
-        <li><a href="https://dev.azure.com" target="_blank" rel="noopener">Azure DevOps (example)</a></li>
-        <li><a href="https://github.com/ElaMCB/Hyper-Agent" target="_blank" rel="noopener">Hyper-Agent repo</a></li>
-        <li><a href="https://ElaMCB.github.io/Hyper-Agent/" target="_blank" rel="noopener">Shadow site</a></li>
-      </ul>
-    </section>
-    <section class="panel">
-      <h2>At a glance</h2>
-      <ul>
-        <li>Defects: 24 total, 4 critical/high, 18 not closed.</li>
-        <li>Top severity: ado-4412 — Payment API timeout under load (staging)…</li>
-        <li>Latest test run: Nightly regression — Passed. Passed: 312, Failed: 2</li>
-      </ul>
-      <p class="focus"><strong>Suggested focus:</strong> Review the two failing nightly cases with QA; confirm fix target for ado-4412 before delivery sync.</p>
-    </section>
-    <section class="panel warn-panel">
-      <h2>Attention</h2>
-      <ul>
-        <li class="warn">Example only: optional adapter warnings (e.g. rate limits) appear here in a real run.</li>
-      </ul>
-    </section>
-    <section class="panel">
-      <h2>Sources</h2>
-      <ul>
-        <li>Azure DevOps: contoso / Quality (open Bugs)</li>
-        <li>File: defects (defects.json)</li>
-        <li>File: test runs (test_runs.json)</li>
-      </ul>
-    </section>
-    <section class="panel">
-      <h2>Defects in snapshot</h2>
-      <div style="overflow-x:auto">
-        <table>
-          <thead><tr><th>ID</th><th>Title</th><th>Severity</th><th>Status</th></tr></thead>
+    <header class="masthead">
+      <div>
+        <p class="sub">Operations · Portfolio · Sprint</p>
+        <h1>Shadow — Headquarters</h1>
+      </div>
+      <div class="masthead-meta">
+        <div><strong>Snapshot</strong> · 2026-04-05 07:30 UTC</div>
+        <div>Sprint <strong>25.08</strong> · Day 7 of 10 · Horizon: 2 wks</div>
+      </div>
+    </header>
+
+    <div class="kpi-row" aria-label="Key indicators">
+      <div class="kpi kpi--risk">
+        <div class="kpi-label">At risk</div>
+        <div class="kpi-value">2</div>
+        <div class="kpi-hint">programs need exec attention</div>
+      </div>
+      <div class="kpi">
+        <div class="kpi-label">Open P0 / P1</div>
+        <div class="kpi-value">6</div>
+        <div class="kpi-hint">across all streams</div>
+      </div>
+      <div class="kpi kpi--ok">
+        <div class="kpi-label">Automation (7d)</div>
+        <div class="kpi-value">97.1%</div>
+        <div class="kpi-hint">weighted pass rate</div>
+      </div>
+      <div class="kpi">
+        <div class="kpi-label">Coverage gaps</div>
+        <div class="kpi-value">3</div>
+        <div class="kpi-hint">areas without named owner</div>
+      </div>
+    </div>
+
+    <section class="block" aria-labelledby="portfolio-h">
+      <div class="block-head">
+        <h2 id="portfolio-h">Portfolio &amp; status</h2>
+        <span>Programs and work streams — roll-up for standup and steering</span>
+      </div>
+      <div class="panel scroll">
+        <table class="data">
+          <thead>
+            <tr>
+              <th>Program</th>
+              <th>Stream</th>
+              <th>Status</th>
+              <th>Lead</th>
+              <th>This week</th>
+              <th>Blocker / risk</th>
+            </tr>
+          </thead>
           <tbody>
-            <tr><td><code>ado-4412</code></td><td>Payment API timeout under load (staging)</td><td>1 - Critical</td><td>Active</td></tr>
-            <tr><td><code>ado-4398</code></td><td>Checkout: duplicate charge on slow 3G</td><td>2 - High</td><td>Active</td></tr>
-            <tr><td><code>ado-4381</code></td><td>Report export truncates UTF-8 labels</td><td>3 - Medium</td><td>New</td></tr>
-            <tr><td><code>ado-4355</code></td><td>Mobile nav overlaps footer on iOS 18</td><td>3 - Medium</td><td>Resolved</td></tr>
-            <tr><td><code>ado-4320</code></td><td>Load test harness leaks temp files</td><td>4 - Low</td><td>Active</td></tr>
+            <tr>
+              <td><strong>Payments</strong></td>
+              <td>API &amp; checkout</td>
+              <td><span class="st st-watch">Watch</span></td>
+              <td>J. Rivera</td>
+              <td>Staging soak + load re-run</td>
+              <td class="muted">ado-4412 timeout under load — fix target Fri</td>
+            </tr>
+            <tr>
+              <td><strong>Mobile</strong></td>
+              <td>Release 4.2</td>
+              <td><span class="st st-ok">On track</span></td>
+              <td>A. Okonkwo</td>
+              <td>Regression sign-off</td>
+              <td class="muted">—</td>
+            </tr>
+            <tr>
+              <td><strong>Data platform</strong></td>
+              <td>Reporting</td>
+              <td><span class="st st-prog">In progress</span></td>
+              <td>M. Chen</td>
+              <td>UTF-8 export fix in QA</td>
+              <td class="muted">Vendor dependency — waiting CSV patch</td>
+            </tr>
+            <tr>
+              <td><strong>Identity</strong></td>
+              <td>SSO hardening</td>
+              <td><span class="st st-risk">At risk</span></td>
+              <td>S. Patel</td>
+              <td>Pen test findings triage</td>
+              <td class="muted">2 highs unassigned — capacity</td>
+            </tr>
+            <tr>
+              <td><strong>Internal tools</strong></td>
+              <td>Admin console</td>
+              <td><span class="st st-ok">On track</span></td>
+              <td>L. Kim</td>
+              <td>UAT wave 2</td>
+              <td class="muted">—</td>
+            </tr>
           </tbody>
         </table>
       </div>
     </section>
-    <section class="panel">
-      <h2>Test runs</h2>
-      <div style="overflow-x:auto">
-        <table>
-          <thead><tr><th>ID</th><th>Name</th><th>Status</th><th>Counts</th><th>When</th></tr></thead>
+
+    <div class="grid-2">
+      <section class="block" aria-labelledby="sprint-h">
+        <div class="block-head">
+          <h2 id="sprint-h">Sprint execution</h2>
+          <span>Manual focus · people on work</span>
+        </div>
+        <div class="panel">
+          <ul class="mini-list">
+            <li>
+              <span class="st st-prog">Active</span>
+              <span><strong>Exploratory</strong> — Checkout &amp; refunds · <span class="mono">2</span> testers · due sprint end</span>
+            </li>
+            <li>
+              <span class="st st-ok">Done</span>
+              <span><strong>Regression</strong> — Mobile nav iOS 18 · signed off Tue</span>
+            </li>
+            <li>
+              <span class="st st-watch">Behind</span>
+              <span><strong>Accessibility</strong> — Reporting module · owner TBD · <strong class="trend-down">needs assignment</strong></span>
+            </li>
+          </ul>
+          <div style="padding:0.65rem 0.75rem 0.85rem;border-top:1px solid var(--border);font-size:0.78rem;color:var(--muted);">
+            <strong style="color:var(--text);">Capacity signal</strong> — Billing squad at 110% planned QA hours; consider deferring non-critical charters.
+          </div>
+        </div>
+      </section>
+
+      <section class="block" aria-labelledby="auto-h">
+        <div class="block-head">
+          <h2 id="auto-h">Automation health</h2>
+          <span>By team / suite (sample)</span>
+        </div>
+        <div class="panel scroll">
+          <table class="data">
+            <thead>
+              <tr>
+                <th>Team</th>
+                <th>Suite</th>
+                <th>Pass rate</th>
+                <th>Trend</th>
+                <th>Last run</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Payments</td>
+                <td>Nightly regression</td>
+                <td><strong>99.4%</strong><div class="bar"><i style="width:99%"></i></div></td>
+                <td><span class="trend trend-up">▲ stable</span></td>
+                <td class="mono muted">05:12 UTC</td>
+              </tr>
+              <tr>
+                <td>Mobile</td>
+                <td>Smoke staging</td>
+                <td><strong>100%</strong><div class="bar"><i style="width:100%"></i></div></td>
+                <td><span class="trend trend-flat">—</span></td>
+                <td class="mono muted">22:03 UTC</td>
+              </tr>
+              <tr>
+                <td>Platform</td>
+                <td>PR validation</td>
+                <td><strong>91.3%</strong><div class="bar"><i class="mid" style="width:91%"></i></div></td>
+                <td><span class="trend trend-down">▼ 3 fails</span></td>
+                <td class="mono muted">18:41 UTC</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+    </div>
+
+    <section class="block" aria-labelledby="defects-h">
+      <div class="block-head">
+        <h2 id="defects-h">Defect hot list</h2>
+        <span>Feeds from snapshot (same spine as live HQ)</span>
+      </div>
+      <div class="panel scroll">
+        <table class="data">
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Title</th>
+              <th>Severity</th>
+              <th>Status</th>
+            </tr>
+          </thead>
           <tbody>
-            <tr><td><code>run-9821</code></td><td>Nightly regression</td><td>Passed</td><td>P312 / F2 / T314</td><td class="muted">2026-04-05 06:12 UTC</td></tr>
-            <tr><td><code>run-9814</code></td><td>Smoke — staging</td><td>Passed</td><td>P48 / F0 / T48</td><td class="muted">2026-04-04 22:03 UTC</td></tr>
-            <tr><td><code>run-9809</code></td><td>PR validation #1844</td><td>Failed</td><td>P112 / F3 / T115</td><td class="muted">2026-04-04 18:41 UTC</td></tr>
+            <tr>
+              <td class="mono">ado-4412</td>
+              <td>Payment API timeout under load (staging)</td>
+              <td><span class="st st-risk">P0</span></td>
+              <td><span class="st st-prog">Active</span></td>
+            </tr>
+            <tr>
+              <td class="mono">ado-4398</td>
+              <td>Checkout: duplicate charge on slow 3G</td>
+              <td><span class="st st-watch">P1</span></td>
+              <td><span class="st st-prog">Active</span></td>
+            </tr>
+            <tr>
+              <td class="mono">ado-4381</td>
+              <td>Report export truncates UTF-8 labels</td>
+              <td><span class="st st-watch">P2</span></td>
+              <td><span class="st st-prog">New</span></td>
+            </tr>
           </tbody>
         </table>
       </div>
     </section>
-    <details>
-      <summary>Full morning brief (markdown)</summary>
+
+    <section class="block" aria-labelledby="brief-h">
+      <div class="block-head">
+        <h2 id="brief-h">Command brief</h2>
+        <span>One suggested focus — same idea as morning brief output</span>
+      </div>
+      <div class="panel" style="padding:1rem 1.1rem;">
+        <p style="margin:0;font-size:0.95rem;line-height:1.55;border-left:3px solid var(--accent);padding-left:0.9rem;">
+          <strong>Suggested focus today:</strong> Unblock Payments load test (ado-4412); assign owner for accessibility charter; review Platform PR suite failures before tomorrow’s delivery sync.
+        </p>
+      </div>
+    </section>
+
+    <details class="raw">
+      <summary>Underlying morning brief (markdown) — sample</summary>
       <pre># Morning brief
 
 - Defects: 24 total, 4 critical/high, 18 not closed.
@@ -188,9 +468,8 @@
 
 **Suggested focus today:** Review the two failing nightly cases with QA; confirm fix target for ado-4412 before delivery sync.
 
-*As of 2026-04-05T07:30:15Z (UTC) · Sources: Azure DevOps: contoso/Quality (open Bugs), File: defects (defects.json), File: test runs (test_runs.json)*</pre>
+*As of 2026-04-05T07:30:15Z (UTC) · Sources: illustrative*</pre>
     </details>
-  </main>
   </div>
 </body>
 </html>
