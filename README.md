@@ -141,3 +141,13 @@ Headquarters is the **HTML dashboard** (not deployed to Pages by default):
 | **Stretch** | Risk/readiness packs · steering narratives · authenticated endpoints · deeper “ask Shadow” over your data |
 
 This repo is the living implementation of that roadmap—fork, extend, and tune it to how *you* run quality.
+
+---
+
+<div align="center">
+
+[![Visits](https://visitor-badge.laobi.icu/badge?page_id=ElaMCB.Hyper-Agent&left_text=Visits&left_color=0c0e11&right_color=d4af37)](https://github.com/ElaMCB/Hyper-Agent/graphs/traffic)
+
+*Counter updates when this README is loaded (approximate; includes bots). Repo owners: [Traffic](https://github.com/ElaMCB/Hyper-Agent/graphs/traffic).*
+
+</div>
