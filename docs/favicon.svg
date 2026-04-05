@@ -21,7 +21,7 @@
       <feDropShadow dx="0" dy="0.3" stdDeviation="0.25" flood-color="#d4af37" flood-opacity="0.2"/>
     </filter>
   </defs>
-  <rect width="32" height="32" rx="7" fill="#0c0e11"/>
+  <rect width="32" height="32" rx="7" fill="#0f1218"/>
   <rect width="32" height="32" rx="7" fill="url(#favHeroGlow)"/>
   <rect x="0.5" y="0.5" width="31" height="31" rx="6.5" fill="none" stroke="#2a313c" stroke-width="0.75"/>
   <rect x="4" y="0" width="24" height="2" rx="1" fill="#d4af37" opacity="0.55"/>

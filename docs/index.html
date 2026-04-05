@@ -9,8 +9,8 @@
   <meta property="og:description" content="AI brain · Second brain · Clarity layer for test leadership." />
   <meta property="og:image" content="https://ElaMCB.github.io/Hyper-Agent/logo.svg" />
   <title>Shadow — AI Test Architect</title>
-  <link rel="icon" href="favicon.svg" type="image/svg+xml" />
-  <link rel="apple-touch-icon" href="favicon.svg" />
+  <link rel="icon" href="favicon.svg?v=3" type="image/svg+xml" />
+  <link rel="apple-touch-icon" href="favicon.svg?v=3" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;0,9..144,700;1,9..144,400&family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,400&display=swap" rel="stylesheet" />
@@ -90,6 +90,8 @@
       height: 30px;
       width: auto;
       display: block;
+      /* Lift the tile off the same-color nav bar (SVG panel matches --bg otherwise). */
+      filter: drop-shadow(0 2px 10px rgba(0, 0, 0, 0.5)) drop-shadow(0 0 0 1px rgba(255, 255, 255, 0.05));
       transition: opacity 0.15s ease, filter 0.15s ease;
     }
     @media (min-width: 480px) {
@@ -97,7 +99,7 @@
     }
     .site-nav .logo:hover img {
       opacity: 0.95;
-      filter: brightness(1.12);
+      filter: drop-shadow(0 2px 10px rgba(0, 0, 0, 0.5)) drop-shadow(0 0 0 1px rgba(255, 255, 255, 0.05)) brightness(1.1);
     }
     .site-nav .logo:focus-visible {
       outline: 2px solid var(--accent);
@@ -197,6 +199,21 @@
       letter-spacing: -0.03em;
       margin: 0 0 0.4rem;
       line-height: 1;
+    }
+    /* Hero uses README wordmark SVG; keep h1 for document outline without giant text metrics */
+    .hero-title {
+      font-family: inherit;
+      font-size: 0;
+      line-height: 0;
+      letter-spacing: 0;
+      margin: 0 auto 0.65rem;
+      max-width: min(100%, 520px);
+    }
+    .hero-title img {
+      width: 100%;
+      height: auto;
+      display: block;
+      filter: drop-shadow(0 16px 48px rgba(0, 0, 0, 0.55));
     }
     .tagline {
       font-family: "Fraunces", Georgia, serif;
@@ -563,7 +580,7 @@
   <header class="site-nav" id="top">
     <div class="site-nav__inner">
       <a class="logo" href="#top" aria-label="Shadow home">
-        <img src="logo.svg" width="167" height="36" alt="" decoding="async" />
+        <img src="logo.svg?v=3" width="167" height="36" alt="" decoding="async" />
       </a>
       <nav aria-label="Primary">
         <a href="#sample-brief">Sample output</a>
@@ -580,7 +597,9 @@
     <div class="hero-gradient" aria-hidden="true"></div>
     <div class="hero-inner">
       <p class="hero-eyebrow">Hyper-Agent</p>
-      <h1>Shadow</h1>
+      <h1 class="hero-title">
+        <img src="shadow-wordmark.svg?v=3" width="520" height="112" alt="Shadow" decoding="async" />
+      </h1>
       <p class="tagline">Your AI test architect</p>
       <div class="pill-row">
         <span class="pill">AI brain</span>
