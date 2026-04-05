@@ -35,9 +35,6 @@
       line-height: 1.65;
       color: var(--text);
       background: var(--bg);
-      background-image:
-        radial-gradient(ellipse 100% 70% at 50% -25%, var(--glow), transparent 55%),
-        radial-gradient(ellipse 50% 45% at 110% 20%, rgba(60, 80, 120, 0.07), transparent);
     }
     .shell {
       max-width: 56rem;
@@ -48,12 +45,61 @@
       .shell { padding-left: 2rem; padding-right: 2rem; }
     }
 
+    /* Full-bleed hero + animated mesh */
+    .hero-bleed {
+      position: relative;
+      overflow: hidden;
+      min-height: clamp(22rem, 52vh, 36rem);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 3rem 1.25rem 3.5rem;
+      border-bottom: 1px solid var(--border);
+    }
+    .hero-gradient {
+      position: absolute;
+      inset: -40%;
+      background:
+        radial-gradient(ellipse 45% 40% at 30% 40%, rgba(212, 175, 55, 0.14), transparent 55%),
+        radial-gradient(ellipse 50% 45% at 75% 25%, rgba(90, 110, 160, 0.12), transparent 50%),
+        radial-gradient(ellipse 60% 50% at 50% 100%, rgba(212, 175, 55, 0.06), transparent 45%);
+      animation: hero-mesh 22s ease-in-out infinite;
+      pointer-events: none;
+    }
+    .hero-gradient::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 35% 35% at 60% 60%, rgba(212, 175, 55, 0.1), transparent 55%),
+        radial-gradient(ellipse 40% 40% at 20% 70%, rgba(70, 100, 140, 0.08), transparent 50%);
+      animation: hero-mesh-alt 28s ease-in-out infinite reverse;
+      opacity: 0.9;
+    }
+    @keyframes hero-mesh {
+      0%, 100% { transform: translate(0, 0) rotate(0deg); }
+      33% { transform: translate(3%, -2%) rotate(1.5deg); }
+      66% { transform: translate(-2%, 2%) rotate(-1deg); }
+    }
+    @keyframes hero-mesh-alt {
+      0%, 100% { transform: translate(0, 0) scale(1); }
+      50% { transform: translate(-4%, 3%) scale(1.08); }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .hero-gradient,
+      .hero-gradient::after { animation: none; }
+    }
+    .hero-inner {
+      position: relative;
+      z-index: 1;
+      max-width: 48rem;
+      width: 100%;
+      text-align: center;
+    }
+
     /* Hero */
     .hero {
       text-align: center;
-      padding-bottom: 2.5rem;
-      margin-bottom: 2rem;
-      border-bottom: 1px solid var(--border);
     }
     .hero-eyebrow {
       font-size: 0.7rem;
@@ -129,6 +175,79 @@
       border: 1px solid var(--border);
     }
     a.btn-ghost:hover { border-color: var(--muted); background: var(--surface2); }
+    a.btn-muted {
+      background: transparent;
+      color: var(--muted);
+      border: 1px solid transparent;
+      font-weight: 500;
+    }
+    a.btn-muted:hover {
+      color: var(--accent);
+      border-color: var(--border);
+      background: rgba(20, 24, 31, 0.6);
+    }
+
+    /* Sample brief mock */
+    .sample-brief {
+      margin-bottom: 2.75rem;
+    }
+    .sample-brief .card-head {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 0.5rem;
+      margin-bottom: 1rem;
+    }
+    .sample-brief .card-head h2 {
+      font-family: "Fraunces", Georgia, serif;
+      font-size: 1.15rem;
+      font-weight: 600;
+      margin: 0;
+    }
+    .sample-brief .card-head span {
+      font-size: 0.72rem;
+      color: var(--muted);
+      letter-spacing: 0.04em;
+    }
+    .brief-mock {
+      background: #0a0c0f;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 1.25rem 1.35rem 1.35rem;
+      font-family: "DM Sans", ui-monospace, monospace;
+      font-size: 0.84rem;
+      line-height: 1.55;
+      color: #c5cad3;
+      text-align: left;
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.04);
+    }
+    .brief-mock .brief-title {
+      font-family: "Fraunces", Georgia, serif;
+      font-size: 1.05rem;
+      font-weight: 600;
+      color: var(--text);
+      margin: 0 0 0.85rem;
+      padding-bottom: 0.65rem;
+      border-bottom: 1px solid var(--border);
+    }
+    .brief-mock ul {
+      margin: 0 0 1rem;
+      padding-left: 1.15rem;
+    }
+    .brief-mock li { margin-bottom: 0.35rem; }
+    .brief-mock li:last-child { margin-bottom: 0; }
+    .brief-mock .focus {
+      color: var(--text);
+      font-weight: 600;
+      margin: 0 0 0.65rem;
+    }
+    .brief-mock .meta {
+      margin: 0;
+      font-size: 0.75rem;
+      color: var(--muted);
+      font-style: italic;
+    }
 
     /* Flow strip */
     .flow {
@@ -305,21 +424,45 @@
   </style>
 </head>
 <body>
+  <header class="hero-bleed">
+    <div class="hero-gradient" aria-hidden="true"></div>
+    <div class="hero-inner">
+      <div class="hero">
+        <p class="hero-eyebrow">Hyper-Agent</p>
+        <h1>Shadow</h1>
+        <p class="tagline">Your AI test architect</p>
+        <div class="pill-row">
+          <span class="pill">Context keeper</span>
+          <span class="pill">Evidence gatherer</span>
+          <span class="pill">Draft producer</span>
+        </div>
+        <div class="hero-ctas">
+          <a class="btn btn-primary" href="https://github.com/ElaMCB/Hyper-Agent">Repository</a>
+          <a class="btn btn-ghost" href="https://github.com/ElaMCB/Hyper-Agent/blob/main/README.md">Full README</a>
+          <a class="btn btn-muted" href="#sample-brief">Sample brief</a>
+        </div>
+      </div>
+    </div>
+  </header>
+
   <div class="shell">
-    <header class="hero">
-      <p class="hero-eyebrow">Hyper-Agent</p>
-      <h1>Shadow</h1>
-      <p class="tagline">Your AI test architect</p>
-      <div class="pill-row">
-        <span class="pill">Context keeper</span>
-        <span class="pill">Evidence gatherer</span>
-        <span class="pill">Draft producer</span>
+    <section class="sample-brief" id="sample-brief" aria-labelledby="sample-brief-heading">
+      <p class="section-label">Output shape</p>
+      <div class="card-head">
+        <h2 id="sample-brief-heading">Morning brief</h2>
+        <span>Illustrative — yours pulls from ADO + <code style="font-size:0.85em;color:var(--accent);">data/</code></span>
       </div>
-      <div class="hero-ctas">
-        <a class="btn btn-primary" href="https://github.com/ElaMCB/Hyper-Agent">Repository</a>
-        <a class="btn btn-ghost" href="https://github.com/ElaMCB/Hyper-Agent/blob/main/README.md">Full README</a>
+      <div class="brief-mock">
+        <p class="brief-title">Morning brief</p>
+        <ul>
+          <li>Defects: 24 total, 4 critical/high, 18 not closed.</li>
+          <li>Top severity: ado-4412 — Payment API timeout under load (staging)…</li>
+          <li>Latest test run: Nightly regression — Passed. Passed: 312, Failed: 2</li>
+        </ul>
+        <p class="focus">Suggested focus today: Review the two failing nightly cases with QA; confirm fix target for ado-4412 before delivery sync.</p>
+        <p class="meta">Sources: Azure DevOps (open Bugs), test_runs.json · As of illustrative snapshot</p>
       </div>
-    </header>
+    </section>
 
     <p class="section-label" id="idea">How it works</p>
     <div class="flow" aria-label="Shadow flow">
