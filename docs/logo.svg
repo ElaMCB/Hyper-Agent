@@ -1,9 +1,28 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 168 36" role="img" aria-labelledby="logoTitle">
   <title id="logoTitle">Shadow</title>
-  <!-- Mark: layered shadow (matches favicon language) -->
+  <defs>
+    <!-- Wordmark fades out to the right like a dissolving shadow -->
+    <linearGradient id="wordDissolve" x1="38" y1="18" x2="122" y2="18" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#e8eaed" stop-opacity="1"/>
+      <stop offset="38%" stop-color="#e8eaed" stop-opacity="0.92"/>
+      <stop offset="62%" stop-color="#d4d7dc" stop-opacity="0.35"/>
+      <stop offset="82%" stop-color="#9aa0a8" stop-opacity="0.08"/>
+      <stop offset="100%" stop-color="#8b929b" stop-opacity="0"/>
+    </linearGradient>
+    <!-- Soft echo behind / below, disappears even faster -->
+    <linearGradient id="echoDissolve" x1="40" y1="18" x2="118" y2="18" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#d4af37" stop-opacity="0.22"/>
+      <stop offset="35%" stop-color="#b8962e" stop-opacity="0.12"/>
+      <stop offset="65%" stop-color="#8b929b" stop-opacity="0.04"/>
+      <stop offset="100%" stop-color="#8b929b" stop-opacity="0"/>
+    </linearGradient>
+  </defs>
+  <!-- Mark -->
   <rect x="2" y="4" width="28" height="28" rx="7" fill="#14181f" stroke="#2a313c" stroke-width="1"/>
   <rect x="7" y="11" width="14" height="10" rx="2" fill="#d4af37" opacity="0.38"/>
   <rect x="9" y="13" width="14" height="10" rx="2" fill="#d4af37"/>
-  <!-- Wordmark -->
-  <text x="38" y="24.5" font-family="Georgia, 'Times New Roman', Times, serif" font-size="17" font-weight="700" letter-spacing="-0.02em" fill="#e8eaed">Shadow</text>
+  <!-- Echo word (offset, fades like a cast shadow) -->
+  <text x="39.5" y="25.5" font-family="Georgia, 'Times New Roman', Times, serif" font-size="17" font-weight="700" letter-spacing="-0.02em" fill="url(#echoDissolve)">Shadow</text>
+  <!-- Primary wordmark -->
+  <text x="38" y="24.5" font-family="Georgia, 'Times New Roman', Times, serif" font-size="17" font-weight="700" letter-spacing="-0.02em" fill="url(#wordDissolve)">Shadow</text>
 </svg>
