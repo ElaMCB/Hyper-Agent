@@ -1,6 +1,32 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" role="img" aria-label="Shadow">
-  <rect width="32" height="32" rx="7" fill="#0f1114"/>
-  <!-- layered "shadow" mark -->
-  <rect x="7" y="9" width="14" height="10" rx="2" fill="#c9a227" opacity="0.35"/>
-  <rect x="9" y="11" width="14" height="10" rx="2" fill="#c9a227"/>
+  <defs>
+    <linearGradient id="favHeroGlow" x1="0" y1="0" x2="0" y2="1" gradientUnits="objectBoundingBox">
+      <stop offset="0%" stop-color="#d4af37" stop-opacity="0.14"/>
+      <stop offset="55%" stop-color="#d4af37" stop-opacity="0.03"/>
+      <stop offset="100%" stop-color="#d4af37" stop-opacity="0"/>
+    </linearGradient>
+    <linearGradient id="favWordDissolve" gradientUnits="objectBoundingBox" x1="0" y1="0.5" x2="1" y2="0.5">
+      <stop offset="0" stop-color="#f5f6f8" stop-opacity="1"/>
+      <stop offset="0.35" stop-color="#e8eaed" stop-opacity="0.85"/>
+      <stop offset="0.65" stop-color="#c5cad3" stop-opacity="0.35"/>
+      <stop offset="1" stop-color="#6b7280" stop-opacity="0"/>
+    </linearGradient>
+    <linearGradient id="favEchoDissolve" gradientUnits="objectBoundingBox" x1="0" y1="0.5" x2="1" y2="0.5">
+      <stop offset="0" stop-color="#d4af37" stop-opacity="0.45"/>
+      <stop offset="0.5" stop-color="#b8962e" stop-opacity="0.12"/>
+      <stop offset="1" stop-color="#8b929b" stop-opacity="0"/>
+    </linearGradient>
+    <filter id="favShade" x="-25%" y="-25%" width="150%" height="150%" color-interpolation-filters="sRGB">
+      <feDropShadow dx="0" dy="0.6" stdDeviation="0.5" flood-color="#000000" flood-opacity="0.5"/>
+      <feDropShadow dx="0" dy="0.3" stdDeviation="0.25" flood-color="#d4af37" flood-opacity="0.2"/>
+    </filter>
+  </defs>
+  <rect width="32" height="32" rx="7" fill="#0c0e11"/>
+  <rect width="32" height="32" rx="7" fill="url(#favHeroGlow)"/>
+  <rect x="0.5" y="0.5" width="31" height="31" rx="6.5" fill="none" stroke="#2a313c" stroke-width="0.75"/>
+  <rect x="4" y="0" width="24" height="2" rx="1" fill="#d4af37" opacity="0.55"/>
+  <text x="16.8" y="22.5" text-anchor="middle" font-family="Georgia, 'Times New Roman', Times, serif" font-size="17" font-weight="700" letter-spacing="-0.04em" fill="url(#favEchoDissolve)">S</text>
+  <g filter="url(#favShade)">
+    <text x="16" y="22" text-anchor="middle" font-family="Georgia, 'Times New Roman', Times, serif" font-size="17" font-weight="700" letter-spacing="-0.04em" fill="url(#favWordDissolve)">S</text>
+  </g>
 </svg>

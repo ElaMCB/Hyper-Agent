@@ -1,30 +1,36 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 172 38" role="img" aria-labelledby="logoTitle">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 176 38" role="img" aria-labelledby="logoTitle">
   <title id="logoTitle">Shadow</title>
   <defs>
-    <!-- Fade maps to each text element's bounding box (reliable vs fixed userSpace coords) -->
-    <linearGradient id="wordDissolve" gradientUnits="objectBoundingBox" x1="0" y1="0.5" x2="1" y2="0.5">
-      <stop offset="0" stop-color="#f0f2f5" stop-opacity="1"/>
-      <stop offset="0.22" stop-color="#e8eaed" stop-opacity="1"/>
-      <stop offset="0.42" stop-color="#e8eaed" stop-opacity="0.65"/>
-      <stop offset="0.58" stop-color="#c5cad3" stop-opacity="0.28"/>
-      <stop offset="0.75" stop-color="#8b929b" stop-opacity="0.06"/>
+    <linearGradient id="navHeroGlow" x1="0" y1="0" x2="0" y2="1" gradientUnits="objectBoundingBox">
+      <stop offset="0%" stop-color="#d4af37" stop-opacity="0.12"/>
+      <stop offset="50%" stop-color="#d4af37" stop-opacity="0.02"/>
+      <stop offset="100%" stop-color="#d4af37" stop-opacity="0"/>
+    </linearGradient>
+    <linearGradient id="navWordDissolve" gradientUnits="objectBoundingBox" x1="0" y1="0.5" x2="1" y2="0.5">
+      <stop offset="0" stop-color="#f5f6f8" stop-opacity="1"/>
+      <stop offset="0.2" stop-color="#e8eaed" stop-opacity="1"/>
+      <stop offset="0.4" stop-color="#e8eaed" stop-opacity="0.72"/>
+      <stop offset="0.55" stop-color="#c5cad3" stop-opacity="0.32"/>
+      <stop offset="0.72" stop-color="#8b929b" stop-opacity="0.08"/>
+      <stop offset="1" stop-color="#6b7280" stop-opacity="0"/>
+    </linearGradient>
+    <linearGradient id="navEchoDissolve" gradientUnits="objectBoundingBox" x1="0" y1="0.5" x2="1" y2="0.5">
+      <stop offset="0" stop-color="#d4af37" stop-opacity="0.4"/>
+      <stop offset="0.38" stop-color="#b8962e" stop-opacity="0.15"/>
+      <stop offset="0.65" stop-color="#8b929b" stop-opacity="0.04"/>
       <stop offset="1" stop-color="#8b929b" stop-opacity="0"/>
     </linearGradient>
-    <linearGradient id="echoDissolve" gradientUnits="objectBoundingBox" x1="0" y1="0.5" x2="1" y2="0.5">
-      <stop offset="0" stop-color="#d4af37" stop-opacity="0.35"/>
-      <stop offset="0.35" stop-color="#d4af37" stop-opacity="0.14"/>
-      <stop offset="0.6" stop-color="#8b929b" stop-opacity="0.03"/>
-      <stop offset="1" stop-color="#8b929b" stop-opacity="0"/>
-    </linearGradient>
-    <filter id="navWordShade" x="-15%" y="-25%" width="130%" height="150%" color-interpolation-filters="sRGB">
-      <feDropShadow dx="0" dy="1.25" stdDeviation="1.1" flood-color="#000000" flood-opacity="0.45"/>
+    <filter id="navShade" x="-10%" y="-20%" width="120%" height="150%" color-interpolation-filters="sRGB">
+      <feDropShadow dx="0" dy="1" stdDeviation="0.9" flood-color="#000000" flood-opacity="0.55"/>
+      <feDropShadow dx="0" dy="0.5" stdDeviation="0.35" flood-color="#d4af37" flood-opacity="0.15"/>
     </filter>
   </defs>
-  <rect x="2" y="5" width="28" height="28" rx="7" fill="#14181f" stroke="#2a313c" stroke-width="1"/>
-  <rect x="7" y="12" width="14" height="10" rx="2" fill="#d4af37" opacity="0.38"/>
-  <rect x="9" y="14" width="14" height="10" rx="2" fill="#d4af37"/>
-  <text x="39.5" y="26" font-family="Georgia, 'Times New Roman', Times, serif" font-size="17" font-weight="700" letter-spacing="-0.02em" fill="url(#echoDissolve)">Shadow</text>
-  <g filter="url(#navWordShade)">
-    <text x="38" y="25" font-family="Georgia, 'Times New Roman', Times, serif" font-size="17" font-weight="700" letter-spacing="-0.02em" fill="url(#wordDissolve)">Shadow</text>
+  <rect width="176" height="38" rx="6" fill="#0c0e11"/>
+  <rect width="176" height="38" rx="6" fill="url(#navHeroGlow)"/>
+  <rect x="0.5" y="0.5" width="175" height="37" rx="5.5" fill="none" stroke="#2a313c" stroke-width="1"/>
+  <rect x="8" y="0" width="160" height="1.5" rx="0.75" fill="#d4af37" opacity="0.55"/>
+  <text x="89.5" y="25.5" text-anchor="middle" font-family="Georgia, 'Times New Roman', Times, serif" font-size="19" font-weight="700" letter-spacing="-0.03em" fill="url(#navEchoDissolve)">Shadow</text>
+  <g filter="url(#navShade)">
+    <text x="88" y="24.5" text-anchor="middle" font-family="Georgia, 'Times New Roman', Times, serif" font-size="19" font-weight="700" letter-spacing="-0.03em" fill="url(#navWordDissolve)">Shadow</text>
   </g>
 </svg>
