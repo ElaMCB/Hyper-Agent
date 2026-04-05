@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="robots" content="noindex" />
+  <title>Shadow — Headquarters (sample)</title>
+  <style>
+    :root {
+      --bg: #0c0e11;
+      --panel: #12151c;
+      --border: #2a313c;
+      --text: #e8eaed;
+      --muted: #8b929b;
+      --accent: #d4af37;
+      --warn-bg: rgba(180, 83, 9, 0.12);
+      --warn-border: rgba(212, 175, 55, 0.35);
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: "Segoe UI", system-ui, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.5;
+      padding: 0 0 3rem;
+    }
+    .sample-banner {
+      background: linear-gradient(90deg, rgba(212, 175, 55, 0.15), rgba(212, 175, 55, 0.06));
+      border-bottom: 1px solid var(--warn-border);
+      padding: 0.65rem clamp(1rem, 4vw, 2.5rem);
+      font-size: 0.82rem;
+      color: var(--muted);
+      text-align: center;
+    }
+    .sample-banner strong { color: var(--accent); }
+    .sample-banner a { color: var(--accent); font-weight: 600; text-decoration: none; }
+    .sample-banner a:hover { text-decoration: underline; }
+    .wrap {
+      padding: 1.5rem clamp(1rem, 4vw, 2.5rem) 0;
+    }
+    header {
+      max-width: 56rem;
+      margin: 0 auto 1.5rem;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 1rem;
+    }
+    h1 {
+      font-size: clamp(1.35rem, 3vw, 1.75rem);
+      font-weight: 700;
+      margin: 0 0 0.35rem;
+      letter-spacing: -0.02em;
+    }
+    .stamp { color: var(--muted); font-size: 0.9rem; }
+    main { max-width: 56rem; margin: 0 auto; display: flex; flex-direction: column; gap: 1.25rem; }
+    .panel {
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 1rem 1.15rem;
+    }
+    .panel h2 {
+      margin: 0 0 0.65rem;
+      font-size: 0.78rem;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--accent);
+    }
+    .warn-panel { border-color: var(--warn-border); background: var(--warn-bg); }
+    ul { margin: 0; padding-left: 1.2rem; }
+    li { margin: 0.35rem 0; }
+    li.warn { color: #fbbf24; }
+    .focus {
+      font-size: 1.05rem;
+      border-left: 3px solid var(--accent);
+      padding-left: 0.85rem;
+      margin: 0;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.82rem;
+    }
+    th, td { text-align: left; padding: 0.45rem 0.5rem; border-bottom: 1px solid var(--border); vertical-align: top; }
+    th { color: var(--muted); font-weight: 600; font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.06em; }
+    code { font-size: 0.85em; color: #c5cad3; }
+    .muted { color: var(--muted); }
+    .small { font-size: 0.8rem; margin: 0.5rem 0 0; }
+    .links { list-style: none; padding-left: 0; display: flex; flex-wrap: wrap; gap: 0.5rem 1.25rem; }
+    .links a { color: var(--accent); text-decoration: none; font-weight: 600; }
+    .links a:hover { text-decoration: underline; }
+    details {
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 0.75rem 1rem;
+    }
+    summary { cursor: pointer; font-weight: 600; color: var(--muted); }
+    pre {
+      margin: 0.75rem 0 0;
+      overflow: auto;
+      font-size: 0.78rem;
+      color: var(--muted);
+      white-space: pre-wrap;
+      word-break: break-word;
+    }
+  </style>
+</head>
+<body>
+  <div class="sample-banner">
+    <strong>Illustrative sample</strong> — not live data. This mimics <code style="color:#c5cad3;">output/headquarters/latest.html</code> from <code style="color:#c5cad3;">python src/main.py headquarters</code>.
+    · <a href="index.html">Back to Shadow site</a>
+    · <a href="https://github.com/ElaMCB/Hyper-Agent">Repository</a>
+  </div>
+  <div class="wrap">
+  <header>
+    <h1>Shadow — Headquarters</h1>
+    <p class="stamp">Snapshot: 2026-04-05 07:30:15 UTC <span class="muted">(mock)</span></p>
+  </header>
+  <main>
+    <section class="panel">
+      <h2>Quick links</h2>
+      <ul class="links">
+        <li><a href="https://dev.azure.com" target="_blank" rel="noopener">Azure DevOps (example)</a></li>
+        <li><a href="https://github.com/ElaMCB/Hyper-Agent" target="_blank" rel="noopener">Hyper-Agent repo</a></li>
+        <li><a href="https://ElaMCB.github.io/Hyper-Agent/" target="_blank" rel="noopener">Shadow site</a></li>
+      </ul>
+    </section>
+    <section class="panel">
+      <h2>At a glance</h2>
+      <ul>
+        <li>Defects: 24 total, 4 critical/high, 18 not closed.</li>
+        <li>Top severity: ado-4412 — Payment API timeout under load (staging)…</li>
+        <li>Latest test run: Nightly regression — Passed. Passed: 312, Failed: 2</li>
+      </ul>
+      <p class="focus"><strong>Suggested focus:</strong> Review the two failing nightly cases with QA; confirm fix target for ado-4412 before delivery sync.</p>
+    </section>
+    <section class="panel warn-panel">
+      <h2>Attention</h2>
+      <ul>
+        <li class="warn">Example only: optional adapter warnings (e.g. rate limits) appear here in a real run.</li>
+      </ul>
+    </section>
+    <section class="panel">
+      <h2>Sources</h2>
+      <ul>
+        <li>Azure DevOps: contoso / Quality (open Bugs)</li>
+        <li>File: defects (defects.json)</li>
+        <li>File: test runs (test_runs.json)</li>
+      </ul>
+    </section>
+    <section class="panel">
+      <h2>Defects in snapshot</h2>
+      <div style="overflow-x:auto">
+        <table>
+          <thead><tr><th>ID</th><th>Title</th><th>Severity</th><th>Status</th></tr></thead>
+          <tbody>
+            <tr><td><code>ado-4412</code></td><td>Payment API timeout under load (staging)</td><td>1 - Critical</td><td>Active</td></tr>
+            <tr><td><code>ado-4398</code></td><td>Checkout: duplicate charge on slow 3G</td><td>2 - High</td><td>Active</td></tr>
+            <tr><td><code>ado-4381</code></td><td>Report export truncates UTF-8 labels</td><td>3 - Medium</td><td>New</td></tr>
+            <tr><td><code>ado-4355</code></td><td>Mobile nav overlaps footer on iOS 18</td><td>3 - Medium</td><td>Resolved</td></tr>
+            <tr><td><code>ado-4320</code></td><td>Load test harness leaks temp files</td><td>4 - Low</td><td>Active</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+    <section class="panel">
+      <h2>Test runs</h2>
+      <div style="overflow-x:auto">
+        <table>
+          <thead><tr><th>ID</th><th>Name</th><th>Status</th><th>Counts</th><th>When</th></tr></thead>
+          <tbody>
+            <tr><td><code>run-9821</code></td><td>Nightly regression</td><td>Passed</td><td>P312 / F2 / T314</td><td class="muted">2026-04-05 06:12 UTC</td></tr>
+            <tr><td><code>run-9814</code></td><td>Smoke — staging</td><td>Passed</td><td>P48 / F0 / T48</td><td class="muted">2026-04-04 22:03 UTC</td></tr>
+            <tr><td><code>run-9809</code></td><td>PR validation #1844</td><td>Failed</td><td>P112 / F3 / T115</td><td class="muted">2026-04-04 18:41 UTC</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+    <details>
+      <summary>Full morning brief (markdown)</summary>
+      <pre># Morning brief
+
+- Defects: 24 total, 4 critical/high, 18 not closed.
+- Top severity: ado-4412 — Payment API timeout under load (staging)…
+- Latest test run: Nightly regression — Passed. Passed: 312, Failed: 2
+
+**Suggested focus today:** Review the two failing nightly cases with QA; confirm fix target for ado-4412 before delivery sync.
+
+*As of 2026-04-05T07:30:15Z (UTC) · Sources: Azure DevOps: contoso/Quality (open Bugs), File: defects (defects.json), File: test runs (test_runs.json)*</pre>
+    </details>
+  </main>
+  </div>
+</body>
+</html>
