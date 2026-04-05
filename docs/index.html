@@ -4,163 +4,310 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="theme-color" content="#0f1114" />
+  <meta name="description" content="Shadow — an intelligence layer for Test Managers: briefs, evidence, and drafts from ADO and your stack. Built by Hyper-Agent." />
+  <meta property="og:title" content="Shadow — AI Test Architect" />
+  <meta property="og:description" content="Context keeper · Evidence gatherer · Draft producer for test leadership." />
   <title>Shadow — AI Test Architect</title>
   <link rel="icon" href="favicon.svg" type="image/svg+xml" />
   <link rel="apple-touch-icon" href="favicon.svg" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;1,9..144,400&family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;1,9..40,400&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;0,9..144,700;1,9..144,400&family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,400&display=swap" rel="stylesheet" />
   <style>
     :root {
-      --bg: #0f1114;
-      --surface: #181c22;
+      --bg: #0c0e11;
+      --surface: #14181f;
+      --surface2: #1a1f28;
       --text: #e8eaed;
-      --muted: #9aa0a8;
-      --accent: #c9a227;
-      --accent-soft: rgba(201, 162, 39, 0.15);
-      --border: #2a3038;
+      --muted: #8b929b;
+      --accent: #d4af37;
+      --accent-dim: rgba(212, 175, 55, 0.12);
+      --border: #2a313c;
+      --glow: rgba(212, 175, 55, 0.06);
     }
     * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
     body {
       margin: 0;
       min-height: 100vh;
       font-family: "DM Sans", system-ui, sans-serif;
       font-size: 1rem;
-      line-height: 1.6;
+      line-height: 1.65;
       color: var(--text);
       background: var(--bg);
       background-image:
-        radial-gradient(ellipse 120% 80% at 50% -20%, rgba(201, 162, 39, 0.08), transparent 50%),
-        radial-gradient(ellipse 60% 40% at 100% 50%, rgba(80, 100, 140, 0.06), transparent);
+        radial-gradient(ellipse 100% 70% at 50% -25%, var(--glow), transparent 55%),
+        radial-gradient(ellipse 50% 45% at 110% 20%, rgba(60, 80, 120, 0.07), transparent);
     }
-    .wrap {
-      max-width: 42rem;
+    .shell {
+      max-width: 56rem;
       margin: 0 auto;
-      padding: 3rem 1.5rem 4rem;
+      padding: 2.5rem 1.25rem 3.5rem;
     }
-    header {
+    @media (min-width: 640px) {
+      .shell { padding-left: 2rem; padding-right: 2rem; }
+    }
+
+    /* Hero */
+    .hero {
       text-align: center;
-      margin-bottom: 3rem;
+      padding-bottom: 2.5rem;
+      margin-bottom: 2rem;
+      border-bottom: 1px solid var(--border);
+    }
+    .hero-eyebrow {
+      font-size: 0.7rem;
+      font-weight: 600;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 1rem;
     }
     h1 {
       font-family: "Fraunces", Georgia, serif;
-      font-size: clamp(2.75rem, 8vw, 4rem);
-      font-weight: 600;
-      letter-spacing: -0.02em;
-      margin: 0 0 0.35em;
-      line-height: 1.05;
+      font-size: clamp(3rem, 10vw, 4.25rem);
+      font-weight: 700;
+      letter-spacing: -0.03em;
+      margin: 0 0 0.4rem;
+      line-height: 1;
     }
     .tagline {
       font-family: "Fraunces", Georgia, serif;
       font-style: italic;
-      font-size: 1.25rem;
+      font-size: 1.35rem;
       color: var(--muted);
-      margin: 0 0 1rem;
+      margin: 0 0 1.25rem;
     }
     .pill-row {
       display: flex;
       flex-wrap: wrap;
-      gap: 0.5rem;
+      gap: 0.45rem;
       justify-content: center;
-      margin-top: 1.25rem;
+      margin-bottom: 1.75rem;
     }
     .pill {
-      font-size: 0.75rem;
-      font-weight: 500;
-      letter-spacing: 0.06em;
+      font-size: 0.68rem;
+      font-weight: 600;
+      letter-spacing: 0.08em;
       text-transform: uppercase;
       color: var(--accent);
-      padding: 0.35rem 0.75rem;
+      padding: 0.4rem 0.85rem;
       border-radius: 999px;
-      background: var(--accent-soft);
-      border: 1px solid rgba(201, 162, 39, 0.35);
+      background: var(--accent-dim);
+      border: 1px solid rgba(212, 175, 55, 0.28);
     }
-    .card {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: 12px;
-      padding: 1.5rem 1.75rem;
-      margin-bottom: 1.25rem;
-    }
-    .card h2 {
-      font-family: "Fraunces", Georgia, serif;
-      font-size: 1.15rem;
-      font-weight: 600;
-      margin: 0 0 0.75rem;
-      color: var(--text);
-    }
-    .card p { margin: 0 0 0.75rem; color: var(--muted); }
-    .card p:last-child { margin-bottom: 0; }
-    ul.capabilities {
-      list-style: none;
-      padding: 0;
-      margin: 0;
-    }
-    ul.capabilities li {
-      display: flex;
-      gap: 0.75rem;
-      padding: 0.65rem 0;
-      border-bottom: 1px solid var(--border);
-      font-size: 0.95rem;
-    }
-    ul.capabilities li:last-child { border-bottom: none; }
-    ul.capabilities strong {
-      color: var(--text);
-      min-width: 1.5rem;
-      font-variant-numeric: tabular-nums;
-    }
-    .actions {
+    .hero-ctas {
       display: flex;
       flex-wrap: wrap;
-      gap: 0.75rem;
-      margin-top: 2rem;
+      gap: 0.65rem;
       justify-content: center;
     }
     a.btn {
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      padding: 0.65rem 1.25rem;
+      padding: 0.7rem 1.35rem;
       border-radius: 8px;
-      font-weight: 500;
+      font-weight: 600;
+      font-size: 0.92rem;
       text-decoration: none;
-      transition: transform 0.15s ease, background 0.15s ease;
+      transition: transform 0.12s ease, filter 0.12s ease, background 0.12s ease;
     }
-    a.btn:hover { transform: translateY(-1px); }
+    a.btn:focus-visible {
+      outline: 2px solid var(--accent);
+      outline-offset: 3px;
+    }
+    a.btn:hover { transform: translateY(-2px); }
     a.btn-primary {
       background: var(--accent);
-      color: #0f1114;
+      color: #0c0e11;
     }
-    a.btn-primary:hover { filter: brightness(1.08); }
+    a.btn-primary:hover { filter: brightness(1.06); }
     a.btn-ghost {
-      background: transparent;
+      background: var(--surface);
       color: var(--text);
       border: 1px solid var(--border);
     }
-    a.btn-ghost:hover { background: var(--surface); border-color: var(--muted); }
-    footer {
-      text-align: center;
-      margin-top: 3rem;
-      font-size: 0.85rem;
-      color: var(--muted);
+    a.btn-ghost:hover { border-color: var(--muted); background: var(--surface2); }
+
+    /* Flow strip */
+    .flow {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 0.75rem;
+      margin-bottom: 2.5rem;
     }
-    footer a { color: var(--accent); text-decoration: none; }
-    footer a:hover { text-decoration: underline; }
-    .links {
-      margin-top: 1rem;
+    @media (min-width: 720px) {
+      .flow {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 1rem;
+      }
     }
-    .links a {
+    .flow-step {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 1.1rem 1.2rem;
+      position: relative;
+    }
+    .flow-step-num {
+      font-family: "Fraunces", Georgia, serif;
+      font-size: 1.75rem;
+      font-weight: 600;
       color: var(--accent);
-      text-decoration: none;
+      opacity: 0.85;
+      line-height: 1;
+      margin-bottom: 0.35rem;
+    }
+    .flow-step h3 {
+      margin: 0 0 0.35rem;
+      font-size: 0.95rem;
+      font-weight: 600;
+    }
+    .flow-step p {
+      margin: 0;
+      font-size: 0.88rem;
+      color: var(--muted);
+      line-height: 1.5;
+    }
+
+    .section-label {
+      font-size: 0.7rem;
+      font-weight: 600;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 0.85rem;
+    }
+
+    /* Two-up grid */
+    .grid-2 {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 1rem;
+      margin-bottom: 2.5rem;
+    }
+    @media (min-width: 800px) {
+      .grid-2 { grid-template-columns: 1.2fr 1fr; gap: 1.25rem; }
+    }
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 1.5rem 1.6rem;
+    }
+    .card h2 {
+      font-family: "Fraunces", Georgia, serif;
+      font-size: 1.2rem;
+      font-weight: 600;
+      margin: 0 0 0.75rem;
+    }
+    .card p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 0.95rem;
+    }
+    .card p + p { margin-top: 0.75rem; }
+    .card strong { color: var(--text); font-weight: 600; }
+    .card-aside {
+      background: linear-gradient(145deg, var(--surface2) 0%, var(--surface) 100%);
+      border-left: 3px solid var(--accent);
+    }
+    .card-aside ul {
+      margin: 0;
+      padding-left: 1.1rem;
+      color: var(--muted);
       font-size: 0.9rem;
     }
-    .links a:hover { text-decoration: underline; }
-    .links span { color: var(--border); margin: 0 0.5rem; }
+    .card-aside li { margin-bottom: 0.4rem; }
+    .card-aside li:last-child { margin-bottom: 0; }
+
+    /* Capability tiles */
+    .cap-section { margin-bottom: 2.5rem; }
+    .cap-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 0.65rem;
+    }
+    @media (min-width: 520px) {
+      .cap-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (min-width: 900px) {
+      .cap-grid { grid-template-columns: repeat(3, 1fr); }
+    }
+    .cap-tile {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 1rem 1.1rem;
+      transition: border-color 0.15s ease;
+    }
+    .cap-tile:hover { border-color: rgba(212, 175, 55, 0.25); }
+    .cap-tile .n {
+      font-family: "Fraunces", Georgia, serif;
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: var(--accent);
+      margin-bottom: 0.25rem;
+    }
+    .cap-tile .t {
+      font-weight: 600;
+      font-size: 0.9rem;
+      margin-bottom: 0.2rem;
+    }
+    .cap-tile .d {
+      font-size: 0.78rem;
+      color: var(--muted);
+      line-height: 1.45;
+    }
+
+    /* Doc chips */
+    .doc-section { margin-bottom: 2rem; }
+    .chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+    a.chip {
+      display: inline-flex;
+      align-items: center;
+      padding: 0.45rem 0.85rem;
+      border-radius: 999px;
+      font-size: 0.82rem;
+      font-weight: 500;
+      color: var(--text);
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      text-decoration: none;
+      transition: border-color 0.15s ease, color 0.15s ease;
+    }
+    a.chip:hover {
+      border-color: var(--accent);
+      color: var(--accent);
+    }
+    a.chip:focus-visible {
+      outline: 2px solid var(--accent);
+      outline-offset: 2px;
+    }
+
+    footer {
+      text-align: center;
+      padding-top: 1.5rem;
+      border-top: 1px solid var(--border);
+      font-size: 0.82rem;
+      color: var(--muted);
+    }
+    footer a {
+      color: var(--accent);
+      text-decoration: none;
+    }
+    footer a:hover { text-decoration: underline; }
   </style>
 </head>
 <body>
-  <div class="wrap">
-    <header>
+  <div class="shell">
+    <header class="hero">
+      <p class="hero-eyebrow">Hyper-Agent</p>
       <h1>Shadow</h1>
       <p class="tagline">Your AI test architect</p>
       <div class="pill-row">
@@ -168,54 +315,105 @@
         <span class="pill">Evidence gatherer</span>
         <span class="pill">Draft producer</span>
       </div>
+      <div class="hero-ctas">
+        <a class="btn btn-primary" href="https://github.com/ElaMCB/Hyper-Agent">Repository</a>
+        <a class="btn btn-ghost" href="https://github.com/ElaMCB/Hyper-Agent/blob/main/README.md">Full README</a>
+      </div>
     </header>
 
-    <div class="card">
-      <h2>What Shadow is</h2>
-      <p>
-        An <strong style="color: var(--text); font-weight: 500;">intelligence layer</strong> on the tools you already use—ADO, mail, calendar—not a replacement for them.
-        Shadow ingests signal, compresses it into briefs and drafts with provenance, and returns time for coaching QA, aligning delivery, and owning risk.
-      </p>
-      <p style="margin-top: 1rem; color: var(--muted); font-size: 0.95rem;">
-        <strong style="color: var(--text); font-weight: 500;">Hyper-Agent</strong> is the project that builds Shadow.
-      </p>
+    <p class="section-label" id="idea">How it works</p>
+    <div class="flow" aria-label="Shadow flow">
+      <div class="flow-step">
+        <div class="flow-step-num">1</div>
+        <h3>Connect</h3>
+        <p>ADO, files, and (soon) calendar—signal from systems you already trust.</p>
+      </div>
+      <div class="flow-step">
+        <div class="flow-step-num">2</div>
+        <h3>Compress</h3>
+        <p>Briefs and drafts with provenance, not another dashboard to babysit.</p>
+      </div>
+      <div class="flow-step">
+        <div class="flow-step-num">3</div>
+        <h3>Decide</h3>
+        <p>You lead QA, delivery, and risk; Shadow never replaces your signature.</p>
+      </div>
     </div>
 
-    <div class="card">
-      <h2>Six capability areas</h2>
-      <ul class="capabilities">
-        <li><strong>1</strong> Daily orchestration & focus</li>
-        <li><strong>2</strong> QA team oversight</li>
-        <li><strong>3</strong> Delivery collaboration</li>
-        <li><strong>4</strong> Decision support</li>
-        <li><strong>5</strong> Governance & consistency</li>
-        <li><strong>6</strong> Second brain</li>
-      </ul>
+    <p class="section-label">Positioning</p>
+    <div class="grid-2">
+      <div class="card">
+        <h2>Intelligence layer</h2>
+        <p>
+          Shadow sits <strong>on top of</strong> Azure DevOps, Outlook, and your rituals—not in place of them.
+          It ingests work items and exports, turns them into a <strong>morning brief</strong> and (roadmap) meeting prep,
+          and frees attention for judgment and relationships.
+        </p>
+        <p>
+          <strong>Hyper-Agent</strong> is the open project that implements Shadow; this site is the front door.
+        </p>
+      </div>
+      <div class="card card-aside">
+        <h2>Live today</h2>
+        <ul>
+          <li>CLI &amp; API morning brief</li>
+          <li>Optional live <strong>Azure DevOps</strong> open bugs</li>
+          <li>File-based test run summaries</li>
+          <li>LLM polish when you enable it</li>
+        </ul>
+      </div>
     </div>
 
-    <div class="actions">
-      <a class="btn btn-primary" href="https://github.com/ElaMCB/Hyper-Agent">Open repository</a>
-      <a class="btn btn-ghost" href="https://github.com/ElaMCB/Hyper-Agent/blob/main/README.md">README</a>
+    <div class="cap-section" id="capabilities">
+      <p class="section-label">Capability system</p>
+      <div class="cap-grid">
+        <div class="cap-tile">
+          <div class="n">01</div>
+          <div class="t">Daily orchestration</div>
+          <div class="d">Brief · priorities · meeting prep</div>
+        </div>
+        <div class="cap-tile">
+          <div class="n">02</div>
+          <div class="t">QA team oversight</div>
+          <div class="d">Commitments · capacity · consistency</div>
+        </div>
+        <div class="cap-tile">
+          <div class="n">03</div>
+          <div class="t">Delivery collaboration</div>
+          <div class="d">Scope ↔ tests · readiness · comms</div>
+        </div>
+        <div class="cap-tile">
+          <div class="n">04</div>
+          <div class="t">Decision support</div>
+          <div class="d">Go/no-go evidence · impact</div>
+        </div>
+        <div class="cap-tile">
+          <div class="n">05</div>
+          <div class="t">Governance</div>
+          <div class="d">Standards · patterns</div>
+        </div>
+        <div class="cap-tile">
+          <div class="n">06</div>
+          <div class="t">Second brain</div>
+          <div class="d">Status on demand · your prefs</div>
+        </div>
+      </div>
     </div>
 
-    <div class="links">
-      <a href="https://github.com/ElaMCB/Hyper-Agent/blob/main/docs/VISION-ai-test-architect.md">Vision</a>
-      <span>|</span>
-      <a href="https://github.com/ElaMCB/Hyper-Agent/blob/main/docs/DIAGRAM-capabilities.md">Capability diagrams</a>
-      <span>|</span>
-      <a href="https://github.com/ElaMCB/Hyper-Agent/blob/main/docs/BUILD-PLAN.md">Build plan</a>
-      <span>|</span>
-      <a href="https://github.com/ElaMCB/Hyper-Agent/blob/main/docs/DEPLOY.md">Deploy API</a>
-      <span>|</span>
-      <a href="https://github.com/ElaMCB/Hyper-Agent/blob/main/docs/INTEGRATION-ADO-OUTLOOK.md">ADO & Outlook</a>
+    <div class="doc-section" id="docs">
+      <p class="section-label">Documentation</p>
+      <div class="chips">
+        <a class="chip" href="https://github.com/ElaMCB/Hyper-Agent/blob/main/docs/VISION-ai-test-architect.md">Vision</a>
+        <a class="chip" href="https://github.com/ElaMCB/Hyper-Agent/blob/main/docs/DIAGRAM-capabilities.md">Diagrams</a>
+        <a class="chip" href="https://github.com/ElaMCB/Hyper-Agent/blob/main/docs/BUILD-PLAN.md">Build plan</a>
+        <a class="chip" href="https://github.com/ElaMCB/Hyper-Agent/blob/main/docs/INTEGRATION-ADO-OUTLOOK.md">ADO &amp; Outlook</a>
+        <a class="chip" href="https://github.com/ElaMCB/Hyper-Agent/blob/main/docs/DEPLOY.md">Deploy API</a>
+        <a class="chip" href="https://github.com/ElaMCB/Hyper-Agent/blob/main/docs/NEXT-STEPS.md">Next steps</a>
+      </div>
     </div>
 
     <footer>
-      <p><a href="https://github.com/ElaMCB/Hyper-Agent">Hyper-Agent on GitHub</a> · Shadow — AI test architect</p>
-      <p style="margin-top: 0.75rem; font-size: 0.8rem;">
-        Enable <strong style="color: var(--text);">GitHub Pages</strong> (Settings → Pages → Branch <code>main</code>, folder <code>/docs</code>) to host this page at<br />
-        <code style="color: var(--accent);">https://ElaMCB.github.io/Hyper-Agent/</code>
-      </p>
+      <p><a href="https://github.com/ElaMCB/Hyper-Agent">Hyper-Agent</a> · Shadow — AI test architect</p>
     </footer>
   </div>
 </body>
