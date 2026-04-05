@@ -4,7 +4,7 @@
 
 *Your AI test architect*
 
-**Context keeper · Evidence gatherer · Clarity layer**
+**Unified view · Evidence gatherer · Clarity layer**
 
 </div>
 
