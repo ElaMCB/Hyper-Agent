@@ -22,7 +22,7 @@ flowchart TB
         D3["Meeting prep"]
     end
 
-    subgraph vendor["2. Vendor (TCS) oversight"]
+    subgraph qa_team["2. QA team oversight"]
         direction TB
         V1["Commitment vs actuals"]
         V2["Single view"]
@@ -57,7 +57,7 @@ flowchart TB
     end
 
     CORE --- daily
-    CORE --- vendor
+    CORE --- qa_team
     CORE --- delivery
     CORE --- decision
     CORE --- gov
@@ -78,7 +78,7 @@ flowchart LR
         A3[Meeting prep]
     end
 
-    subgraph "2. Vendor (TCS) oversight"
+    subgraph "2. QA team oversight"
         B1[Commitment vs actuals]
         B2[Single view]
         B3[Escalation support]
@@ -115,7 +115,7 @@ flowchart LR
 | # | Capability area | Sub-capabilities |
 |---|-----------------|------------------|
 | **1** | **Daily orchestration & focus** | Morning brief, Priority stack, Meeting prep |
-| **2** | **Vendor (TCS) oversight** | Commitment vs actuals, Single view, Escalation support, Consistency |
+| **2** | **QA team oversight** | Commitment vs actuals, Single view, Escalation support, Consistency |
 | **3** | **Delivery collaboration** | Scope ↔ test alignment, Release readiness, Communication |
 | **4** | **Decision support** | Go/no-go evidence, Prioritization, Impact of changes |
 | **5** | **Governance & consistency** | Standards, Patterns |
@@ -130,7 +130,7 @@ flowchart LR
     subgraph inputs["Inputs"]
         I1[Test results]
         I2[Defects]
-        I3[TCS status]
+        I3[QA status]
         I4[Calendar / actions]
     end
 
@@ -139,7 +139,7 @@ flowchart LR
     end
 
     subgraph you["You: Test Manager"]
-        Y1[Direct TCS]
+        Y1[Lead QA]
         Y2[Align delivery]
         Y3[Decide]
     end
@@ -148,9 +148,9 @@ flowchart LR
     shadow --> you
 ```
 
-- **Inputs:** Data the agent can read (test runs, defects, TCS commitments, calendar, actions).
+- **Inputs:** Data the agent can read (test runs, defects, QA commitments, calendar, actions).
 - **Shadow:** Applies the six capability areas to produce briefs, prep, evidence, drafts.
-- **You:** Use the outputs to direct vendors, align with delivery, and make decisions.
+- **You:** Use the outputs to lead your QA team, align with delivery, and make decisions.
 
 ---
 

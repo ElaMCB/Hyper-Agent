@@ -1,6 +1,6 @@
 # Vision: AI Test Architect / Shadow for a Test Manager
 
-*Private repo — Hyper-Agent: an AI employee that shadows the Test Manager in their current role (authority over vendor TCS, close collaboration with delivery).*
+*Private repo — Hyper-Agent: an AI employee that shadows the Test Manager in their current role (oversight of the QA team, close collaboration with delivery).*
 
 ---
 
@@ -8,35 +8,35 @@
 
 ### Morning brief
 - Single place that summarizes overnight test runs, new/open defects, blockers, and environment issues so you know what needs your attention before calls.
-- **Expanded:** The agent ingests execution results, defect feeds, and (where available) pipeline status to produce a short “state of play” each morning. It highlights: critical/open defects, tests blocked or failing consistently, environment or data issues, and any TCS or delivery milestones due today. You get one read before your first meeting instead of opening five tools.
+- **Expanded:** The agent ingests execution results, defect feeds, and (where available) pipeline status to produce a short “state of play” each morning. It highlights: critical/open defects, tests blocked or failing consistently, environment or data issues, and any QA or delivery milestones due today. You get one read before your first meeting instead of opening five tools.
 
 ### Priority stack
-- The agent suggests “today’s must-do” (e.g. TCS escalation, delivery alignment, go/no-go input) based on deadlines and risks.
-- **Expanded:** It combines release calendar, open actions from previous meetings, SLA or commitment dates with TCS, and risk flags (e.g. coverage gaps, ageing defects) to propose an ordered list. You can accept, reorder, or ignore—the goal is to reduce “what should I do first?” friction.
+- The agent suggests “today’s must-do” (e.g. QA escalation, delivery alignment, go/no-go input) based on deadlines and risks.
+- **Expanded:** It combines release calendar, open actions from previous meetings, SLA or commitment dates with your QA team, and risk flags (e.g. coverage gaps, ageing defects) to propose an ordered list. You can accept, reorder, or ignore—the goal is to reduce “what should I do first?” friction.
 
 ### Meeting prep
-- Before TCS or delivery meetings, it surfaces: open actions, commitments not met, and suggested talking points or questions so you lead the conversation.
-- **Expanded:** For each scheduled meeting it can pull: action items assigned to or by TCS/delivery, status of those actions, and any new data (e.g. test results, defects) since last sync. It suggests 3–5 concrete talking points or questions (e.g. “TCS committed to X by Friday—confirm current status” or “Delivery changed scope for Y—agree updated test scope”) so you walk in prepared.
+- Before QA or delivery meetings, it surfaces: open actions, commitments not met, and suggested talking points or questions so you lead the conversation.
+- **Expanded:** For each scheduled meeting it can pull: action items assigned to or by QA/delivery, status of those actions, and any new data (e.g. test results, defects) since last sync. It suggests 3–5 concrete talking points or questions (e.g. “QA committed to X by Friday—confirm current status” or “Delivery changed scope for Y—agree updated test scope”) so you walk in prepared.
 
 ---
 
-## 2. Vendor (TCS) oversight
+## 2. QA team oversight
 
 ### Commitment vs actuals
-- Track TCS deliverables (test cases, execution, defect turnaround, coverage) against agreed plan/SLAs and flag gaps or slippage early.
+- Track QA team deliverables (test cases, execution, defect turnaround, coverage) against agreed plan/SLAs and flag gaps or slippage early.
 - **Expanded:** The agent maintains a view of what was agreed (test case count, execution windows, defect response times, coverage targets) and compares to actuals from test and defect systems. It doesn’t need to replace your tools—it can consume exports or APIs. Alerts are configurable (e.g. “flag when execution is >2 days behind plan” or “when critical defect turnaround exceeds 24h”). You get early warning instead of discovering issues in a steering meeting.
 
 ### Single view
-- One coherent view of TCS capacity, assignments, and performance so you don’t have to chase multiple statuses.
-- **Expanded:** Whether capacity is tracked in a sheet, Jira, or a vendor portal, the agent can aggregate: who is assigned to what, utilization vs capacity, and key performance indicators (delivery on time, defect escape rate, rework). One dashboard or report that you use for your own oversight and for conversations with TCS or your own leadership.
+- One coherent view of QA capacity, assignments, and performance so you don’t have to chase multiple statuses.
+- **Expanded:** Whether capacity is tracked in a sheet, Jira, or another tool, the agent can aggregate: who is assigned to what, utilization vs capacity, and key performance indicators (delivery on time, defect escape rate, rework). One dashboard or report that you use for your own oversight and for conversations with your QA team or your leadership.
 
 ### Escalation support
-- Draft factual escalation text or status updates (with evidence) when you need to document or escalate to TCS or above.
+- Draft factual escalation text or status updates (with evidence) when you need to document or escalate within QA or above.
 - **Expanded:** When you decide to escalate, the agent can generate a short, evidence-based summary: what was committed, what was delivered, dates, and gaps. You edit tone and emphasis and send. Same for “for the record” status updates to your management—consistent structure, less time writing.
 
 ### Consistency
-- Check that TCS artifacts (test plans, reports, evidence) align with your standards and traceability expectations.
-- **Expanded:** The agent knows your standards (naming, traceability to requirements, evidence format). It can review incoming TCS deliverables and flag mismatches (e.g. missing traceability, wrong template, incomplete evidence) so you can correct course in the next cycle rather than at audit time.
+- Check that QA artifacts (test plans, reports, evidence) align with your standards and traceability expectations.
+- **Expanded:** The agent knows your standards (naming, traceability to requirements, evidence format). It can review QA deliverables and flag mismatches (e.g. missing traceability, wrong template, incomplete evidence) so you can correct course in the next cycle rather than at audit time.
 
 ---
 
@@ -60,7 +60,7 @@
 
 - **Go/no-go:** “Here’s the evidence; here are the risks; here’s what’s missing” so you decide with full context.
 - **Prioritization:** When time is short, suggest ordering of test execution or defect fix order based on risk and impact.
-- **Impact of changes:** When delivery or TCS changes scope or code, outline impact on test scope, existing tests, and timelines.
+- **Impact of changes:** When delivery or QA changes scope or code, outline impact on test scope, existing tests, and timelines.
 
 The agent never makes the decision; it makes your decision better informed and faster.
 
@@ -68,14 +68,14 @@ The agent never makes the decision; it makes your decision better informed and f
 
 ## 5. Governance & consistency
 
-- **Standards:** Remind or check that strategy, naming, traceability, and evidence rules are applied across your team and TCS.
-- **Patterns:** Surface recurring failure areas, late deliveries, or process bottlenecks so you can improve ways of working with TCS and delivery.
+- **Standards:** Remind or check that strategy, naming, traceability, and evidence rules are applied across your QA team and delivery touchpoints.
+- **Patterns:** Surface recurring failure areas, late deliveries, or process bottlenecks so you can improve ways of working with QA and delivery.
 
 ---
 
 ## 6. Your “second brain”
 
-- **Status on demand:** Answer “What’s the status of X?” or “What did we agree with TCS on Y?” from the data and history it has access to.
+- **Status on demand:** Answer “What’s the status of X?” or “What did we agree with QA on Y?” from the data and history it has access to.
 - **Your preferences:** Over time, align with how you like reports (format, detail, frequency), who gets escalated when, and your risk thresholds—so outputs are tailored to you.
 
 ---
@@ -84,7 +84,7 @@ The agent never makes the decision; it makes your decision better informed and f
 
 | Your situation | How the agent helps |
 |----------------|---------------------|
-| **Authority over TCS** | Gives you visibility and evidence so you can direct, challenge, and escalate from a position of clarity. |
+| **Oversight of your QA team** | Gives you visibility and evidence so you can direct, coach, and escalate from a position of clarity. |
 | **Close work with delivery** | Keeps test scope, risks, and release readiness in one place so conversations with delivery are fact-based and aligned. |
 | **Daily tasks** | Cuts “hunting for information” and drafting from scratch so you spend more time on judgment, relationships, and decisions. |
 
@@ -92,7 +92,7 @@ The agent never makes the decision; it makes your decision better informed and f
 
 ## One-line summary
 
-An AI test architect that shadows you would act as your **context keeper, evidence gatherer, and draft producer** so you can focus on directing TCS, aligning with delivery, and making the calls only you can make.
+An AI test architect that shadows you would act as your **context keeper, evidence gatherer, and draft producer** so you can focus on leading your QA team, aligning with delivery, and making the calls only you can make.
 
 ---
 

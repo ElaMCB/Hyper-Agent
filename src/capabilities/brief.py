@@ -84,5 +84,5 @@ def _build_summary(defects: list, test_runs: list, max_bullets: int) -> tuple[li
     if len(bullets) > max_bullets:
         bullets = bullets[:max_bullets]
 
-    suggested = "Review open defects and latest test run; align with TCS on priorities." if defects or test_runs else "Add data exports to data/ and run brief again."
+    suggested = "Review open defects and latest test run; align with your QA team on priorities." if defects or test_runs else "Add data exports to data/ and run brief again."
     return bullets, suggested

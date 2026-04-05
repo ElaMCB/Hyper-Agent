@@ -10,7 +10,7 @@
 
 ---
 
-> **Shadow** is the AI that runs in this repo. It shadows the Test Manager: vendor oversight (e.g. TCS), delivery collaboration, daily orchestration. You focus on directing and deciding; Shadow keeps the picture clear and the drafts ready.
+> **Shadow** is the AI that runs in this repo. It shadows the Test Manager: QA team oversight, delivery collaboration, daily orchestration. You focus on directing and deciding; Shadow keeps the picture clear and the drafts ready.
 
 **Hyper-Agent** is the project and repo that builds Shadow.
 
@@ -32,7 +32,7 @@ How Shadow supports a Test Manager’s daily work:
 
 **[→ Vision: AI Test Architect / Shadow](docs/VISION-ai-test-architect.md)**
 
-Covers: daily brief & meeting prep, vendor (TCS) oversight, delivery collaboration, decision support, governance, and your “second brain.”
+Covers: daily brief & meeting prep, QA team oversight, delivery collaboration, decision support, governance, and your “second brain.”
 
 ### Capability diagram
 
@@ -46,7 +46,7 @@ flowchart TB
     CORE --- A5
     CORE --- A6
     A1["1. Daily orchestration & focus"]
-    A2["2. Vendor (TCS) oversight"]
+    A2["2. QA team oversight"]
     A3["3. Delivery collaboration"]
     A4["4. Decision support"]
     A5["5. Governance & consistency"]
@@ -56,7 +56,7 @@ flowchart TB
 | Area | Sub-capabilities |
 |------|------------------|
 | **1. Daily orchestration** | Morning brief · Priority stack · Meeting prep |
-| **2. Vendor (TCS) oversight** | Commitment vs actuals · Single view · Escalation support · Consistency |
+| **2. QA team oversight** | Commitment vs actuals · Single view · Escalation support · Consistency |
 | **3. Delivery collaboration** | Scope ↔ test alignment · Release readiness · Communication |
 | **4. Decision support** | Go/no-go evidence · Prioritization · Impact of changes |
 | **5. Governance** | Standards · Patterns |

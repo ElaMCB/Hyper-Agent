@@ -114,7 +114,7 @@ Hyper-Agent/
    - Load actions and (if available) last meeting notes or commitments.
    - Filter by meeting or “today”.
    - Optionally LLM: “Given these actions and commitments, suggest 3–5 talking points.”
-3. **Entrypoint:** `python src/main.py prep --meeting "TCS sync"` (or `--date today`).
+3. **Entrypoint:** `python src/main.py prep --meeting "QA sync"` (or `--date today`).
 4. **Output:** Same as brief — markdown to console or file.
 
 ---

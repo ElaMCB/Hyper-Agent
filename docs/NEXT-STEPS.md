@@ -11,10 +11,10 @@ Choose **one** high-value capability to build first so you have something usable
 | Option | Why it’s a good first slice |
 |--------|-----------------------------|
 | **Morning brief** | Single output (e.g. markdown or chat). You see value every day. Can start with manual or file-based inputs. |
-| **Meeting prep for TCS/delivery** | Clear input (calendar + list of meetings) and output (talking points + open actions). Less dependency on live tool APIs at first. |
-| **TCS commitment vs actuals** | High impact for your role. May need access to test/defect data (APIs or exports). |
+| **Meeting prep for QA / delivery** | Clear input (calendar + list of meetings) and output (talking points + open actions). Less dependency on live tool APIs at first. |
+| **QA commitment vs actuals** | High impact for your role. May need access to test/defect data (APIs or exports). |
 
-**Recommendation:** Start with **morning brief** or **meeting prep** so you can validate the format and content with minimal integration; add TCS actuals once data access is clear.
+**Recommendation:** Start with **morning brief** or **meeting prep** so you can validate the format and content with minimal integration; add QA actuals once data access is clear.
 
 ---
 
@@ -24,7 +24,7 @@ The agent needs to read from *somewhere*. List what you actually use today:
 
 - **Test results** — Where do they live? (e.g. Jira, Azure DevOps, qTest, Excel, email)
 - **Defects** — Same question: which tool, and can you export or use an API?
-- **TCS commitments / status** — Spreadsheets, Jira boards, vendor portal, email?
+- **QA commitments / status** — Spreadsheets, Jira boards, test management tools, email?
 - **Calendar / meetings** — Outlook, Google Calendar, etc. (for meeting prep)
 
 For each: note whether you have **API**, **export (CSV/Excel)**, or **manual only**. That drives how the first version gets data (API client vs “drop a file here” vs you paste).
@@ -66,7 +66,7 @@ For the slice you chose, write down the **exact** output you want.
 - 3–5 bullet points: overnight test run result, new/open critical defects, blockers, anything due today.
 - One sentence: “Suggested focus today: …”
 
-**Example — Meeting prep (TCS):**
+**Example — Meeting prep (QA):**
 
 - List of open actions (from last meeting or your list).
 - 3–5 suggested talking points or questions.
@@ -90,8 +90,8 @@ Ship this; use it for a few days; then refine prompts and add more data sources.
 ## 7. Security and privacy
 
 - Repo is **private** — good.
-- When you connect to **real tools** (Jira, TCS portal, etc.): use env vars or secrets; don’t commit credentials.
-- If the agent will see **real project/vendor names and data**, confirm your org’s policy on where that data is processed (e.g. which LLM provider and region).
+- When you connect to **real tools** (Jira, test tools, etc.): use env vars or secrets; don’t commit credentials.
+- If the agent will see **real project or team names and data**, confirm your org’s policy on where that data is processed (e.g. which LLM provider and region).
 
 ---
 
