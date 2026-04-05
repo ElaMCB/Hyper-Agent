@@ -8,6 +8,10 @@
 
 **AI brain · Second brain · Clarity layer**
 
+[![README views](https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=https%3A%2F%2Fgithub.com%2FElaMCB%2FHyper-Agent&title=README+views&count_bg=0c0e11&title_bg=d4af37&icon=github&icon_color=e8eaed&edge_flat=false)](https://github.com/ElaMCB/Hyper-Agent/graphs/traffic)
+
+*Badge counts approximate loads of this README (including bots and previews). As the repo owner, use **GitHub → Insights → Traffic** for [clones and visitors](https://github.com/ElaMCB/Hyper-Agent/graphs/traffic) to the repository; the [GitHub Pages](https://ElaMCB.github.io/Hyper-Agent/) site is tracked separately unless you add analytics there.*
+
 </div>
 
 ---
