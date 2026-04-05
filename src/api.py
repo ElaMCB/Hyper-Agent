@@ -61,6 +61,7 @@ def get_brief():
         test_runs_file=data_cfg.get("test_runs_file"),
         use_llm=bool(llm_cfg.get("enabled")),
         max_bullets=brief_cfg.get("max_bullets", 5),
+        config=config,
     )
     return {"markdown": markdown}
 
@@ -80,4 +81,5 @@ def get_brief_raw():
         test_runs_file=data_cfg.get("test_runs_file"),
         use_llm=bool(llm_cfg.get("enabled")),
         max_bullets=brief_cfg.get("max_bullets", 5),
+        config=config,
     )

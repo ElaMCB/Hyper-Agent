@@ -1,6 +1,15 @@
 # Hyper-Agent config
 # Paths are relative to repo root unless absolute.
 
+# Azure DevOps: set enabled: true, organization + project (or use AZDO_ORG / AZDO_PROJECT in .env)
+azure_devops:
+  enabled: false
+  organization: ""
+  project: ""
+  pat_env: AZDO_PAT
+  max_items: 75
+  # wiql: |   # optional custom WIQL (must return Bug work items)
+
 data:
   dir: data
   # Files to use for brief (names or paths under data.dir)

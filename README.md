@@ -87,6 +87,8 @@ Then open **http://localhost:8000/brief.md** for the brief, **http://localhost:8
 
 Data: put `defects.json` and `test_runs.json` in `data/` (sample files are included). Optional: set `llm.enabled: true` in `config/config.yaml` and add `OPENAI_API_KEY` to `.env` for LLM-polished briefs.
 
+**Azure DevOps & Outlook:** [docs/INTEGRATION-ADO-OUTLOOK.md](docs/INTEGRATION-ADO-OUTLOOK.md) — enable live Bugs in the brief (PAT + `azure_devops.enabled`); Outlook via Microsoft Graph or Power Automate.
+
 ---
 
 ## Repo

@@ -6,6 +6,21 @@ from src.data.adapters.file_export import FileExportAdapter
 from src.output.formatter import format_brief_md
 
 
+_CLOSED_STATES = frozenset({"closed", "done", "removed"})
+
+
+def _is_open_status(status: str) -> bool:
+    return (status or "").strip().lower() not in _CLOSED_STATES
+
+
+def _is_high_severity(severity: str) -> bool:
+    s = (severity or "").lower()
+    if "critical" in s or "high" in s:
+        return True
+    t = (severity or "").strip()
+    return t.startswith("1") or t.startswith("2")
+
+
 def _find_repo_root() -> Path:
     cwd = Path.cwd()
     if (cwd / "config" / "config.yaml").exists():
@@ -21,16 +36,34 @@ def run_brief(
     test_runs_file: str | None = None,
     use_llm: bool = False,
     max_bullets: int = 5,
+    config: dict | None = None,
 ) -> str:
     """
     Load defects and test runs, build a short summary, optionally use LLM to polish.
+    If config is passed and azure_devops.enabled, merges bugs from ADO with file-based defects.
     Returns markdown string.
     """
     root = _find_repo_root()
+    if config is not None:
+        mb = config.get("brief", {}).get("max_bullets")
+        if mb is not None:
+            max_bullets = int(mb)
+
     data_dir = data_dir or root / "data"
     adapter = FileExportAdapter(data_dir)
 
-    defects = adapter.get_defects(defects_file)
+    defects: list = []
+    ado_error = ""
+    if config and config.get("azure_devops", {}).get("enabled"):
+        try:
+            from src.data.adapters.azure_devops import AzureDevOpsAdapter
+
+            ado = AzureDevOpsAdapter.from_config(config["azure_devops"])
+            defects.extend(ado.fetch_bugs())
+        except Exception as e:
+            ado_error = str(e)
+
+    defects.extend(adapter.get_defects(defects_file))
     test_runs = adapter.get_test_runs(test_runs_file)
 
     # Structured summary (no LLM)
@@ -57,7 +90,13 @@ def run_brief(
             # Fallback to non-LLM if key missing or API error
             return format_brief_md(bullets, suggested) + f"\n\n*(LLM skipped: {e})*"
 
-    return format_brief_md(bullets, suggested)
+    md = format_brief_md(bullets, suggested)
+    if ado_error:
+        md += f"\n\n*Azure DevOps: could not load bugs — {ado_error}*"
+    elif config and config.get("azure_devops", {}).get("enabled"):
+        if any(str(d.id).startswith("ado-") for d in defects):
+            md += "\n\n*Bugs: live data from Azure DevOps.*"
+    return md
 
 
 def _build_summary(defects: list, test_runs: list, max_bullets: int) -> tuple[list[str], str]:
@@ -65,11 +104,11 @@ def _build_summary(defects: list, test_runs: list, max_bullets: int) -> tuple[li
     bullets = []
 
     if defects:
-        critical = [d for d in defects if d.severity and "critical" in d.severity.lower()]
-        open_count = len([d for d in defects if d.status and "open" in d.status.lower() or "new" in d.status.lower()])
-        bullets.append(f"Defects: {len(defects)} total, {len(critical)} critical/high, {open_count} open.")
-        if critical and len(bullets) < max_bullets:
-            bullets.append(f"Critical/open: {critical[0].id} — {critical[0].title[:60]}...")
+        high = [d for d in defects if _is_high_severity(d.severity)]
+        open_count = len([d for d in defects if _is_open_status(d.status)])
+        bullets.append(f"Defects: {len(defects)} total, {len(high)} critical/high, {open_count} not closed.")
+        if high and len(bullets) < max_bullets:
+            bullets.append(f"Top severity: {high[0].id} — {high[0].title[:60]}...")
     else:
         bullets.append("No defect data loaded. Drop defects.json (or defects.csv) into data/.")
 
