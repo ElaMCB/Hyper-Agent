@@ -120,16 +120,6 @@ Then open **http://localhost:8000/brief.md** for the brief, **http://localhost:8
 
 **Azure DevOps & Outlook:** [docs/INTEGRATION-ADO-OUTLOOK.md](docs/INTEGRATION-ADO-OUTLOOK.md) — live Bugs in the brief; Outlook via Graph or Power Automate.
 
-### Where is Headquarters?
-
-Headquarters is the **HTML dashboard** (not deployed to Pages by default):
-
-| Where | What to do |
-|--------|------------|
-| **This machine** | Run `python src/main.py headquarters`, then open **`output/headquarters/latest.html`** in a browser (the CLI prints the path). |
-| **API** | With the API running, open **`/headquarters.html`** (e.g. `http://localhost:8000/headquarters.html`). |
-| **GitHub Actions** | **Actions** → workflow **Nightly Headquarters** → latest run → **Artifacts** → download **`headquarters-…`** → open **`latest.html`** inside the zip. |
-
 ---
 
 ## Roadmap
