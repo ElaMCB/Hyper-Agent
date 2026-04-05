@@ -7,12 +7,12 @@ Predefined view of the AI Test Architect / Shadow and its capabilities.
 
 ## 1. High-level: six capability areas
 
-The shadow has **six predefined capability areas** around a single core role: unified view, evidence gatherer, clarity layer for the Test Manager.
+The shadow has **six predefined capability areas** around a single core role: AI brain, second brain, clarity layer for the Test Manager.
 
 ```mermaid
 flowchart TB
     subgraph agent["Hyper-Agent: AI Test Architect / Shadow"]
-        CORE["Unified view · Evidence gatherer · Clarity layer"]
+        CORE["AI brain · Second brain · Clarity layer"]
     end
 
     subgraph daily["1. Daily orchestration & focus"]

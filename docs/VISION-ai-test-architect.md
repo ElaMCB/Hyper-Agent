@@ -92,7 +92,7 @@ The agent never makes the decision; it makes your decision better informed and f
 
 ## One-line summary
 
-An AI test architect that shadows you would act as your **unified view** across tools, **evidence gatherer**, and **clarity layer**—briefs, escalations, and stakeholder comms stay grounded in evidence and **your** voice—so you can focus on leading your QA team, aligning with delivery, and making the calls only you can make.
+An AI test architect that shadows you would act as your **AI brain** for signal across tools, **second brain** for recall and synthesis, and **clarity layer** for how you show up in briefs and stakeholder comms—always grounded in evidence and **your** voice—so you can focus on leading your QA team, aligning with delivery, and making the calls only you can make.
 
 ---
 

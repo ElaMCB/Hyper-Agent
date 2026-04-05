@@ -4,7 +4,7 @@
 
 *Your AI test architect*
 
-**Unified view · Evidence gatherer · Clarity layer**
+**AI brain · Second brain · Clarity layer**
 
 </div>
 
@@ -45,7 +45,7 @@ How Shadow maps to a Test Manager’s world:
 
 ```mermaid
 flowchart TB
-    CORE["Shadow<br/>AI Test Architect"]
+    CORE["Shadow<br/>AI brain · Second brain · Clarity layer"]
     CORE --- A1
     CORE --- A2
     CORE --- A3
