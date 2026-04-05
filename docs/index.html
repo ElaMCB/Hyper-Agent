@@ -7,6 +7,7 @@
   <meta name="description" content="Shadow — an intelligence layer for Test Managers: briefs, evidence-backed summaries, and clear stakeholder framing from ADO and your stack. Built by Hyper-Agent." />
   <meta property="og:title" content="Shadow — AI Test Architect" />
   <meta property="og:description" content="AI brain · Second brain · Clarity layer for test leadership." />
+  <meta property="og:image" content="https://ElaMCB.github.io/Hyper-Agent/logo.svg" />
   <title>Shadow — AI Test Architect</title>
   <link rel="icon" href="favicon.svg" type="image/svg+xml" />
   <link rel="apple-touch-icon" href="favicon.svg" />
@@ -80,14 +81,29 @@
       .site-nav__inner { padding-left: 2rem; padding-right: 2rem; }
     }
     .site-nav .logo {
-      font-family: "Fraunces", Georgia, serif;
-      font-weight: 700;
-      font-size: 1.15rem;
-      color: var(--text);
+      display: flex;
+      align-items: center;
       text-decoration: none;
-      letter-spacing: -0.02em;
+      line-height: 0;
     }
-    .site-nav .logo:hover { color: var(--accent); }
+    .site-nav .logo img {
+      height: 30px;
+      width: auto;
+      display: block;
+      transition: opacity 0.15s ease, filter 0.15s ease;
+    }
+    @media (min-width: 480px) {
+      .site-nav .logo img { height: 32px; }
+    }
+    .site-nav .logo:hover img {
+      opacity: 0.95;
+      filter: brightness(1.12);
+    }
+    .site-nav .logo:focus-visible {
+      outline: 2px solid var(--accent);
+      outline-offset: 4px;
+      border-radius: 6px;
+    }
     .site-nav nav {
       display: flex;
       flex-wrap: wrap;
@@ -546,7 +562,9 @@
 
   <header class="site-nav" id="top">
     <div class="site-nav__inner">
-      <a class="logo" href="#top" aria-label="Shadow home">Shadow</a>
+      <a class="logo" href="#top" aria-label="Shadow home">
+        <img src="logo.svg" width="168" height="36" alt="" decoding="async" />
+      </a>
       <nav aria-label="Primary">
         <a href="#sample-brief">Sample output</a>
         <a href="#how-it-works">How it works</a>
