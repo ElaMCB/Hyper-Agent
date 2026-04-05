@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Shadow — AI Test Architect</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;1,9..144,400&family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;1,9..40,400&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg: #0f1114;
+      --surface: #181c22;
+      --text: #e8eaed;
+      --muted: #9aa0a8;
+      --accent: #c9a227;
+      --accent-soft: rgba(201, 162, 39, 0.15);
+      --border: #2a3038;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: "DM Sans", system-ui, sans-serif;
+      font-size: 1rem;
+      line-height: 1.6;
+      color: var(--text);
+      background: var(--bg);
+      background-image:
+        radial-gradient(ellipse 120% 80% at 50% -20%, rgba(201, 162, 39, 0.08), transparent 50%),
+        radial-gradient(ellipse 60% 40% at 100% 50%, rgba(80, 100, 140, 0.06), transparent);
+    }
+    .wrap {
+      max-width: 42rem;
+      margin: 0 auto;
+      padding: 3rem 1.5rem 4rem;
+    }
+    header {
+      text-align: center;
+      margin-bottom: 3rem;
+    }
+    h1 {
+      font-family: "Fraunces", Georgia, serif;
+      font-size: clamp(2.75rem, 8vw, 4rem);
+      font-weight: 600;
+      letter-spacing: -0.02em;
+      margin: 0 0 0.35em;
+      line-height: 1.05;
+    }
+    .tagline {
+      font-family: "Fraunces", Georgia, serif;
+      font-style: italic;
+      font-size: 1.25rem;
+      color: var(--muted);
+      margin: 0 0 1rem;
+    }
+    .pill-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      justify-content: center;
+      margin-top: 1.25rem;
+    }
+    .pill {
+      font-size: 0.75rem;
+      font-weight: 500;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--accent);
+      padding: 0.35rem 0.75rem;
+      border-radius: 999px;
+      background: var(--accent-soft);
+      border: 1px solid rgba(201, 162, 39, 0.35);
+    }
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 1.5rem 1.75rem;
+      margin-bottom: 1.25rem;
+    }
+    .card h2 {
+      font-family: "Fraunces", Georgia, serif;
+      font-size: 1.15rem;
+      font-weight: 600;
+      margin: 0 0 0.75rem;
+      color: var(--text);
+    }
+    .card p { margin: 0 0 0.75rem; color: var(--muted); }
+    .card p:last-child { margin-bottom: 0; }
+    ul.capabilities {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+    ul.capabilities li {
+      display: flex;
+      gap: 0.75rem;
+      padding: 0.65rem 0;
+      border-bottom: 1px solid var(--border);
+      font-size: 0.95rem;
+    }
+    ul.capabilities li:last-child { border-bottom: none; }
+    ul.capabilities strong {
+      color: var(--text);
+      min-width: 1.5rem;
+      font-variant-numeric: tabular-nums;
+    }
+    .actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+      margin-top: 2rem;
+      justify-content: center;
+    }
+    a.btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0.65rem 1.25rem;
+      border-radius: 8px;
+      font-weight: 500;
+      text-decoration: none;
+      transition: transform 0.15s ease, background 0.15s ease;
+    }
+    a.btn:hover { transform: translateY(-1px); }
+    a.btn-primary {
+      background: var(--accent);
+      color: #0f1114;
+    }
+    a.btn-primary:hover { filter: brightness(1.08); }
+    a.btn-ghost {
+      background: transparent;
+      color: var(--text);
+      border: 1px solid var(--border);
+    }
+    a.btn-ghost:hover { background: var(--surface); border-color: var(--muted); }
+    footer {
+      text-align: center;
+      margin-top: 3rem;
+      font-size: 0.85rem;
+      color: var(--muted);
+    }
+    footer a { color: var(--accent); text-decoration: none; }
+    footer a:hover { text-decoration: underline; }
+    .links {
+      margin-top: 1rem;
+    }
+    .links a {
+      color: var(--accent);
+      text-decoration: none;
+      font-size: 0.9rem;
+    }
+    .links a:hover { text-decoration: underline; }
+    .links span { color: var(--border); margin: 0 0.5rem; }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <header>
+      <h1>Shadow</h1>
+      <p class="tagline">Your AI test architect</p>
+      <div class="pill-row">
+        <span class="pill">Context keeper</span>
+        <span class="pill">Evidence gatherer</span>
+        <span class="pill">Draft producer</span>
+      </div>
+    </header>
+
+    <div class="card">
+      <h2>What Shadow is</h2>
+      <p>
+        Shadow is the AI that shadows the Test Manager: vendor oversight (e.g. TCS), delivery collaboration, and daily orchestration.
+        <strong style="color: var(--text); font-weight: 500;">Hyper-Agent</strong> is the project and repo that builds Shadow.
+      </p>
+    </div>
+
+    <div class="card">
+      <h2>Six capability areas</h2>
+      <ul class="capabilities">
+        <li><strong>1</strong> Daily orchestration & focus</li>
+        <li><strong>2</strong> Vendor (TCS) oversight</li>
+        <li><strong>3</strong> Delivery collaboration</li>
+        <li><strong>4</strong> Decision support</li>
+        <li><strong>5</strong> Governance & consistency</li>
+        <li><strong>6</strong> Second brain</li>
+      </ul>
+    </div>
+
+    <div class="actions">
+      <a class="btn btn-primary" href="https://github.com/ElaMCB/Hyper-Agent">Open repository</a>
+      <a class="btn btn-ghost" href="https://github.com/ElaMCB/Hyper-Agent/blob/main/README.md">README</a>
+    </div>
+
+    <div class="links">
+      <a href="https://github.com/ElaMCB/Hyper-Agent/blob/main/docs/VISION-ai-test-architect.md">Vision</a>
+      <span>|</span>
+      <a href="https://github.com/ElaMCB/Hyper-Agent/blob/main/docs/DIAGRAM-capabilities.md">Capability diagrams</a>
+      <span>|</span>
+      <a href="https://github.com/ElaMCB/Hyper-Agent/blob/main/docs/BUILD-PLAN.md">Build plan</a>
+      <span>|</span>
+      <a href="https://github.com/ElaMCB/Hyper-Agent/blob/main/docs/DEPLOY.md">Deploy API</a>
+    </div>
+
+    <footer>
+      <p>Private project · <a href="https://github.com/ElaMCB/Hyper-Agent">GitHub</a></p>
+      <p style="margin-top: 0.75rem; font-size: 0.8rem;">
+        Enable <strong style="color: var(--text);">GitHub Pages</strong> (Settings → Pages → Branch <code>main</code>, folder <code>/docs</code>) to host this page at<br />
+        <code style="color: var(--accent);">https://ElaMCB.github.io/Hyper-Agent/</code>
+      </p>
+    </footer>
+  </div>
+</body>
+</html>

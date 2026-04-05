@@ -14,6 +14,18 @@
 
 **Hyper-Agent** is the project and repo that builds Shadow.
 
+## Website (GitHub Pages)
+
+Shadow has a **landing page** in `docs/index.html`. It is **not** live until you turn Pages on:
+
+1. Repo **Settings** → **Pages**
+2. **Build and deployment** → Source: **Deploy from a branch**
+3. Branch: **main** → Folder: **`/docs`** → **Save**
+
+After a minute, open: **https://ElaMCB.github.io/Hyper-Agent/**
+
+That page is separate from the README: branding, capability list, and links into the repo and docs.
+
 ## Vision
 
 How Shadow supports a Test Manager’s daily work:
