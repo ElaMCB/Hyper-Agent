@@ -10,17 +10,36 @@
 
 ---
 
-> **Shadow** is the AI that runs in this repo. It shadows the Test Manager: QA team oversight, delivery collaboration, daily orchestration. You focus on directing and deciding; Shadow keeps the picture clear and the drafts ready.
+## The idea
 
-**Hyper-Agent** is the project and repo that builds Shadow.
+Test leadership is **decision-making under load**: Azure DevOps, Outlook, chat, decks, and memory all compete for the same mental bandwidth. Tools record work; they rarely **synthesize** it for *you* in the moment you need to lead.
 
-## Vision
+**Shadow** is an **intelligence layer** on top of that stack—not a replacement for ADO or your rituals, but a system that:
 
-How Shadow supports a Test Manager’s daily work:
+1. **Ingests** what already exists (work items, runs, exports; calendar and mail when you wire them).
+2. **Compresses** it into **briefs, prep, and drafts** with clear provenance—so you know what it saw and when.
+3. **Returns time** for what only you can do: coaching QA, aligning with delivery, owning risk, and signing your name to outcomes.
 
-**[→ Vision: AI Test Architect / Shadow](docs/VISION-ai-test-architect.md)**
+**Hyper-Agent** is the project that builds **Shadow**. Shadow is the name of the agent you run, deploy, and eventually talk to every day.
 
-Covers: daily brief & meeting prep, QA team oversight, delivery collaboration, decision support, governance, and your “second brain.”
+### What makes it powerful
+
+| Lever | Why it matters |
+|--------|----------------|
+| **Rhythm** | A repeatable morning brief (and later, pre-meeting prep) builds *situational awareness* without relying on willpower. |
+| **Evidence** | Escalations, steering bullets, and readiness views start from **structured facts**, not what you remembered in the car. |
+| **Composable** | Same codebase: files today, **live ADO bugs** now, Outlook/Graph and test runs next—each integration makes the next cheaper. |
+| **Human-in-the-loop** | Shadow **proposes** and **drafts**; you **decide**. No black-box “the AI said ship it.” |
+
+> Shadow shadows *you*: QA team oversight, delivery collaboration, daily orchestration. It keeps the picture sharp and the paperwork light so your judgment lands with weight.
+
+---
+
+## Vision & capability system
+
+How Shadow maps to a Test Manager’s world:
+
+**[→ Vision (full narrative)](docs/VISION-ai-test-architect.md)** — daily orchestration, QA oversight, delivery, decision support, governance, second brain.
 
 ### Capability diagram
 
@@ -50,13 +69,15 @@ flowchart TB
 | **5. Governance** | Standards · Patterns |
 | **6. Second brain** | Status on demand · Your preferences |
 
-*Full diagram set:* [docs/DIAGRAM-capabilities.md](docs/DIAGRAM-capabilities.md)
+*More diagrams:* [docs/DIAGRAM-capabilities.md](docs/DIAGRAM-capabilities.md)
 
-## Next steps
+---
 
-**[→ Recommended next steps](docs/NEXT-STEPS.md)** — first capability, data and tools, form factor, tech baseline.
+## Build & evolve Shadow
 
-**[→ How to build Shadow](docs/BUILD-PLAN.md)** — architecture, repo layout, data layer, first slice (morning brief), and order of work.
+**[→ Recommended next steps](docs/NEXT-STEPS.md)** — first slice, data sources, form factor, tech baseline.
+
+**[→ How to build (architecture)](docs/BUILD-PLAN.md)** — adapters, capabilities, CLI/API.
 
 ---
 
@@ -76,22 +97,27 @@ uvicorn src.api:app --reload --host 0.0.0.0 --port 8000
 ```
 Then open **http://localhost:8000/brief.md** for the brief, **http://localhost:8000/docs** for the API docs.
 
-| Endpoint   | Description              |
-|-----------|---------------------------|
-| `GET /`   | Service info             |
-| `GET /brief`   | Brief as JSON            |
-| `GET /brief.md`| Brief as markdown        |
-| `GET /health`  | Health check             |
+| Endpoint | Description |
+|----------|-------------|
+| `GET /` | Service info |
+| `GET /brief` | Brief as JSON |
+| `GET /brief.md` | Brief as markdown |
+| `GET /health` | Health check |
 
 **Deploy:** [docs/DEPLOY.md](docs/DEPLOY.md) — Railway, Render, Azure, or Docker.
 
-Data: put `defects.json` and `test_runs.json` in `data/` (sample files are included). Optional: set `llm.enabled: true` in `config/config.yaml` and add `OPENAI_API_KEY` to `.env` for LLM-polished briefs.
+**Data:** `defects.json` and `test_runs.json` in `data/` (samples included). Optional: `llm.enabled` + `OPENAI_API_KEY` in `.env` for LLM-polished briefs.
 
-**Azure DevOps & Outlook:** [docs/INTEGRATION-ADO-OUTLOOK.md](docs/INTEGRATION-ADO-OUTLOOK.md) — enable live Bugs in the brief (PAT + `azure_devops.enabled`); Outlook via Microsoft Graph or Power Automate.
+**Azure DevOps & Outlook:** [docs/INTEGRATION-ADO-OUTLOOK.md](docs/INTEGRATION-ADO-OUTLOOK.md) — live Bugs in the brief; Outlook via Graph or Power Automate.
 
 ---
 
-## Repo
+## Roadmap
 
-- **Private** — your space to design and build Shadow.
-- **Status** — first slice (morning brief) implemented; more capabilities to follow.
+| Horizon | Focus |
+|---------|--------|
+| **Now** | Morning brief · REST API · **Azure DevOps** open bugs merged into the brief |
+| **Next** | Meeting prep · **Outlook** (calendar) via Graph or Power Automate · ADO test results |
+| **Stretch** | Risk/readiness packs · steering narratives · authenticated endpoints · deeper “ask Shadow” over your data |
+
+This repo is the living implementation of that roadmap—fork, extend, and tune it to how *you* run quality.

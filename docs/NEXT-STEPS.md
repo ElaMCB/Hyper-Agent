@@ -89,7 +89,7 @@ Ship this; use it for a few days; then refine prompts and add more data sources.
 
 ## 7. Security and privacy
 
-- Repo is **private** — good.
+- Keep secrets and PATs **out of the repo** — use `.env` or your host’s secret store.
 - When you connect to **real tools** (Jira, test tools, etc.): use env vars or secrets; don’t commit credentials.
 - If the agent will see **real project or team names and data**, confirm your org’s policy on where that data is processed (e.g. which LLM provider and region).
 

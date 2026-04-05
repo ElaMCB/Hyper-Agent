@@ -1,6 +1,6 @@
 # Vision: AI Test Architect / Shadow for a Test Manager
 
-*Private repo — Hyper-Agent: an AI employee that shadows the Test Manager in their current role (oversight of the QA team, close collaboration with delivery).*
+*Hyper-Agent builds Shadow: an AI employee that shadows the Test Manager in their current role (oversight of the QA team, close collaboration with delivery).*
 
 ---
 
