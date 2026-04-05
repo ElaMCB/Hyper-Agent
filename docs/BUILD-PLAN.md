@@ -37,38 +37,34 @@ Concrete plan for building Hyper-Agent: architecture, first slice, and how to gr
 
 ---
 
-## 2. Suggested repo layout
+## 2. Repo layout (snapshot spine)
 
-Keep it flat at first; split later when it grows.
+**Flow:** `build_snapshot(config)` → **`Snapshot`** (UTC `as_of`, `sources`, `defects`, `test_runs`, `notes`) → `render_brief(snapshot, …)` → markdown + optional **artifact** under `output/briefs/`.
 
 ```
 Hyper-Agent/
-├── README.md
-├── docs/                    # Vision, diagram, next steps, this build plan
 ├── config/
-│   ├── config.yaml          # Data sources, LLM provider, preferences
-│   └── prompts/              # One file per capability (brief, prep, ask, …)
+│   ├── config.yaml
+│   └── prompts/
 ├── src/
-│   ├── main.py (or index.ts) # Entrypoint: parse command → run brief / prep / ask
-│   ├── data/
-│   │   ├── adapters/         # jira.py, file_export.py, excel.py, …
-│   │   └── models.py        # Shared shapes: TestRun, Defect, Action, …
-│   ├── capabilities/
-│   │   ├── brief.py         # Morning brief logic
-│   │   ├── prep.py          # Meeting prep logic
-│   │   └── ask.py           # “Status of X?” → answer
+│   ├── main.py              # CLI: brief | prep
+│   ├── api.py               # FastAPI: same spine as CLI
 │   ├── llm/
-│   │   └── client.py        # Call OpenAI / Anthropic / etc. with prompts
-│   └── output/
-│       └── formatter.py     # To markdown, plain text, etc.
-├── data/                    # Optional: drop exports here (e.g. defects.csv)
-├── .env.example             # API keys, paths — never commit .env
-└── requirements.txt or package.json
+│   │   └── client.py        # Optional polish (after deterministic brief)
+│   └── shadow/
+│       ├── models.py        # Defect, TestRun, Action, Snapshot
+│       ├── snapshot.py      # build_snapshot — adapters in, one spine out
+│       ├── adapters/        # file_export, azure_devops, …
+│       ├── capabilities/    # brief, prep (ask later)
+│       └── output/          # formatter, writer (timestamped brief-*.md)
+├── data/                    # JSON/CSV exports
+├── output/briefs/           # Generated snapshots (gitignored by default)
+└── requirements.txt
 ```
 
-- **config** = single place for “where do I read from” and “how do I like my brief”.
-- **data/adapters** = add one adapter per source; the rest of the code stays the same.
-- **capabilities** = one module per capability; each gets data from the data layer, optionally calls the LLM, returns a string or structured result.
+- **Snapshot** = single object every capability reads; provenance lives in `sources` and `as_of`.
+- **Adapters** = only populate the snapshot; no capability calls ADO directly.
+- **Capabilities** = pure(ish) transforms: `Snapshot` → string (markdown).
 
 ---
 
@@ -92,11 +88,11 @@ Hyper-Agent/
 
 1. **Define the brief format** (e.g. 5 bullets + “Suggested focus today”).
 2. **Implement a file adapter** that reads at least one of: test run summary, defects list. Use CSVs or JSON you can export today.
-3. **`capabilities/brief.py`:**
+3. **`shadow/capabilities/brief.py`** (reads `Snapshot`):
    - Load data via the data layer (file adapter only for v0).
    - Build a short structured summary (e.g. “N defects open, M critical, last run at X”). No LLM needed for v0.
    - Optionally: send that summary + a prompt to the LLM to get a tighter, natural-language brief.
-4. **`main` entrypoint:** e.g. `python src/main.py brief` (or `npm run brief`) → print markdown or write to `brief.md`.
+4. **`main` entrypoint:** `python src/main.py brief` → print markdown and save under `output/briefs/` (configurable).
 5. **Config:** path(s) to data files or “data directory”; optional LLM on/off and model name.
 
 **Acceptance:** You run the command, you get a brief you can use. Then refine prompts and add more data sources.
@@ -110,7 +106,7 @@ Hyper-Agent/
 **Steps:**
 
 1. **Data:** Either a static list of actions (CSV/JSON) or a calendar adapter (e.g. Google Calendar API) + an “actions” file. Start with file.
-2. **`capabilities/prep.py`:**
+2. **`shadow/capabilities/prep.py`:**
    - Load actions and (if available) last meeting notes or commitments.
    - Filter by meeting or “today”.
    - Optionally LLM: “Given these actions and commitments, suggest 3–5 talking points.”

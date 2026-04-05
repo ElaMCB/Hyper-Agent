@@ -2,6 +2,7 @@
 
 import base64
 import os
+from datetime import datetime
 from typing import Any
 
 import requests
@@ -18,8 +19,6 @@ ORDER BY [Microsoft.VSTS.Common.Severity] ASC, [System.CreatedDate] DESC
 
 
 class AzureDevOpsAdapter:
-    """Read bugs from a project using a Personal Access Token (PAT)."""
-
     def __init__(
         self,
         organization: str,
@@ -40,7 +39,8 @@ class AzureDevOpsAdapter:
     def from_config(cls, cfg: dict[str, Any]) -> "AzureDevOpsAdapter":
         org = (cfg.get("organization") or os.getenv("AZDO_ORG") or "").strip()
         project = (cfg.get("project") or os.getenv("AZDO_PROJECT") or "").strip()
-        pat = os.getenv(cfg.get("pat_env", "AZDO_PAT"), "") or os.getenv("AZDO_PAT", "")
+        pat_env = cfg.get("pat_env", "AZDO_PAT")
+        pat = os.getenv(pat_env, "") or os.getenv("AZDO_PAT", "")
         if not pat:
             raise ValueError("Azure DevOps PAT missing. Set AZDO_PAT in .env (see .env.example).")
         if not org or not project:
@@ -57,7 +57,6 @@ class AzureDevOpsAdapter:
         }
 
     def fetch_bugs(self) -> list[Defect]:
-        """Run WIQL, batch-get work items, map to Defect."""
         wiql_url = f"{self._base}/_apis/wit/wiql?api-version=7.1"
         r = requests.post(wiql_url, headers=self._headers(), json={"query": self.wiql}, timeout=60)
         r.raise_for_status()
@@ -70,7 +69,6 @@ class AzureDevOpsAdapter:
         if not ids:
             return []
 
-        # Batch get details (max 200 per call)
         defects: list[Defect] = []
         chunk = 200
         for i in range(0, len(ids), chunk):
@@ -92,7 +90,6 @@ def _work_item_to_defect(w: dict[str, Any]) -> Defect:
     sev = fields.get("Microsoft.VSTS.Common.Severity")
     severity = str(sev) if sev is not None else "Unknown"
     created = fields.get("System.CreatedDate")
-    from datetime import datetime
     parsed = None
     if created:
         try:

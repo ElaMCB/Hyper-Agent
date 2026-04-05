@@ -5,3 +5,6 @@ __pycache__/
 *.pyc
 .pytest_cache/
 *.egg-info/
+
+# Generated brief snapshots (optional: remove this line to track in git)
+output/briefs/

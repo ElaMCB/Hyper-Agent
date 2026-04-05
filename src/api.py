@@ -1,6 +1,6 @@
 """
 Hyper-Agent API. Run: uvicorn src.api:app --reload
-From repo root: uvicorn src.api:app --host 0.0.0.0 --port 8000
+Same spine as CLI: build_snapshot → render_brief.
 """
 import sys
 from pathlib import Path
@@ -13,12 +13,14 @@ import yaml
 from fastapi import FastAPI
 from fastapi.responses import PlainTextResponse
 
-from src.capabilities.brief import run_brief
+from src.shadow.capabilities.brief import render_brief
+from src.shadow.output.writer import write_brief_artifact
+from src.shadow.snapshot import build_snapshot
 
 app = FastAPI(
     title="Shadow",
     description="AI Test Architect — morning brief, prep, and more.",
-    version="0.1.0",
+    version="0.2.0",
 )
 
 
@@ -33,6 +35,7 @@ def _load_config() -> dict:
 def root():
     return {
         "service": "Shadow",
+        "architecture": "snapshot → capabilities (brief, …)",
         "endpoints": {
             "brief": "/brief",
             "brief_md": "/brief.md",
@@ -46,40 +49,26 @@ def health():
     return {"status": "ok"}
 
 
-@app.get("/brief")
-def get_brief():
-    """Return morning brief as JSON (markdown in .markdown field)."""
-    config = _load_config()
-    data_cfg = config.get("data", {})
-    data_dir = _ROOT / data_cfg.get("dir", "data")
-    brief_cfg = config.get("brief", {})
-    llm_cfg = config.get("llm", {})
+def _brief_markdown(config: dict, *, persist: bool = False) -> str:
+    snap = build_snapshot(_ROOT, config)
+    llm_on = bool(config.get("llm", {}).get("enabled"))
+    md = render_brief(snap, _ROOT, config, use_llm=llm_on)
+    out_cfg = config.get("output", {})
+    if persist and out_cfg.get("save_on_api", False):
+        briefs_dir = out_cfg.get("briefs_dir", "output/briefs")
+        write_brief_artifact(_ROOT, md, snap.as_of, briefs_dir)
+    return md
 
-    markdown = run_brief(
-        data_dir=data_dir,
-        defects_file=data_cfg.get("defects_file"),
-        test_runs_file=data_cfg.get("test_runs_file"),
-        use_llm=bool(llm_cfg.get("enabled")),
-        max_bullets=brief_cfg.get("max_bullets", 5),
-        config=config,
-    )
+
+@app.get("/brief")
+def get_brief(persist: bool = False):
+    """Return morning brief as JSON. Use ?persist=1 to write artifact if save_on_api is true in config."""
+    config = _load_config()
+    markdown = _brief_markdown(config, persist=persist)
     return {"markdown": markdown}
 
 
 @app.get("/brief.md", response_class=PlainTextResponse)
-def get_brief_raw():
-    """Return morning brief as plain markdown (e.g. for browser or curl)."""
+def get_brief_raw(persist: bool = False):
     config = _load_config()
-    data_cfg = config.get("data", {})
-    data_dir = _ROOT / data_cfg.get("dir", "data")
-    brief_cfg = config.get("brief", {})
-    llm_cfg = config.get("llm", {})
-
-    return run_brief(
-        data_dir=data_dir,
-        defects_file=data_cfg.get("defects_file"),
-        test_runs_file=data_cfg.get("test_runs_file"),
-        use_llm=bool(llm_cfg.get("enabled")),
-        max_bullets=brief_cfg.get("max_bullets", 5),
-        config=config,
-    )
+    return _brief_markdown(config, persist=persist)

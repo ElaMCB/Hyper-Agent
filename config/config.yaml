@@ -24,3 +24,9 @@ llm:
 brief:
   # Number of bullets before "Suggested focus"
   max_bullets: 5
+
+# Timestamped brief artifacts (audit: "what did Shadow know at standup?")
+output:
+  briefs_dir: output/briefs
+  save_on_cli: true
+  save_on_api: false

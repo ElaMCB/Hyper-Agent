@@ -21,7 +21,6 @@ def _parse_datetime(s: str | None) -> Any:
 
 
 def load_defects_from_json(path: Path) -> list[Defect]:
-    """Load defects from JSON. Expected shape: list of objects with id, title, severity, status; optional created."""
     raw = json.loads(path.read_text(encoding="utf-8"))
     if not isinstance(raw, list):
         raw = raw.get("defects", raw.get("issues", [raw]))
@@ -40,7 +39,6 @@ def load_defects_from_json(path: Path) -> list[Defect]:
 
 
 def load_defects_from_csv(path: Path) -> list[Defect]:
-    """Load defects from CSV with headers: id, title, severity, status (or key, summary, priority, status)."""
     out = []
     with path.open(encoding="utf-8", newline="") as f:
         reader = csv.DictReader(f)
@@ -55,7 +53,6 @@ def load_defects_from_csv(path: Path) -> list[Defect]:
 
 
 def load_test_runs_from_json(path: Path) -> list[TestRun]:
-    """Load test runs from JSON. Expected: list of objects with id, name, status; optional executed_at, passed, failed, total."""
     raw = json.loads(path.read_text(encoding="utf-8"))
     if not isinstance(raw, list):
         raw = raw.get("test_runs", raw.get("runs", [raw]))
@@ -76,7 +73,6 @@ def load_test_runs_from_json(path: Path) -> list[TestRun]:
 
 
 def load_actions_from_json(path: Path) -> list[Action]:
-    """Load actions from JSON. Expected: list of objects with id, title; optional owner, due, status, meeting."""
     raw = json.loads(path.read_text(encoding="utf-8"))
     if not isinstance(raw, list):
         raw = raw.get("actions", raw.get("items", [raw]))
@@ -96,8 +92,6 @@ def load_actions_from_json(path: Path) -> list[Action]:
 
 
 class FileExportAdapter:
-    """Load defects, test runs, and actions from a data directory."""
-
     def __init__(self, data_dir: Path):
         self.data_dir = Path(data_dir)
 

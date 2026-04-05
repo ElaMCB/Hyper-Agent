@@ -90,6 +90,7 @@ From the repo root:
 pip install -r requirements.txt
 python src/main.py brief
 ```
+Builds a **Snapshot** (UTC time + sources + defects + test runs), renders the brief, and by default **saves** `output/briefs/brief-YYYY-MM-DDTHHMMSSZ.md` for an audit trail. Toggle in `config/config.yaml` under `output`.
 
 **API (deploy or run locally):**
 ```bash
@@ -116,7 +117,7 @@ Then open **http://localhost:8000/brief.md** for the brief, **http://localhost:8
 
 | Horizon | Focus |
 |---------|--------|
-| **Now** | Morning brief · REST API · **Azure DevOps** open bugs merged into the brief |
+| **Now** | **Snapshot spine** (UTC + sources + provenance) · morning brief · REST API · **Azure DevOps** bugs · timestamped `output/briefs/` |
 | **Next** | Meeting prep · **Outlook** (calendar) via Graph or Power Automate · ADO test results |
 | **Stretch** | Risk/readiness packs · steering narratives · authenticated endpoints · deeper “ask Shadow” over your data |
 
