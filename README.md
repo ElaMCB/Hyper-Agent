@@ -1,6 +1,8 @@
 <div align="center">
 
-# [Shadow](https://ElaMCB.github.io/Hyper-Agent/)
+<a href="https://ElaMCB.github.io/Hyper-Agent/">
+  <img src="docs/shadow-wordmark.svg" alt="Shadow — AI test architect" width="520">
+</a>
 
 *Your AI test architect*
 
