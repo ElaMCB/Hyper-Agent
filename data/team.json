@@ -1,0 +1,23 @@
+[
+  {
+    "id": "qe-001",
+    "name": "Alex Kim",
+    "role": "Senior QE",
+    "skills": ["API testing", "CI", "Java"],
+    "on_vacation": false,
+    "morale_flag": "green",
+    "last_one_on_one": "2026-04-10",
+    "performance_note": "On track; leading automation guild"
+  },
+  {
+    "id": "qe-002",
+    "name": "Jordan Lee",
+    "role": "QE II",
+    "skills": ["UI", "Accessibility"],
+    "on_vacation": true,
+    "vacation_until": "2026-05-05",
+    "morale_flag": "amber",
+    "last_one_on_one": "2026-03-01",
+    "performance_note": "Check workload after PTO"
+  }
+]

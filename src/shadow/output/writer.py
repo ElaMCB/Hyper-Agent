@@ -55,6 +55,18 @@ def write_headquarters_artifacts(
     return stamped, latest
 
 
+def write_capability_artifact(
+    root: Path, markdown: str, as_of: datetime, *, out_subdir: str, filename_prefix: str
+) -> Path:
+    """Write e.g. `output/qe/qe-pack-2026-05-02T120000Z.md` for subagent runs."""
+    out_dir = root / out_subdir
+    out_dir.mkdir(parents=True, exist_ok=True)
+    stamp = as_of.strftime("%Y-%m-%dT%H%M%SZ")
+    path = out_dir / f"{filename_prefix}-{stamp}.md"
+    path.write_text(markdown, encoding="utf-8")
+    return path
+
+
 def write_brief_artifact(root: Path, markdown: str, as_of: datetime, briefs_dir: str) -> Path:
     """
     Write `output/briefs/brief-2026-04-05T073015Z.md` (UTC, filesystem-safe).

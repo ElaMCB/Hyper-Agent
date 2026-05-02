@@ -1,0 +1,29 @@
+[
+  {
+    "id": "al-1",
+    "person_id": "qe-001",
+    "person_name": "Alex Kim",
+    "app_name": "Billing API",
+    "sprint_label": "2026-W18",
+    "focus_pct": 60,
+    "commitment_note": "Regression + contract tests"
+  },
+  {
+    "id": "al-2",
+    "person_id": "qe-001",
+    "person_name": "Alex Kim",
+    "app_name": "Mobile checkout",
+    "sprint_label": "2026-W18",
+    "focus_pct": 50,
+    "commitment_note": "Exploratory on release candidate"
+  },
+  {
+    "id": "al-3",
+    "person_id": "qe-002",
+    "person_name": "Jordan Lee",
+    "app_name": "Admin portal",
+    "sprint_label": "2026-W18",
+    "focus_pct": 40,
+    "commitment_note": "Handover before PTO"
+  }
+]

@@ -13,9 +13,14 @@ import yaml
 from src.shadow.capabilities.brief import render_brief
 from src.shadow.capabilities.headquarters import render_headquarters_html
 from src.shadow.capabilities.prep import run_prep
+from src.shadow.capabilities.people_capacity import render_people_capacity_md
+from src.shadow.capabilities.qe_pack import render_qe_subagent_pack
+from src.shadow.capabilities.resource_allocation import render_resource_allocation_md
+from src.shadow.capabilities.strategy_lens import render_strategy_md
 from src.shadow.output.writer import (
     prune_headquarters_archives,
     write_brief_artifact,
+    write_capability_artifact,
     write_headquarters_artifacts,
     write_headquarters_latest_md,
 )
@@ -76,6 +81,51 @@ def cmd_headquarters(config: dict) -> None:
         print(f"Pruned {removed} old headquarters-*.html (keeping {max_arch} newest)", file=sys.stderr, flush=True)
 
 
+def _qe_out(config: dict) -> tuple[str, bool]:
+    qe = config.get("qe_subagents") or {}
+    return str(qe.get("output_dir", "output/qe")), bool(qe.get("save_on_cli", False))
+
+
+def cmd_people(config: dict) -> None:
+    snap = build_snapshot(_ROOT, config)
+    md = render_people_capacity_md(snap, config)
+    print(md, flush=True)
+    subdir, save = _qe_out(config)
+    if save:
+        path = write_capability_artifact(_ROOT, md, snap.as_of, out_subdir=subdir, filename_prefix="people")
+        print(f"\nSaved: {path}", file=sys.stderr, flush=True)
+
+
+def cmd_allocation(config: dict) -> None:
+    snap = build_snapshot(_ROOT, config)
+    md = render_resource_allocation_md(snap, config)
+    print(md, flush=True)
+    subdir, save = _qe_out(config)
+    if save:
+        path = write_capability_artifact(_ROOT, md, snap.as_of, out_subdir=subdir, filename_prefix="allocation")
+        print(f"\nSaved: {path}", file=sys.stderr, flush=True)
+
+
+def cmd_strategy(config: dict) -> None:
+    snap = build_snapshot(_ROOT, config)
+    md = render_strategy_md(snap, config)
+    print(md, flush=True)
+    subdir, save = _qe_out(config)
+    if save:
+        path = write_capability_artifact(_ROOT, md, snap.as_of, out_subdir=subdir, filename_prefix="strategy")
+        print(f"\nSaved: {path}", file=sys.stderr, flush=True)
+
+
+def cmd_qe(config: dict) -> None:
+    snap = build_snapshot(_ROOT, config)
+    md = render_qe_subagent_pack(snap, config)
+    print(md, flush=True)
+    subdir, save = _qe_out(config)
+    if save:
+        path = write_capability_artifact(_ROOT, md, snap.as_of, out_subdir=subdir, filename_prefix="qe-pack")
+        print(f"\nSaved: {path}", file=sys.stderr, flush=True)
+
+
 def main() -> None:
     config = _load_config()
     if len(sys.argv) < 2:
@@ -83,6 +133,10 @@ def main() -> None:
         print("  brief        Morning brief (snapshot → markdown; saves under output/briefs by default)")
         print("  headquarters Same snapshot + HQ HTML + latest.md; prunes old HQ archives if configured")
         print("  prep         Meeting prep (stub)")
+        print("  people       QE subagent: people & capacity (from data/team.json)")
+        print("  allocation   QE subagent: sprint / app allocation (from data/allocations.json)")
+        print("  strategy     QE subagent: portfolio strategy signals (from data/strategy.json)")
+        print("  qe           All three QE subagents in one markdown document")
         sys.exit(0)
 
     cmd = sys.argv[1].lower()
@@ -92,6 +146,14 @@ def main() -> None:
         cmd_headquarters(config)
     elif cmd == "prep":
         print(run_prep(_ROOT, config))
+    elif cmd == "people":
+        cmd_people(config)
+    elif cmd in ("allocation", "alloc"):
+        cmd_allocation(config)
+    elif cmd == "strategy":
+        cmd_strategy(config)
+    elif cmd == "qe":
+        cmd_qe(config)
     else:
         print(f"Unknown command: {cmd}")
         sys.exit(1)

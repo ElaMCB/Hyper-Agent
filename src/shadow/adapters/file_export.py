@@ -5,7 +5,7 @@ import json
 from pathlib import Path
 from typing import Any
 
-from ..models import Action, Defect, TestRun
+from ..models import Action, CapacityAllocation, Defect, StrategySignal, TeamMember, TestRun
 
 
 def _parse_datetime(s: str | None) -> Any:
@@ -72,6 +72,85 @@ def load_test_runs_from_json(path: Path) -> list[TestRun]:
     return out
 
 
+def _skills_from_row(r: dict) -> list[str]:
+    s = r.get("skills")
+    if isinstance(s, list):
+        return [str(x) for x in s]
+    if isinstance(s, str) and s.strip():
+        return [x.strip() for x in s.split(",") if x.strip()]
+    return []
+
+
+def load_team_from_json(path: Path) -> list[TeamMember]:
+    raw = json.loads(path.read_text(encoding="utf-8"))
+    if not isinstance(raw, list):
+        raw = raw.get("team", raw.get("members", []))
+    out: list[TeamMember] = []
+    for r in raw:
+        if isinstance(r, dict):
+            out.append(
+                TeamMember(
+                    id=str(r.get("id", r.get("employee_id", ""))),
+                    name=str(r.get("name", "")),
+                    role=str(r.get("role", "")),
+                    skills=_skills_from_row(r),
+                    on_vacation=bool(r.get("on_vacation", r.get("vacation", False))),
+                    vacation_until=_parse_datetime(r.get("vacation_until")),
+                    morale_flag=str(r.get("morale_flag", r.get("morale", ""))),
+                    last_one_on_one=_parse_datetime(r.get("last_one_on_one") or r.get("last_1_1")),
+                    performance_note=str(r.get("performance_note", "")),
+                )
+            )
+    return out
+
+
+def load_allocations_from_json(path: Path) -> list[CapacityAllocation]:
+    raw = json.loads(path.read_text(encoding="utf-8"))
+    if not isinstance(raw, list):
+        raw = raw.get("allocations", raw.get("assignments", []))
+    out: list[CapacityAllocation] = []
+    for r in raw:
+        if isinstance(r, dict):
+            pct = r.get("focus_pct") or r.get("pct") or r.get("allocation_pct")
+            try:
+                focus = int(pct) if pct is not None and str(pct).strip() != "" else None
+            except (TypeError, ValueError):
+                focus = None
+            out.append(
+                CapacityAllocation(
+                    id=str(r.get("id", r.get("key", ""))),
+                    person_id=str(r.get("person_id", r.get("person", ""))),
+                    person_name=str(r.get("person_name", r.get("name", ""))),
+                    app_name=str(r.get("app_name", r.get("app", ""))),
+                    sprint_label=str(r.get("sprint_label", r.get("sprint", ""))),
+                    focus_pct=focus,
+                    commitment_note=str(r.get("commitment_note", r.get("note", ""))),
+                )
+            )
+    return out
+
+
+def load_strategy_from_json(path: Path) -> list[StrategySignal]:
+    raw = json.loads(path.read_text(encoding="utf-8"))
+    if not isinstance(raw, list):
+        raw = raw.get("strategy", raw.get("signals", raw.get("pillars", [])))
+    out: list[StrategySignal] = []
+    for r in raw:
+        if isinstance(r, dict):
+            out.append(
+                StrategySignal(
+                    id=str(r.get("id", r.get("key", ""))),
+                    pillar=str(r.get("pillar", r.get("theme", ""))),
+                    summary=str(r.get("summary", r.get("title", ""))),
+                    horizon=str(r.get("horizon", "")),
+                    priority=str(r.get("priority", "")),
+                    status=str(r.get("status", "")),
+                    evidence_ref=str(r.get("evidence_ref", r.get("evidence", ""))),
+                )
+            )
+    return out
+
+
 def load_actions_from_json(path: Path) -> list[Action]:
     raw = json.loads(path.read_text(encoding="utf-8"))
     if not isinstance(raw, list):
@@ -114,3 +193,21 @@ class FileExportAdapter:
         if not path.exists():
             return []
         return load_actions_from_json(path)
+
+    def get_team_members(self, filename: str | None = None) -> list[TeamMember]:
+        path = self.data_dir / (filename or "team.json")
+        if not path.exists():
+            return []
+        return load_team_from_json(path)
+
+    def get_allocations(self, filename: str | None = None) -> list[CapacityAllocation]:
+        path = self.data_dir / (filename or "allocations.json")
+        if not path.exists():
+            return []
+        return load_allocations_from_json(path)
+
+    def get_strategy_signals(self, filename: str | None = None) -> list[StrategySignal]:
+        path = self.data_dir / (filename or "strategy.json")
+        if not path.exists():
+            return []
+        return load_strategy_from_json(path)

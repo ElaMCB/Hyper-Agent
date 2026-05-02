@@ -4,7 +4,7 @@ from __future__ import annotations
 
 import html
 from datetime import datetime, timezone
-from ..models import Defect, Snapshot, TestRun
+from ..models import CapacityAllocation, Defect, MailMessage, Snapshot, StrategySignal, TeamMember, TestRun
 from .brief import get_brief_bullets_and_focus
 
 
@@ -23,10 +23,16 @@ def render_headquarters_html(
     full_brief_markdown: str,
     max_defect_rows: int = 50,
     max_run_rows: int = 20,
+    max_mail_rows: int = 30,
 ) -> str:
     bullets, suggested = get_brief_bullets_and_focus(snapshot, config)
     hq_cfg = config.get("headquarters", {}) or {}
     links = hq_cfg.get("links") or []
+    mail_cap = int(hq_cfg.get("max_mail_rows", max_mail_rows))
+    show_qe = bool(hq_cfg.get("show_qe_panels", True))
+    team_cap = int(hq_cfg.get("max_team_rows", 40))
+    alloc_cap = int(hq_cfg.get("max_allocation_rows", 40))
+    strat_cap = int(hq_cfg.get("max_strategy_rows", 25))
 
     as_of_utc = snapshot.as_of.strftime("%Y-%m-%d %H:%M:%S UTC")
     title = html.escape(hq_cfg.get("title", "Shadow — Headquarters"))
@@ -65,6 +71,88 @@ def render_headquarters_html(
             return '<tr><td colspan="5" class="muted">No test runs in this snapshot.</td></tr>'
         return "\n".join(parts)
 
+    def rows_mail(messages: list[MailMessage]) -> str:
+        parts: list[str] = []
+        for m in messages[:mail_cap]:
+            unread = "Unread" if m.is_unread else ""
+            subj = (m.subject or "")[:140]
+            subj_disp = html.escape(subj) + ("…" if len(m.subject or "") > 140 else "")
+            snip = html.escape((m.snippet or "")[:160]) + ("…" if len(m.snippet or "") > 160 else "")
+            parts.append(
+                "<tr>"
+                f"<td><code>{html.escape(m.id[:14])}{'…' if len(m.id) > 14 else ''}</code></td>"
+                f"<td>{subj_disp}</td>"
+                f"<td class=\"muted\">{html.escape((m.from_addr or '')[:80])}</td>"
+                f"<td>{html.escape(unread)}</td>"
+                f"<td class=\"muted\">{_fmt_dt_utc(m.internal_date)}</td>"
+                f"<td class=\"muted small\">{snip}</td>"
+                "</tr>"
+            )
+        if not parts:
+            return '<tr><td colspan="6" class="muted">No Gmail rows in this snapshot (enable gmail in config).</td></tr>'
+        return "\n".join(parts)
+
+    def rows_team(members: list[TeamMember]) -> str:
+        parts: list[str] = []
+        for m in members[:team_cap]:
+            skills = ", ".join(m.skills[:5])
+            if len(m.skills) > 5:
+                skills += "…"
+            ooo = m.last_one_on_one.strftime("%Y-%m-%d") if m.last_one_on_one else "—"
+            vac = "Yes" if m.on_vacation else "No"
+            note = html.escape((m.performance_note or "")[:60])
+            parts.append(
+                "<tr>"
+                f"<td>{html.escape(m.name or m.id)}</td>"
+                f"<td>{html.escape(m.role)}</td>"
+                f"<td class=\"muted\">{html.escape(skills)}</td>"
+                f"<td>{html.escape(vac)}</td>"
+                f"<td>{html.escape(m.morale_flag or '—')}</td>"
+                f"<td class=\"muted\">{html.escape(ooo)}</td>"
+                f"<td class=\"muted small\">{note}</td>"
+                "</tr>"
+            )
+        if not parts:
+            return '<tr><td colspan="7" class="muted">No team rows (set data.load_team and data/team.json).</td></tr>'
+        return "\n".join(parts)
+
+    def rows_alloc(rows: list[CapacityAllocation]) -> str:
+        parts: list[str] = []
+        for a in rows[:alloc_cap]:
+            who = html.escape(a.person_name or a.person_id)
+            pct = f"{a.focus_pct}%" if a.focus_pct is not None else "—"
+            note = html.escape((a.commitment_note or "")[:80])
+            parts.append(
+                "<tr>"
+                f"<td>{who}</td>"
+                f"<td>{html.escape(a.app_name)}</td>"
+                f"<td>{html.escape(a.sprint_label)}</td>"
+                f"<td>{html.escape(pct)}</td>"
+                f"<td class=\"muted small\">{note}</td>"
+                "</tr>"
+            )
+        if not parts:
+            return '<tr><td colspan="5" class="muted">No allocation rows (set data.load_allocations).</td></tr>'
+        return "\n".join(parts)
+
+    def rows_strategy(items: list[StrategySignal]) -> str:
+        parts: list[str] = []
+        for s in items[:strat_cap]:
+            summ = html.escape((s.summary or "")[:100]) + ("…" if len(s.summary or "") > 100 else "")
+            parts.append(
+                "<tr>"
+                f"<td>{html.escape(s.pillar)}</td>"
+                f"<td>{html.escape(s.priority)}</td>"
+                f"<td>{html.escape(s.horizon)}</td>"
+                f"<td>{html.escape(s.status)}</td>"
+                f"<td>{summ}</td>"
+                f"<td class=\"muted small\">{html.escape((s.evidence_ref or '')[:48])}</td>"
+                "</tr>"
+            )
+        if not parts:
+            return '<tr><td colspan="6" class="muted">No strategy rows (set data.load_strategy).</td></tr>'
+        return "\n".join(parts)
+
     bullets_html = "\n".join(f"<li>{html.escape(b)}</li>" for b in bullets)
     sources_html = "\n".join(f"<li>{html.escape(s)}</li>" for s in snapshot.sources)
     notes_html = ""
@@ -92,8 +180,41 @@ def render_headquarters_html(
 
     more_def = len(snapshot.defects) - max_defect_rows
     defect_note = f'<p class="muted small">Showing {min(len(snapshot.defects), max_defect_rows)} of {len(snapshot.defects)}.</p>' if more_def > 0 else ""
+    more_mail = len(snapshot.mail_messages) - mail_cap
+    mail_note = f'<p class="muted small">Showing {min(len(snapshot.mail_messages), mail_cap)} of {len(snapshot.mail_messages)}.</p>' if more_mail > 0 else ""
 
     brief_pre = html.escape(full_brief_markdown)
+
+    qe_panels = ""
+    if show_qe:
+        qe_panels = f"""
+    <section class="panel">
+      <h2>QE team (file)</h2>
+      <div style="overflow-x:auto">
+        <table>
+          <thead><tr><th>Name</th><th>Role</th><th>Skills</th><th>Vacation</th><th>Morale</th><th>Last 1:1</th><th>Performance note</th></tr></thead>
+          <tbody>{rows_team(snapshot.team_members)}</tbody>
+        </table>
+      </div>
+    </section>
+    <section class="panel">
+      <h2>QE allocations</h2>
+      <div style="overflow-x:auto">
+        <table>
+          <thead><tr><th>Person</th><th>App</th><th>Sprint</th><th>%</th><th>Commitment</th></tr></thead>
+          <tbody>{rows_alloc(snapshot.capacity_allocations)}</tbody>
+        </table>
+      </div>
+    </section>
+    <section class="panel">
+      <h2>QE strategy signals</h2>
+      <div style="overflow-x:auto">
+        <table>
+          <thead><tr><th>Pillar</th><th>Priority</th><th>Horizon</th><th>Status</th><th>Summary</th><th>Evidence</th></tr></thead>
+          <tbody>{rows_strategy(snapshot.strategy_signals)}</tbody>
+        </table>
+      </div>
+    </section>"""
 
     # Self-contained page; open locally or from artifact hosting.
     return f"""<!DOCTYPE html>
@@ -207,6 +328,17 @@ def render_headquarters_html(
       <h2>Sources</h2>
       <ul>{sources_html}</ul>
     </section>
+    <section class="panel">
+      <h2>Gmail in snapshot</h2>
+      {mail_note}
+      <div style="overflow-x:auto">
+        <table>
+          <thead><tr><th>ID</th><th>Subject</th><th>From</th><th></th><th>When</th><th>Snippet</th></tr></thead>
+          <tbody>{rows_mail(snapshot.mail_messages)}</tbody>
+        </table>
+      </div>
+    </section>
+    {qe_panels}
     <section class="panel">
       <h2>Defects in snapshot</h2>
       {defect_note}

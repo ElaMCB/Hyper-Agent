@@ -6,6 +6,11 @@ __pycache__/
 .pytest_cache/
 *.egg-info/
 
+# OAuth / personal secrets (never push)
+secrets/*
+!secrets/.gitkeep
+
 # Generated brief snapshots (optional: remove this line to track in git)
 output/briefs/
 output/headquarters/
+output/qe/

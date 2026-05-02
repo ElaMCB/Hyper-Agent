@@ -1,0 +1,20 @@
+[
+  {
+    "id": "st-1",
+    "pillar": "Test automation",
+    "summary": "Raise critical-path API coverage and stabilize flaky suites across apps.",
+    "horizon": "FY26",
+    "priority": "P0",
+    "status": "Active",
+    "evidence_ref": "Q1 engineering OKRs"
+  },
+  {
+    "id": "st-2",
+    "pillar": "Quality ownership",
+    "summary": "Clarify QE vs dev test responsibilities per app; reduce duplicate effort.",
+    "horizon": "2026-H2",
+    "priority": "P1",
+    "status": "Draft",
+    "evidence_ref": "RACI workshop notes"
+  }
+]

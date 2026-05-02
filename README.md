@@ -94,6 +94,15 @@ python src/main.py brief
 ```
 Builds a **Snapshot** (UTC time + sources + defects + test runs), renders the brief, and by default **saves** `output/briefs/brief-YYYY-MM-DDTHHMMSSZ.md` for an audit trail. Toggle in `config/config.yaml` under `output`.
 
+**CLI (QE subagents — people, allocation, strategy from `data/*.json`):**
+```bash
+python src/main.py people      # people & capacity markdown (set qe_subagents.save_on_cli: true to write output/qe/*.md)
+python src/main.py allocation  # sprint / app allocation
+python src/main.py strategy    # portfolio strategy signals
+python src/main.py qe          # all three in one document
+```
+Enable `data.load_team`, `load_allocations`, and/or `load_strategy` in `config/config.yaml`. Samples: `data/team.json`, `data/allocations.json`, `data/strategy.json`. Optional: `brief.include_qe_context: true` folds compact QE lines into the morning brief.
+
 **CLI (daily Headquarters page):**
 ```bash
 python src/main.py headquarters
@@ -104,19 +113,22 @@ Same snapshot and brief as above, plus a **single HTML dashboard** at `output/he
 ```bash
 uvicorn src.api:app --reload --host 0.0.0.0 --port 8000
 ```
-Then open **http://localhost:8000/brief.md** for the brief, **http://localhost:8000/headquarters.html** for the dashboard, **http://localhost:8000/docs** for the API docs.
+Then open **http://localhost:8000/brief.md** for the brief, **http://localhost:8000/headquarters.html** for the dashboard, **http://localhost:8000/qe.md** for the combined QE subagent pack, **http://localhost:8000/docs** for the API docs.
 
 | Endpoint | Description |
 |----------|-------------|
 | `GET /` | Service info |
 | `GET /brief` | Brief as JSON |
 | `GET /brief.md` | Brief as markdown |
+| `GET /qe.md` | QE subagent pack (people + allocation + strategy) as markdown |
 | `GET /headquarters.html` | Headquarters dashboard (HTML); `?persist=1` writes `output/headquarters/` (`latest.html`, `latest.md`, archives, prune) if the server can write the repo |
 | `GET /health` | Health check |
 
 **Deploy:** [docs/DEPLOY.md](docs/DEPLOY.md) — Railway, Render, Azure, or Docker.
 
 **Data:** `defects.json` and `test_runs.json` in `data/` (samples included). Optional: `llm.enabled` + `OPENAI_API_KEY` in `.env` for LLM-polished briefs.
+
+**Gmail (personal, read-only):** [docs/INTEGRATION-GMAIL.md](docs/INTEGRATION-GMAIL.md) — OAuth in `secrets/` (gitignored); use `data.load_defects` / `load_test_runs: false` for inbox-only briefs. Do not commit tokens or push a config with `gmail.enabled: true` if the repo is public.
 
 **Azure DevOps & Outlook:** [docs/INTEGRATION-ADO-OUTLOOK.md](docs/INTEGRATION-ADO-OUTLOOK.md) — live Bugs in the brief; Outlook via Graph or Power Automate.
 

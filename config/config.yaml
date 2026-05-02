@@ -10,11 +10,39 @@ azure_devops:
   max_items: 75
   # wiql: |   # optional custom WIQL (must return Bug work items)
 
+# Gmail (personal): read-only; OAuth client JSON + token must stay local — see docs/INTEGRATION-GMAIL.md
+gmail:
+  enabled: false
+  credentials_file: secrets/gmail_oauth_client.json
+  token_file: secrets/gmail_token.json
+  # Gmail search query, e.g. is:unread newer_than:7d — leave empty for recent inbox
+  query: ""
+  max_messages: 25
+
 data:
   dir: data
+  # Set to false to skip sample work files (e.g. personal-only Gmail runs)
+  load_defects: true
+  load_test_runs: true
   # Files to use for brief (names or paths under data.dir)
   defects_file: defects.json
   test_runs_file: test_runs.json
+  # QE leadership files (samples in data/). Set true to include in Snapshot / HQ / subagent CLIs.
+  load_team: false
+  team_file: team.json
+  load_allocations: false
+  allocations_file: allocations.json
+  load_strategy: false
+  strategy_file: strategy.json
+
+# QE subagent markdown artifacts (separate from morning brief)
+qe_subagents:
+  output_dir: output/qe
+  save_on_cli: false
+
+# People & capacity subagent (1:1 staleness threshold, days)
+people:
+  one_on_one_stale_days: 21
 
 llm:
   enabled: false
@@ -24,6 +52,11 @@ llm:
 brief:
   # Number of bullets before "Suggested focus"
   max_bullets: 5
+  # Markdown H1 for the brief, e.g. "# Personal brief"
+  title: "# Morning brief"
+  # Prepend compact QE bullets when team/allocations/strategy are loaded into the snapshot
+  include_qe_context: false
+  max_qe_context_bullets: 3
 
 # Timestamped brief artifacts (audit: "what did Shadow know at standup?")
 output:
@@ -40,6 +73,13 @@ headquarters:
   retention:
     # Keep the N newest headquarters-*.html archives; 0 = never delete old archives
     max_archived_html: 30
+  # Cap rows in the Gmail table (subjects/snippets are still personal — keep output/ local only)
+  max_mail_rows: 30
+  # QE team / allocations / strategy tables (sensitive — disable if sharing HTML)
+  show_qe_panels: true
+  max_team_rows: 40
+  max_allocation_rows: 40
+  max_strategy_rows: 25
   # Optional shortcuts (ADO, dashboards, wiki) — same snapshot, fewer tabs to open
   links: []
   # links:

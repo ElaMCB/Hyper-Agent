@@ -15,6 +15,7 @@ from fastapi.responses import HTMLResponse, PlainTextResponse
 
 from src.shadow.capabilities.brief import render_brief
 from src.shadow.capabilities.headquarters import render_headquarters_html
+from src.shadow.capabilities.qe_pack import render_qe_subagent_pack
 from src.shadow.output.writer import (
     prune_headquarters_archives,
     write_brief_artifact,
@@ -46,6 +47,7 @@ def root():
             "brief": "/brief",
             "brief_md": "/brief.md",
             "headquarters": "/headquarters.html",
+            "qe_md": "/qe.md",
             "health": "/health",
         },
     }
@@ -98,6 +100,14 @@ def _headquarters_html(config: dict, *, persist: bool = False) -> str:
         max_arch = int(ret_cfg.get("max_archived_html", 0))
         prune_headquarters_archives(_ROOT, hq_dir, max_arch)
     return html_page
+
+
+@app.get("/qe.md", response_class=PlainTextResponse)
+def get_qe_pack():
+    """QE subagent pack: people & capacity + allocation + strategy (markdown)."""
+    config = _load_config()
+    snap = build_snapshot(_ROOT, config)
+    return render_qe_subagent_pack(snap, config)
 
 
 @app.get("/headquarters.html", response_class=HTMLResponse)
