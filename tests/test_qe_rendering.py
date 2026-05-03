@@ -38,7 +38,7 @@ class QeRenderingTests(unittest.TestCase):
                 "brief": {
                     "include_qe_context": True,
                     "max_qe_context_bullets": 2,
-                    "max_bullets": 5,
+                    "max_bullets": 2,
                 }
             },
         )
