@@ -64,7 +64,7 @@ class GmailAdapterParsingTests(unittest.TestCase):
                         "credentials_file": "secrets/client.json",
                         "token_file": "secrets/token.json",
                         "query": "   ",
-                        "max_messages": 0,
+                        "max_messages": 1,
                     },
                 )
 
