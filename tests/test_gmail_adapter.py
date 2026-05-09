@@ -67,6 +67,7 @@ class GmailAdapterParsingTests(unittest.TestCase):
                         "max_messages": 1,
                     },
                 )
+            saved_token = json.loads(token_path.read_text(encoding="utf-8"))
 
         self.assertEqual(notes, [])
         self.assertEqual(len(messages), 1)
@@ -89,7 +90,7 @@ class GmailAdapterParsingTests(unittest.TestCase):
                 "metadataHeaders": ["Subject", "From", "Date"],
             },
         )
-        self.assertEqual(json.loads(token_path.read_text(encoding="utf-8")), {"token": "saved"})
+        self.assertEqual(saved_token, {"token": "saved"})
 
 
 def _fake_google_modules():
