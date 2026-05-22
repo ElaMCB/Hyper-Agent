@@ -227,6 +227,7 @@ class RecentRegressionCoverageTests(unittest.TestCase):
         page = render_headquarters_html(
             snapshot,
             {
+                "brief": {"max_bullets": 2},
                 "headquarters": {
                     "title": "Shadow <HQ>",
                     "show_qe_panels": False,
