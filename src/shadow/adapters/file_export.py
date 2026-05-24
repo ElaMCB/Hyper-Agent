@@ -81,6 +81,25 @@ def _skills_from_row(r: dict) -> list[str]:
     return []
 
 
+def _first_present(r: dict, *keys: str) -> Any:
+    for key in keys:
+        if key in r and r.get(key) is not None:
+            return r.get(key)
+    return None
+
+
+def _parse_bool(value: Any) -> bool:
+    if isinstance(value, bool):
+        return value
+    if isinstance(value, str):
+        v = value.strip().lower()
+        if v in {"true", "yes", "y", "1", "on"}:
+            return True
+        if v in {"false", "no", "n", "0", "off", ""}:
+            return False
+    return bool(value)
+
+
 def load_team_from_json(path: Path) -> list[TeamMember]:
     raw = json.loads(path.read_text(encoding="utf-8"))
     if not isinstance(raw, list):
@@ -94,7 +113,7 @@ def load_team_from_json(path: Path) -> list[TeamMember]:
                     name=str(r.get("name", "")),
                     role=str(r.get("role", "")),
                     skills=_skills_from_row(r),
-                    on_vacation=bool(r.get("on_vacation", r.get("vacation", False))),
+                    on_vacation=_parse_bool(_first_present(r, "on_vacation", "vacation") or False),
                     vacation_until=_parse_datetime(r.get("vacation_until")),
                     morale_flag=str(r.get("morale_flag", r.get("morale", ""))),
                     last_one_on_one=_parse_datetime(r.get("last_one_on_one") or r.get("last_1_1")),
@@ -111,7 +130,7 @@ def load_allocations_from_json(path: Path) -> list[CapacityAllocation]:
     out: list[CapacityAllocation] = []
     for r in raw:
         if isinstance(r, dict):
-            pct = r.get("focus_pct") or r.get("pct") or r.get("allocation_pct")
+            pct = _first_present(r, "focus_pct", "pct", "allocation_pct")
             try:
                 focus = int(pct) if pct is not None and str(pct).strip() != "" else None
             except (TypeError, ValueError):
