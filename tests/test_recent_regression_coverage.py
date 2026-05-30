@@ -102,7 +102,13 @@ class RecentRegressionCoverageTests(unittest.TestCase):
                     is_unread=True,
                 )
             ],
-            team_members=[TeamMember(id="qe-1", name="Avery")],
+            team_members=[
+                TeamMember(
+                    id="qe-1",
+                    name="Avery",
+                    last_one_on_one=datetime(2026, 5, 29, tzinfo=timezone.utc),
+                )
+            ],
             capacity_allocations=[
                 CapacityAllocation(id="alloc-1", person_id="qe-1", person_name="Avery", app_name="Checkout")
             ],
@@ -171,7 +177,7 @@ class RecentRegressionCoverageTests(unittest.TestCase):
                     "links": [{"label": f"Docs {unsafe}", "url": 'https://example.test/?q="bad"'}],
                     "max_mail_rows": 1,
                 },
-                "brief": {"max_bullets": 5},
+                "brief": {"max_bullets": 2},
             },
             full_brief_markdown=f"# Brief\n\n{unsafe}",
             max_defect_rows=1,
