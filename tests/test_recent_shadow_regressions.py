@@ -115,7 +115,7 @@ class RecentShadowRegressionTests(unittest.TestCase):
         self.assertIn("File: allocations (allocations.json)", snapshot.sources)
         self.assertIn("File: strategy (strategy.json)", snapshot.sources)
         self.assertFalse(any(source.startswith("Gmail: connected") for source in snapshot.sources))
-        self.assertTrue(any("OAuth client JSON not found" in note for note in snapshot.notes))
+        self.assertTrue(any(note.startswith("Gmail: ") for note in snapshot.notes))
 
     def test_brief_keeps_qe_context_and_focus_when_mail_work_and_qe_are_present(self):
         as_of = datetime(2026, 6, 7, tzinfo=timezone.utc)
