@@ -170,7 +170,14 @@ class CapabilityRegressionTests(unittest.TestCase):
                     is_unread=True,
                 )
             ],
-            team_members=[TeamMember(id="qe-1", name="Alex", on_vacation=False)],
+            team_members=[
+                TeamMember(
+                    id="qe-1",
+                    name="Alex",
+                    on_vacation=False,
+                    last_one_on_one=datetime(2026, 6, 10, tzinfo=timezone.utc),
+                )
+            ],
             capacity_allocations=[CapacityAllocation(id="al-1", person_id="qe-1", app_name="Billing")],
             strategy_signals=[
                 StrategySignal(id="st-1", pillar="Automation", priority="P0", summary="Raise API coverage")
