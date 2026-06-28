@@ -43,6 +43,16 @@ def _first_present(r: dict, *keys: str) -> Any:
     return None
 
 
+def _first_nonblank(r: dict, *keys: str) -> Any:
+    for key in keys:
+        if key not in r or r[key] is None:
+            continue
+        if isinstance(r[key], str) and r[key].strip() == "":
+            continue
+        return r[key]
+    return None
+
+
 def load_defects_from_json(path: Path) -> list[Defect]:
     raw = json.loads(path.read_text(encoding="utf-8"))
     if not isinstance(raw, list):
@@ -134,7 +144,7 @@ def load_allocations_from_json(path: Path) -> list[CapacityAllocation]:
     out: list[CapacityAllocation] = []
     for r in raw:
         if isinstance(r, dict):
-            pct = _first_present(r, "focus_pct", "pct", "allocation_pct")
+            pct = _first_nonblank(r, "focus_pct", "pct", "allocation_pct")
             try:
                 focus = int(pct) if pct is not None and str(pct).strip() != "" else None
             except (TypeError, ValueError):
