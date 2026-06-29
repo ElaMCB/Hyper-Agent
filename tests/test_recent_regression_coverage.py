@@ -222,8 +222,8 @@ class QeCapabilityRenderingTests(unittest.TestCase):
         strategy_md = render_strategy_md(snapshot, config)
         qe_pack = render_qe_subagent_pack(snapshot, config)
 
-        self.assertIn("Morale watch (amber/red): Jordan Lee", people_md)
-        self.assertIn("1:1 stale (>21d or missing): Jordan Lee", people_md)
+        self.assertIn("Morale watch (amber/red):** Jordan Lee", people_md)
+        self.assertIn("1:1 stale (>21d or missing):** Jordan Lee", people_md)
         self.assertIn("Warning:", allocation_md)
         self.assertIn("qe-1 @ 2026-W18", allocation_md)
         self.assertIn("Regression \\| contract tests", allocation_md)
