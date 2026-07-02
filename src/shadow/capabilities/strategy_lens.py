@@ -2,17 +2,19 @@
 
 from __future__ import annotations
 
+import re
+
 from ..models import Snapshot
+
+
+_PRIORITY_RE = re.compile(r"^P([0-2])(?:$|\D)")
 
 
 def _priority_rank(p: str) -> tuple[int, str]:
     u = (p or "").strip().upper()
-    if u.startswith("P0"):
-        return (0, u)
-    if u.startswith("P1"):
-        return (1, u)
-    if u.startswith("P2"):
-        return (2, u)
+    match = _PRIORITY_RE.match(u)
+    if match:
+        return (int(match.group(1)), u)
     return (9, u)
 
 
