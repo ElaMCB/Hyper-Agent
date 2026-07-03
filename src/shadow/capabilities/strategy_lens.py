@@ -7,11 +7,11 @@ from ..models import Snapshot
 
 def _priority_rank(p: str) -> tuple[int, str]:
     u = (p or "").strip().upper()
-    if u.startswith("P0"):
+    if u.startswith("P0") and (len(u) == 2 or not u[2].isdigit()):
         return (0, u)
-    if u.startswith("P1"):
+    if u.startswith("P1") and (len(u) == 2 or not u[2].isdigit()):
         return (1, u)
-    if u.startswith("P2"):
+    if u.startswith("P2") and (len(u) == 2 or not u[2].isdigit()):
         return (2, u)
     return (9, u)
 
