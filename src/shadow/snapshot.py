@@ -106,9 +106,23 @@ def build_snapshot(root: Path, config: dict) -> Snapshot:
         if st:
             sources.append(f"File: strategy ({strat_file})")
 
+    aqua_report = None
+    aqua_cfg = (config.get("integrations") or {}).get("aqua") or {}
+    if aqua_cfg.get("enabled"):
+        from .adapters.aqua import load_aqua_report
+
+        aqua_report, aqua_notes = load_aqua_report(root, aqua_cfg)
+        notes.extend(aqua_notes)
+        if aqua_report is not None:
+            n = len(aqua_report.scenarios)
+            src = aqua_cfg.get("report_path", "data/aqua-report.json")
+            sources.append(f"A.Q.U.A: {n} scenario(s) ({src})")
+        elif aqua_cfg.get("report_path"):
+            sources.append("A.Q.U.A: enabled (no report loaded)")
+
     if not sources:
         sources.append(
-            "(No sources — enable Gmail/ADO, load team/allocations/strategy in config, or add data/ files.)"
+            "(No sources — enable Gmail/ADO, A.Q.U.A, load team/allocations/strategy in config, or add data/ files.)"
         )
 
     return Snapshot(
@@ -120,5 +134,6 @@ def build_snapshot(root: Path, config: dict) -> Snapshot:
         team_members=team_members,
         capacity_allocations=capacity_allocations,
         strategy_signals=strategy_signals,
+        aqua_report=aqua_report,
         notes=notes,
     )

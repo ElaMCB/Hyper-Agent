@@ -132,13 +132,15 @@ Then open **http://localhost:8000/brief.md** for the brief, **http://localhost:8
 
 **Azure DevOps & Outlook:** [docs/INTEGRATION-ADO-OUTLOOK.md](docs/INTEGRATION-ADO-OUTLOOK.md) — live Bugs in the brief; Outlook via Graph or Power Automate.
 
+**A.Q.U.A (testing engine):** [docs/INTEGRATION-AQUA.md](docs/INTEGRATION-AQUA.md) — ingest uncertainty-quantified test reports from [AQUA](https://github.com/ElaMCB/AQUA). Shadow is the **leadership layer** for A.Q.U.A and other testing engines: low-confidence scenarios surface in the morning brief. Enable `integrations.aqua` in `config/config.yaml` and place `aqua-report.json` in `data/`.
+
 ---
 
 ## Roadmap
 
 | Horizon | Focus |
 |---------|--------|
-| **Now** | **Snapshot spine** (UTC + sources + provenance) · morning brief · REST API · **Azure DevOps** bugs · timestamped `output/briefs/` |
+| **Now** | **Snapshot spine** (UTC + sources + provenance) · morning brief · REST API · **Azure DevOps** bugs · **A.Q.U.A** reports · timestamped `output/briefs/` |
 | **Next** | Meeting prep · **Outlook** (calendar) via Graph or Power Automate · ADO test results |
 | **Stretch** | Risk/readiness packs · steering narratives · authenticated endpoints · deeper “ask Shadow” over your data |
 

@@ -1,0 +1,117 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://elamcb.github.io/AQUA/schemas/aqua-report.schema.json",
+  "title": "AQUA Report",
+  "description": "Shared contract between AQUA and Shadow. Copy this file into the Shadow repo at schemas/aqua-report.schema.json.",
+  "type": "object",
+  "required": ["aqua_report"],
+  "additionalProperties": false,
+  "properties": {
+    "aqua_report": {
+      "type": "object",
+      "required": ["version", "snapshot_id", "generated_at", "scenarios"],
+      "additionalProperties": false,
+      "properties": {
+        "version": {
+          "type": "string",
+          "pattern": "^0\\.\\d+\\.\\d+$",
+          "description": "Schema version (semver 0.x)"
+        },
+        "snapshot_id": {
+          "type": "string",
+          "format": "uuid",
+          "description": "Unique identifier for this analysis run"
+        },
+        "generated_at": {
+          "type": "string",
+          "format": "date-time",
+          "description": "ISO 8601 timestamp"
+        },
+        "source": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "repo": { "type": "string" },
+            "pr": { "type": "integer", "minimum": 1 },
+            "base_ref": { "type": "string" },
+            "head_ref": { "type": "string" },
+            "base_sha": { "type": "string" },
+            "head_sha": { "type": "string" }
+          }
+        },
+        "scenarios": {
+          "type": "array",
+          "minItems": 1,
+          "items": { "$ref": "#/$defs/scenario" }
+        },
+        "production_drift": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/drift_signal" }
+        },
+        "recommendations": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/recommendation" }
+        }
+      }
+    }
+  },
+  "$defs": {
+    "scenario": {
+      "type": "object",
+      "required": ["id", "description", "confidence", "rationale", "alternatives", "impact", "status"],
+      "additionalProperties": false,
+      "properties": {
+        "id": { "type": "string", "format": "uuid" },
+        "description": { "type": "string", "minLength": 1 },
+        "confidence": { "type": "number", "minimum": 0, "maximum": 1 },
+        "rationale": { "type": "string", "minLength": 1 },
+        "alternatives": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["hypothesis", "probability"],
+            "additionalProperties": false,
+            "properties": {
+              "hypothesis": { "type": "string" },
+              "probability": { "type": "number", "minimum": 0, "maximum": 1 },
+              "evidence": { "type": "string" }
+            }
+          }
+        },
+        "impact": { "type": "string", "enum": ["high", "medium", "low"] },
+        "status": {
+          "type": "string",
+          "enum": ["generated", "executed", "failed", "passed"]
+        },
+        "affected_paths": {
+          "type": "array",
+          "items": { "type": "string" }
+        }
+      }
+    },
+    "drift_signal": {
+      "type": "object",
+      "required": ["id", "description", "severity", "detected_at"],
+      "additionalProperties": false,
+      "properties": {
+        "id": { "type": "string", "format": "uuid" },
+        "description": { "type": "string" },
+        "severity": { "type": "string", "enum": ["high", "medium", "low"] },
+        "detected_at": { "type": "string", "format": "date-time" },
+        "confidence": { "type": "number", "minimum": 0, "maximum": 1 }
+      }
+    },
+    "recommendation": {
+      "type": "object",
+      "required": ["id", "action", "risk", "scenario_id"],
+      "additionalProperties": false,
+      "properties": {
+        "id": { "type": "string", "format": "uuid" },
+        "scenario_id": { "type": "string", "format": "uuid" },
+        "action": { "type": "string" },
+        "risk": { "type": "string", "enum": ["high", "medium", "low"] },
+        "auto_merge": { "type": "boolean", "const": false }
+      }
+    }
+  }
+}

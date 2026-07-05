@@ -4,6 +4,7 @@ from pathlib import Path
 
 from ..models import Snapshot
 from ..output.formatter import format_brief_md
+from .aqua_brief import aqua_summary_bullets
 from .people_capacity import people_capacity_summary_bullets
 from .resource_allocation import resource_allocation_summary_bullets
 from .strategy_lens import strategy_summary_bullets
@@ -91,9 +92,13 @@ def _build_summary(snapshot: Snapshot, max_bullets: int, config: dict) -> tuple[
         qe.extend(strategy_summary_bullets(snapshot, config))
         qe = qe[:qe_mx]
 
-    work_max = max(0, max_bullets - len(qe))
+    aqua = aqua_summary_bullets(snapshot, config)
+    aqua_mx = int(brief_cfg.get("max_aqua_bullets", 4))
+    aqua = aqua[:aqua_mx]
+
+    work_max = max(0, max_bullets - len(qe) - len(aqua))
     work, has_personal, has_work = _work_mail_bullets(snapshot, work_max)
-    bullets = qe + work
+    bullets = qe + aqua + work
     if len(bullets) > max_bullets:
         bullets = bullets[:max_bullets]
 

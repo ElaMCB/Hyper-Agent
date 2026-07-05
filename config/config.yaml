@@ -1,6 +1,16 @@
 # Hyper-Agent config
 # Paths are relative to repo root unless absolute.
 
+# A.Q.U.A — uncertainty-quantified test reports (https://github.com/ElaMCB/AQUA)
+integrations:
+  aqua:
+    enabled: false
+  #   endpoint: ""                    # optional: AQUA HTTP API when available
+  #   report_path: data/aqua-report.json
+  #   alert_threshold: 0.75           # flag scenarios below this confidence in brief
+  #   include_in_brief: true
+  #   timeout_seconds: 10
+
 # Azure DevOps: set enabled: true, organization + project (or use AZDO_ORG / AZDO_PROJECT in .env)
 azure_devops:
   enabled: false
@@ -52,6 +62,8 @@ llm:
 brief:
   # Number of bullets before "Suggested focus"
   max_bullets: 5
+  # Cap A.Q.U.A lines in the morning brief (when integrations.aqua.enabled)
+  max_aqua_bullets: 4
   # Markdown H1 for the brief, e.g. "# Personal brief"
   title: "# Morning brief"
   # Prepend compact QE bullets when team/allocations/strategy are loaded into the snapshot

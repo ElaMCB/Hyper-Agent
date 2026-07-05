@@ -104,5 +104,6 @@ class Snapshot:
     team_members: list[TeamMember] = field(default_factory=list)
     capacity_allocations: list[CapacityAllocation] = field(default_factory=list)
     strategy_signals: list[StrategySignal] = field(default_factory=list)
+    aqua_report: Optional[object] = None  # AquaReport from adapters.aqua when integrations.aqua enabled
     """Human-readable issues (e.g. adapter failures) — shown in brief footer."""
     notes: list[str] = field(default_factory=list)
