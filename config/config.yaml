@@ -4,12 +4,12 @@
 # A.Q.U.A — uncertainty-quantified test reports (https://github.com/ElaMCB/AQUA)
 integrations:
   aqua:
-    enabled: false
-  #   endpoint: ""                    # optional: AQUA HTTP API when available
-  #   report_path: data/aqua-report.json
-  #   alert_threshold: 0.75           # flag scenarios below this confidence in brief
-  #   include_in_brief: true
-  #   timeout_seconds: 10
+    enabled: true
+    report_path: data/aqua-report.json
+    alert_threshold: 0.75
+    include_in_brief: true
+    timeout_seconds: 10
+    # endpoint: ""   # optional: AQUA HTTP API when available
 
 # Azure DevOps: set enabled: true, organization + project (or use AZDO_ORG / AZDO_PROJECT in .env)
 azure_devops:
