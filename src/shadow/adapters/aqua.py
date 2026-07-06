@@ -10,6 +10,21 @@ from urllib.error import URLError
 from urllib.request import Request, urlopen
 
 
+def _safe_float(value: Any, default: float = 0.0) -> float:
+    try:
+        return float(value)
+    except (TypeError, ValueError):
+        return default
+
+
+def _as_dict(value: Any) -> dict[str, Any]:
+    return value if isinstance(value, dict) else {}
+
+
+def _as_list(value: Any) -> list[Any]:
+    return value if isinstance(value, list) else []
+
+
 @dataclass
 class AquaAlternative:
     hypothesis: str
@@ -42,13 +57,13 @@ class AquaReport:
 
 def _parse_alternatives(raw: list[Any]) -> list[AquaAlternative]:
     out: list[AquaAlternative] = []
-    for item in raw:
+    for item in _as_list(raw):
         if not isinstance(item, dict):
             continue
         out.append(
             AquaAlternative(
                 hypothesis=str(item.get("hypothesis", item.get("description", ""))),
-                probability=float(item.get("probability", 0)),
+                probability=_safe_float(item.get("probability")),
                 evidence=str(item.get("evidence", "")),
             )
         )
@@ -61,19 +76,20 @@ def parse_aqua_payload(raw: dict[str, Any]) -> AquaReport | None:
         return None
 
     scenarios: list[AquaScenario] = []
-    for item in block.get("scenarios", []):
+    for item in _as_list(block.get("scenarios", [])):
         if not isinstance(item, dict):
             continue
+        affected_paths = item.get("affected_paths", [])
         scenarios.append(
             AquaScenario(
                 id=str(item.get("id", "")),
                 description=str(item.get("description", "")),
-                confidence=float(item.get("confidence", 0)),
+                confidence=_safe_float(item.get("confidence")),
                 rationale=str(item.get("rationale", "")),
                 impact=str(item.get("impact", "medium")),
                 status=str(item.get("status", "generated")),
                 alternatives=_parse_alternatives(item.get("alternatives", [])),
-                affected_paths=[str(p) for p in item.get("affected_paths", [])],
+                affected_paths=[str(p) for p in affected_paths] if isinstance(affected_paths, list) else [],
             )
         )
 
@@ -82,9 +98,9 @@ def parse_aqua_payload(raw: dict[str, Any]) -> AquaReport | None:
         snapshot_id=str(block.get("snapshot_id", "")),
         generated_at=str(block.get("generated_at", "")),
         scenarios=scenarios,
-        source=dict(block.get("source", {})),
-        production_drift=list(block.get("production_drift", [])),
-        recommendations=list(block.get("recommendations", [])),
+        source=_as_dict(block.get("source", {})),
+        production_drift=_as_list(block.get("production_drift", [])),
+        recommendations=_as_list(block.get("recommendations", [])),
     )
 
 
