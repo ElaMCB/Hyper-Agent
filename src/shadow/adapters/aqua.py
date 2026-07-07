@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import json
+import math
 from dataclasses import dataclass, field
 from pathlib import Path
 from typing import Any
@@ -40,15 +41,27 @@ class AquaReport:
     recommendations: list[dict[str, Any]] = field(default_factory=list)
 
 
-def _parse_alternatives(raw: list[Any]) -> list[AquaAlternative]:
+def _safe_float(value: Any, default: float = 0.0) -> float:
+    try:
+        parsed = float(value)
+    except (TypeError, ValueError):
+        return default
+    return parsed if math.isfinite(parsed) else default
+
+
+def _dict_list(raw: Any) -> list[dict[str, Any]]:
+    if not isinstance(raw, list):
+        return []
+    return [item for item in raw if isinstance(item, dict)]
+
+
+def _parse_alternatives(raw: Any) -> list[AquaAlternative]:
     out: list[AquaAlternative] = []
-    for item in raw:
-        if not isinstance(item, dict):
-            continue
+    for item in _dict_list(raw):
         out.append(
             AquaAlternative(
                 hypothesis=str(item.get("hypothesis", item.get("description", ""))),
-                probability=float(item.get("probability", 0)),
+                probability=_safe_float(item.get("probability", 0)),
                 evidence=str(item.get("evidence", "")),
             )
         )
@@ -56,35 +69,38 @@ def _parse_alternatives(raw: list[Any]) -> list[AquaAlternative]:
 
 
 def parse_aqua_payload(raw: dict[str, Any]) -> AquaReport | None:
+    if not isinstance(raw, dict):
+        return None
     block = raw.get("aqua_report")
     if not isinstance(block, dict):
         return None
 
     scenarios: list[AquaScenario] = []
-    for item in block.get("scenarios", []):
-        if not isinstance(item, dict):
-            continue
+    for item in _dict_list(block.get("scenarios", [])):
+        affected_paths = item.get("affected_paths", [])
         scenarios.append(
             AquaScenario(
                 id=str(item.get("id", "")),
                 description=str(item.get("description", "")),
-                confidence=float(item.get("confidence", 0)),
+                confidence=_safe_float(item.get("confidence", 0)),
                 rationale=str(item.get("rationale", "")),
                 impact=str(item.get("impact", "medium")),
                 status=str(item.get("status", "generated")),
                 alternatives=_parse_alternatives(item.get("alternatives", [])),
-                affected_paths=[str(p) for p in item.get("affected_paths", [])],
+                affected_paths=[str(p) for p in affected_paths] if isinstance(affected_paths, list) else [],
             )
         )
+
+    source = block.get("source", {})
 
     return AquaReport(
         version=str(block.get("version", "0.1.0")),
         snapshot_id=str(block.get("snapshot_id", "")),
         generated_at=str(block.get("generated_at", "")),
         scenarios=scenarios,
-        source=dict(block.get("source", {})),
-        production_drift=list(block.get("production_drift", [])),
-        recommendations=list(block.get("recommendations", [])),
+        source=source if isinstance(source, dict) else {},
+        production_drift=_dict_list(block.get("production_drift", [])),
+        recommendations=_dict_list(block.get("recommendations", [])),
     )
 
 
