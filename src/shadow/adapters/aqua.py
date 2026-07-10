@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import json
+import math
 from dataclasses import dataclass, field
 from pathlib import Path
 from typing import Any
@@ -40,15 +41,39 @@ class AquaReport:
     recommendations: list[dict[str, Any]] = field(default_factory=list)
 
 
-def _parse_alternatives(raw: list[Any]) -> list[AquaAlternative]:
+def _finite_float(raw: Any, default: float = 0.0) -> float:
+    try:
+        value = float(raw)
+    except (TypeError, ValueError):
+        return default
+    return value if math.isfinite(value) else default
+
+
+def _dict_list(raw: Any) -> list[dict[str, Any]]:
+    if not isinstance(raw, list):
+        return []
+    return [item for item in raw if isinstance(item, dict)]
+
+
+def _source_dict(raw: Any) -> dict[str, Any]:
+    return dict(raw) if isinstance(raw, dict) else {}
+
+
+def _affected_paths(raw: Any) -> list[str]:
+    if isinstance(raw, list):
+        return [str(p) for p in raw]
+    if isinstance(raw, str) and raw.strip():
+        return [raw]
+    return []
+
+
+def _parse_alternatives(raw: Any) -> list[AquaAlternative]:
     out: list[AquaAlternative] = []
-    for item in raw:
-        if not isinstance(item, dict):
-            continue
+    for item in _dict_list(raw):
         out.append(
             AquaAlternative(
                 hypothesis=str(item.get("hypothesis", item.get("description", ""))),
-                probability=float(item.get("probability", 0)),
+                probability=_finite_float(item.get("probability", 0)),
                 evidence=str(item.get("evidence", "")),
             )
         )
@@ -61,19 +86,17 @@ def parse_aqua_payload(raw: dict[str, Any]) -> AquaReport | None:
         return None
 
     scenarios: list[AquaScenario] = []
-    for item in block.get("scenarios", []):
-        if not isinstance(item, dict):
-            continue
+    for item in _dict_list(block.get("scenarios", [])):
         scenarios.append(
             AquaScenario(
                 id=str(item.get("id", "")),
                 description=str(item.get("description", "")),
-                confidence=float(item.get("confidence", 0)),
+                confidence=_finite_float(item.get("confidence", 0)),
                 rationale=str(item.get("rationale", "")),
-                impact=str(item.get("impact", "medium")),
+                impact=(str(item.get("impact", "medium")).strip().lower() or "medium"),
                 status=str(item.get("status", "generated")),
                 alternatives=_parse_alternatives(item.get("alternatives", [])),
-                affected_paths=[str(p) for p in item.get("affected_paths", [])],
+                affected_paths=_affected_paths(item.get("affected_paths", [])),
             )
         )
 
@@ -82,9 +105,9 @@ def parse_aqua_payload(raw: dict[str, Any]) -> AquaReport | None:
         snapshot_id=str(block.get("snapshot_id", "")),
         generated_at=str(block.get("generated_at", "")),
         scenarios=scenarios,
-        source=dict(block.get("source", {})),
-        production_drift=list(block.get("production_drift", [])),
-        recommendations=list(block.get("recommendations", [])),
+        source=_source_dict(block.get("source", {})),
+        production_drift=_dict_list(block.get("production_drift", [])),
+        recommendations=_dict_list(block.get("recommendations", [])),
     )
 
 
