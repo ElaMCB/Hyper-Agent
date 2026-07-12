@@ -22,7 +22,7 @@ def aqua_summary_bullets(snapshot: Snapshot, config: dict) -> list[str]:
     ]
 
     low = [s for s in report.scenarios if s.confidence < threshold]
-    high_impact_low = [s for s in low if s.impact == "high"]
+    high_impact_low = [s for s in low if (s.impact or "").strip().lower() == "high"]
 
     if low:
         bullets.append(
