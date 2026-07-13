@@ -180,5 +180,5 @@ class AquaIntegrationTests(unittest.TestCase):
 
         bullets = aqua_summary_bullets(snapshot, config)
 
-        self.assertIn("Checkout authorization bypass (70%, High impact)", bullets)
-        self.assertNotIn("Lower-impact cache warning (40%, medium impact)", bullets)
+        self.assertIn("— Checkout authorization bypass (70%, High impact)", bullets)
+        self.assertNotIn("— Lower-impact cache warning (40%, medium impact)", bullets)
