@@ -106,7 +106,9 @@ def _build_summary(snapshot: Snapshot, max_bullets: int, config: dict) -> tuple[
         snapshot.team_members or snapshot.capacity_allocations or snapshot.strategy_signals
     )
 
-    if has_personal and not has_work and not has_qe_data:
+    if has_qe_data and (has_work or has_personal):
+        suggested = "Balance people/capacity/strategy context with inbox and execution signals for today."
+    elif has_personal and not has_work and not has_qe_data:
         suggested = "Triage unread Gmail; reply, archive, or snooze so nothing important slips."
     elif has_personal and has_work:
         suggested = "Blend inbox triage with defect and test-run priorities for today."
@@ -116,8 +118,6 @@ def _build_summary(snapshot: Snapshot, max_bullets: int, config: dict) -> tuple[
         suggested = (
             "Reconcile team capacity and sprint allocations with strategy signals; pick 1–2 leadership moves today."
         )
-    elif has_qe_data and (has_work or has_personal):
-        suggested = "Balance people/capacity/strategy context with inbox and execution signals for today."
     else:
         suggested = "Enable Gmail, work data, and/or QE files (team, allocations, strategy), then run again."
 
