@@ -20,6 +20,39 @@ def _parse_datetime(s: str | None) -> Any:
     return None
 
 
+def _parse_bool(value: Any, *, default: bool = False) -> bool:
+    if value is None:
+        return default
+    if isinstance(value, bool):
+        return value
+    if isinstance(value, (int, float)):
+        return value != 0
+    if isinstance(value, str):
+        normalized = value.strip().lower()
+        if normalized in {"1", "true", "yes", "y", "on"}:
+            return True
+        if normalized in {"0", "false", "no", "n", "off", ""}:
+            return False
+    return bool(value)
+
+
+def _first_present(r: dict, *keys: str) -> Any:
+    for key in keys:
+        if key in r and r[key] is not None:
+            return r[key]
+    return None
+
+
+def _first_nonblank(r: dict, *keys: str) -> Any:
+    for key in keys:
+        if key not in r or r[key] is None:
+            continue
+        if isinstance(r[key], str) and r[key].strip() == "":
+            continue
+        return r[key]
+    return None
+
+
 def load_defects_from_json(path: Path) -> list[Defect]:
     raw = json.loads(path.read_text(encoding="utf-8"))
     if not isinstance(raw, list):
@@ -94,7 +127,7 @@ def load_team_from_json(path: Path) -> list[TeamMember]:
                     name=str(r.get("name", "")),
                     role=str(r.get("role", "")),
                     skills=_skills_from_row(r),
-                    on_vacation=bool(r.get("on_vacation", r.get("vacation", False))),
+                    on_vacation=_parse_bool(_first_present(r, "on_vacation", "vacation")),
                     vacation_until=_parse_datetime(r.get("vacation_until")),
                     morale_flag=str(r.get("morale_flag", r.get("morale", ""))),
                     last_one_on_one=_parse_datetime(r.get("last_one_on_one") or r.get("last_1_1")),
@@ -111,7 +144,7 @@ def load_allocations_from_json(path: Path) -> list[CapacityAllocation]:
     out: list[CapacityAllocation] = []
     for r in raw:
         if isinstance(r, dict):
-            pct = r.get("focus_pct") or r.get("pct") or r.get("allocation_pct")
+            pct = _first_nonblank(r, "focus_pct", "pct", "allocation_pct")
             try:
                 focus = int(pct) if pct is not None and str(pct).strip() != "" else None
             except (TypeError, ValueError):
