@@ -28,7 +28,7 @@ def _parse_internal_date(ms: str | None) -> datetime | None:
     try:
         sec = int(ms) / 1000.0
         return datetime.fromtimestamp(sec, tz=timezone.utc)
-    except (ValueError, TypeError, OSError):
+    except (ValueError, TypeError, OSError, OverflowError):
         return None
 
 
